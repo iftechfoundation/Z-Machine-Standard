@@ -11,6 +11,8 @@
 !	@set_font
 !	Consider making this test suite non-interactive, and have another test suite for interactive tests
 !		Move too any tests which are manually confirmed by eye, so that all of Praxix can be summed up by "All tests passed"
+!	Maybe add tests for @loadw/@storew etc to check they are casting array+word correctly
+!	1.1 spec unicode texts
 
 Constant Story "Praxix";
 Constant Headline "A Z-code interpreter unit test^";
@@ -2685,7 +2687,7 @@ TestClass gestalt
 		print "Selector $2001 (Streams 3/4): "; check_hex_min(val, 1); print "^";
 
 		@"EXT:30S" $2002 0 -> val;
-		print "Selector $2002 (@@call_vs2): "; check_hex_min(val, 1); print "^";
+		print "Selector $2002 (@@64call_vs2): "; check_hex_min(val, 1); print "^";
 		
 		count_failures();
 		return;
