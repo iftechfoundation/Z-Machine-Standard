@@ -9,6 +9,9 @@
 !	@erase_line
 !	@get_cursor
 !	@set_font
+!	@call 0
+!	@random - check it's a good distribution
+!	@print_table - check line breaks are only printed between lines
 !	Consider making this test suite non-interactive, and have another test suite for interactive tests
 !		Move too any tests which are manually confirmed by eye, so that all of Praxix can be summed up by "All tests passed"
 !	Maybe add tests for @loadw/@storew etc to check they are casting array+word correctly
