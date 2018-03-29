@@ -2682,16 +2682,6 @@ TestClass gestalt
 		@"EXT:30S" 1 0 -> val;
 		print "Selector 1 (Standard Revision): $0102<= "; check_hex_min(val, $0102); print "^";
 		
-		! Other core selectors
-		@"EXT:30S" $2000 0 -> val;
-		print "Selector $2000 (@@64set_font 0): "; check_hex_min(val, 1); print "^";
-
-		@"EXT:30S" $2001 0 -> val;
-		print "Selector $2001 (Streams 3/4): "; check_hex_min(val, 1); print "^";
-
-		@"EXT:30S" $2002 0 -> val;
-		print "Selector $2002 (@@64call_vs2): "; check_hex_min(val, 1); print "^";
-		
 		count_failures();
 		return;
 	];
