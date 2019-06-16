@@ -1,0 +1,278 @@
+<HTML>
+<HEAD><TITLE>The Z-Machine Standards Document</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#DDDDDD"><H1 align=center><IMG height=86 width=82
+SRC="iconac.gif" ALT="Z"></H1>
+<BR><H3 align=center><I>Appendix C. Resources available</I></H3>
+<P>
+<BLOCKQUOTE>
+...the dead hand of the academy had yet to stifle the unbridled
+enthusiasms of a small band of amateurs in Europe and America.
+<P>Michael D. Coe, <B>Breaking the Maya Code</B>
+</BLOCKQUOTE>
+<BR>
+[Note: the hypertext links in this appendix are to WWW sites external
+to the standards document, and were correct as of 20th June 1997.]
+<P>
+The resources below are mainly available from the
+<A HREF="ftp://ftp.gmd.de/if-archive/">if-archive</A>
+at the anonymous FTP site <B>ftp.gmd.de</B> in Germany,
+maintained by Volker Blasius.  [Some mirrors of this site
+are listed at the
+<A HREF="http://www.gnelson.demon.co.uk/inform.html">Inform home page</A>.]
+<P>
+<HR><H4>Public Interpreters</H4><BR>
+<P>
+<I>At least eleven essentially different
+<a href="ftp://ftp.gmd.de/if-archive/infocom/interpreters">interpreters</a>
+are publically available, of which six are in modern use:</I>
+<P><B>1.</B>
+<a href="ftp://ftp.gmd.de/if-archive/infocom/interpreters/frotz">Frotz</a>,
+by Stefan Jokisch (1996-), was written in a
+successful attempt to implement a Standard-compliant interpreter
+from scratch, rather than repair old interpreter cores.  It covers
+all Versions and ports are available for: DOS, Amiga, Windows CE,
+Acorn RISC OS, Windows 95/NT, OS/2, Unix, HP-UX.
+<P><B>2a.</B> <B>Zplet</B>, by Matthew Russotto (1996-), is an almost
+Standard-compliant Java applet to interpret Versions 3, 5 and 8.
+<P><B>2b.</B>
+<a href="ftp://ftp.gmd.de/if-archive/infocom/interpreters/zax">Zax</A>,
+by Matt Kimmel (1997-), is an almost
+Standard-compliant Java application to interpret all Versions other
+than 6.  (Note that <B>Zax</B> and <B>Zplet</B>
+are quite independent of each other:
+as one runs in a browser, the other as a stand-alone application, they
+may be seen as complementary.)
+<P><B>3.</B>
+<a href="ftp://ftp.gmd.de/if-archive/infocom/interpreters/zip">Zip</a>,
+by Mark Howell (1991-), is a good, almost entirely accurate interpreter
+across Versions 1 to 5.  The core has evolved into many extended versions,
+often covering Version 8 or even implementing this Standard; Stefan
+Jokisch has written a document listing bugs and omissions in the original.
+Noteworthy ports include: Kevin Bracey's Standard-compliant
+<a href="http://www.ifarchive.org/if-archive/infocom/interpreters/zip2000/Acorn_Zip2000_141_Std1.0.spk">!Zip2000</a>,
+(Acorn RISC OS only), which fully supports even Version 6;
+Rick Bram's
+<a href="http://www.palmglyph.com/zip.html">Pilot Zip</a> (1997):
+the PalmPilot is a pocket-sized, battery-powered personal organiser
+without even a keyboard; Andrew Plotkin's <B>MaxZip</B>,
+for System 7 Macintoshes, and <B>XZip</B>, for X-Windows;
+Matthew Russotto's <B>Zip Infinity</B>, also for Macintosh; John Holder's
+<B>JZip</B> for PCs (itself ported to the Atari ST and Bebox); Greg Ewing's
+<B>macZeX</B>, which extends the Z-machine specification to include textual
+formatting information loosely based on TeX, but which has not been
+used by designers; and other ports including to MS Windows, DOS,
+BSD Unix, Amiga, OS/2, Apple IIgs.
+
+<P><B>4.</B>
+The <a href="ftp://ftp.gmd.de/if-archive/infocom/interpreters/itf">
+InfoTaskForce</a> (or ITF) interpreter (1987-92) is almost as
+good, but slower and less accurate on some Version 5 features.  It is no
+longer maintained by its original authors (David Beazley,
+George Janczuk, Peter Lisle, Russell Hoare and Chris Tham)
+and the final version was 4.01
+(ported to Acorn RISC OS, Atari ST, OS/2, Macintosh, DOS, Amiga); a beta
+test of version 4.02 was never widely distributed.  However,
+Bryan Scattergood has given <B>ITF</B> a new lease of life by updating
+it to much more accurate and reliable interpreters for Acorn RISC OS,
+the Psion Series 3, Unix/X11 and Windows.
+<P><B>5.</B>
+Apple Newton users can at present play Version 3 games only, using
+the shareware interpreter
+<a href="ftp://ftp.gmd.de/if-archive/infocom/interpreters/yazi">YAZI</a>,
+Yet Another Z-Machine Interpreter, by George Madrid and Sanjay Vankil
+(1994-).
+<P><B>6.</B>
+Another Version-3-only interpreter,
+<a href="http://www.work.de/nocash/infgmb.htm">Infocom Interpreter</a>
+by Martin Korth (1993) is noteworthy for two reasons: first, because
+Mr Korth seems to have worked by reverse-engineering the Infocom CP/M
+interpreter (in isolation from the main groups of Infocom hackers of
+the period), and in this way wrote the only known Z-machine in Pascal
+(source available at his site); second, because he then wrote an
+assembly-language version for the keyboard-less Nintendo Gameboy.
+To use this, one appends the story file to the interpreter, burns the
+result into an EPROM and plugs it in: it's probably the nearest thing
+to a "hardware Z-machine" yet devised.
+<p>
+<I>The other four interpreters are obsolescent and now hardly used, but
+ought not to be forgotten, if only for their contribution to the gradual
+process of decipherment.</I>
+<P><B>7.</B>
+<a href="ftp://ftp.gmd.de/if-archive/infocom/interpreters/old/pinfocom">
+Pinfocom</a> (1992), derived from an early form of <B>ITF</B>, and
+released by Paul Smith as a Version 3 (only) interpreter;
+final version 3.0 (ported to Amiga and Atari ST).
+<P><B>8.</B>
+<a href="ftp://ftp.gmd.de/if-archive/infocom/interpreters/old/zmachine">
+Zmachine</a> (1988-90), by Matthias Pfaller: briefly in limited
+circulation (again, for Version 3 only; ported to Amiga and Atari ST).
+<P><B>9.</B>
+<a href="ftp://ftp.gmd.de/if-archive/infocom/interpreters/old/zipdebug">
+ZIPDebug</a> (1991-3), by Frank Lancaster, supporting
+Versions 1 to 5 and offering some debugger facilities.
+<P><B>10.</B>
+<a href="ftp://ftp.gmd.de/if-archive/infocom/interpreters/old/zterp">
+Zterp</a> (1992), by Charles M. Hannum, for Versions 3 to 5:
+reputedly very fast.
+
+<P>
+<HR><H4>Testing compliance</H4><BR>
+<P>
+Andrew Plotkin has written a story file to torture interpreters into
+revealing non-Standard behaviour, with the appropriately contrived
+name of
+<a href="ftp://ftp.gmd.de/if-archive/infocom/interpreters/tools/etude.tar.Z">TerpEtude</a> [an archive containing the source code and compiled
+story file].  It supersedes the handful of smaller programs
+previously attached to versions of this document.
+<P>
+<HR><H4>Compilers</H4><BR>
+<P>
+Infocom's original compiler <B>Zilch</B> no longer exists: nor is any of its
+language, <B>ZIL</B>, documented anywhere
+(though this is similar to <B>MDL</B>, which
+is documented): no continuous part of the source code of any of
+Infocom's games is in the public domain [but see
+<a href="ftp://ftp.gmd.de/if-archive/infocom/articles/NZT-Zorkhistory.txt">
+Stu Galley's chapter of an Infocom history article</a>, and the IEEE
+article, for fragments].
+<P>
+<a href="http://www.gnelson.demon.co.uk/inform.html">Inform</a>
+is the only other compiler to have existed.  It is freeware and
+comes with full documentation (of which this document is a part).
+<P>
+<HR><H4>Debugger</H4><BR>
+<P>
+A source-level debugger for Inform games, called <B>Infix</B>, has been
+on the drawing boards for some years now.  A group of authors is
+currently developing an implementation.
+<P>
+<HR><H4>Utility programs</H4><BR>
+<P>
+Mark Howell has written a toolkit of
+<a href="ftp://ftp.gmd.de/if-archive/infocom/tools/ztools/">
+Ztools</a>, or utility programs (1991-5, updated 1997), which includes:
+<P><B>1.</B> <B>Txd</B>, a disassembler for Versions 1 to 8.  (Uses the
+same opcode names as Inform and this document, and has an option to
+disassemble in Inform assembly-language syntax.)
+<P><B>2.</B> <B>Infodump</B>, capable of printing the header information,
+object tree (with properties and attributes), dictionary and grammar
+tables of any Infocom or Inform-compiled game.  (Understands all four
+varieties of grammar table: Infocom pre-Version 6, Infocom Version 6,
+Inform GV1 and GV2.)
+<P><B>3.</B> <B>Pix2gif</B>, for converting Version 6 picture data
+to GIF files.
+<P><B>4.</B> <B>Check</B>, for verifying Infocom or Inform story files.
+<P>
+
+These continue to be maintained (by Matthew Russotto) and the first two
+are extremely useful.
+<B>Infodump</B> largely supersedes Mike Threepoint's vocabulary
+dumper <B>Zorkword</B> (1991-2), which was important in its day (and
+which this author found extremely helpful when writing Inform 1).
+<P>
+<HR><H4>Story files</H4><BR>
+<P>
+<P><B>1.</B>
+<a href="ftp://ftp.gmd.de/if-archive/games/infocom/">
+Numerous Inform-compiled story files</a> are publically available:
+games such as 'Curses', 'Christminster', 'Theatre', 'Busted', 'Balances',
+'Advent', 'Adventureland' and so on.  [For an annotated selection see the
+<A HREF="http://www.gnelson.demon.co.uk/inform.html">Inform home page</A>.]
+<P><B>2.</B> A few Infocom story files are public, notably two 4-in-1 sample
+games (released for advertising purposes:
+<a href="ftp://ftp.gmd.de/if-archive/infocom/demos/sampler1_R55.z3">
+55.850823</a>
+and 
+<a href="ftp://ftp.gmd.de/if-archive/infocom/demos/sampler2.z3">
+97.870601</a>) and
+<a href="ftp://ftp.gmd.de/if-archive/infocom/demos/minizork.z3">
+Minizork</a> (a heavily
+abbreviated form of Zork I released with a Commodore magazine).
+<P><B>3.</B> Almost all Infocom's games remain commercially available in
+anthologies published by
+<A href="http://www.activision.com">Activision</A>.
+Copyright resides in them and they should not available by FTP
+from any site.
+<P><B>4.</B> A few other Infocom story files have existed but are neither
+on sale nor released from copyright: this applies to several of the
+Version 6 games, those games involving literary rights or other
+legal issues ('Shogun', 'Hitch-Hiker's Guide To The Galaxy') and
+ephemera such as beta-test versions (notably the German version
+of 'Zork I') which have somehow passed into private circulation.
+<P>
+Most of the Infocom games exist in
+<A href="appf.html">several different releases</A>, and some
+were written for one Version and then ported to later ones.  'Zork I', for
+instance, has at least 11 releases, 2 early, 8 in Version 3
+(with release numbers between 5 to 88 in chronological order) and one in
+Version 5 (release 52 -- the releases go back to 1 when the version changes).
+<P>
+Version 1 and 2 games are extinct, though there are a few fossils
+in the hands of collectors.
+<P>
+<HR><H4>Documents</H4><BR>
+<P>
+The definitive guide to all Infocom story files known to exist, and an
+indispensable reference for anyone interested in Infocom, is Paul David
+Doherty's
+<a href="ftp://ftp.gmd.de/if-archive/infocom/info/fact-sheet.txt">
+Infocom fact sheet</a>, which is regularly updated, concise and
+precise.  This supersedes Paul Smith's "Infocom Game Information" file.
+<P>
+Stefan Jokisch has written a
+<a href="ftp://ftp.gmd.de/if-archive/infocom/info/sound_format.txt">
+brief specification of Infocom-format sound effects files</a>.
+<P>
+Martin Frost is the author of the
+<a href="../quetzal/index.html">Quetzal</a>
+standard for saved-game files.  Patches to adapt <B>Zip</B>-based
+interpreters to use <B>Quetzal</B> are now available.
+<P>
+Andrew Plotkin is drafting the <B>Blorb</B> standard for packaging up
+images and sounds with new Z-machine games.
+<P>
+The <a href="http://www.inform-fiction.org/source/tm/TechMan.txt">
+Inform Technical Manual</a> documents the format of parsing tables
+used in Inform games.
+<P>
+Most of the contents of the original Infocom game manuals are still on
+sale with the games themselves: the "samplers" (sample transcripts of
+play) are not, but an
+<a href="ftp://ftp.gmd.de/if-archive/infocom/shipped-documentation/">
+archive of them</a> is publically available.  So is
+<a href="ftp://ftp.gmd.de/if-archive/infocom/articles/">
+an interesting historical archive of magazine articles</a> concerning
+Infocom, and articles from Infocom's own publicity magazine
+[indexed
+<a href="http://www.ifarchive.org/if-archive/infocom/NZT+TSL/NZT+TSL.list">
+here</a>].
+<P>
+<HR><H4>Mailing list</H4><BR>
+<P>
+A Z-Machine mailing list, organised by
+Marnix Klooster (marnix@worldonline.nl),
+enables debates on this document, discussion of what interpreters
+should do, collaboration on new programs and so on.
+<P>
+<HR>
+<P>
+<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
+<A HREF="overview.html">Overview</A>
+<P>Section
+<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
+<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
+<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
+<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
+<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
+<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
+<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
+<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
+<P>Appendix
+<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
+<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
+<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
+</P>
+<HR>
+</BODY></HTML>
