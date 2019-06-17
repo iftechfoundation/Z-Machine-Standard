@@ -66,10 +66,15 @@
    table's contents are unspecified (and a game cannot safely read or write
    to it).  When the stream is deselected, the initial word of the table holds
    the number of characters printed and subsequent bytes hold those characters.
-   Similarly, in Version 6, the total width of printing (in units) will then be
-   stored in the word at <strong>$30</strong> in the header.  (It is the programmer's
-   responsibility to make the table large enough: the interpreter performs no
-   overflow checking.)
+   (It is the programmer's responsibility to make the table large enough: the 
+   interpreter performs no overflow checking.) 
+</p>
+<p>In Version 6, the total width of printing (in units) will then be stored in 
+   the word at <strong>$30</strong> in the header. The game should not attempt any
+   operation that will change the width of the font (such as changing from a 
+   proportional to a fixed width font) while output stream 3 is active, and the
+   interpreter need not store an accurate width of the resulting string if a game does
+   do this.
 </p>
 
 <h2>7.1.2.1.1</h2>
