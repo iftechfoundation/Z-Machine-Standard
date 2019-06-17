@@ -1,1 +1,426 @@
-<HTML><HEAD><TITLE>The Z-Machine Standards Document</TITLE></HEAD><BODY BGCOLOR="#EEEEEE"><H1 align=center><IMG height=86 width=82SRC="icon03.gif" ALT="Z"></H1><BR><H3 align=center><I>3. How text and characters are encoded</I></H3><P><BLOCKQUOTE>    This technique is similar to the five-bit Baudot code, which    was used by early Teletypes before ASCII was invented.<P>Marc S. Blank and S. W. Galley, <B>How to Fit a Large Program Intoa Small Machine</B></BLOCKQUOTE><HR>3.1 <A HREF="#one">Text</A> / 3.2 <A HREF="#two">Alphabets</A> / 3.3 <A HREF="#three">Abbreviations</A> /3.4 <A HREF="#four">ZSCII escape</A> / 3.5 <A HREF="#five">Alphabet table</A> / 3.6 <A HREF="#six">Padding and incompleteness</A> / 3.7 <A HREF="#seven">Dictionary truncation</A> / 3.8 <A HREF="#eight">Definition of ZSCII and Unicode</A><HR><P><A NAME="one"><BR><B>3.1</B><P>  Z-machine text is a sequence of ZSCII character codes (ZSCII isa system similar to ASCII: see <B>S</B> 3.8 below).  These ZSCII values areencoded into memory using a string of Z-characters.  The process ofconverting between Z-characters and ZSCII values is given in <B>S</B><B>S</B> 3.2 to3.7 below.<P><A NAME="two"><BR><B>3.2</B><P> Text in memory consists of a sequence of 2-byte words.  Each wordis divided into three 5-bit 'Z-characters', plus 1 bit left over, arrangedas<PRE>   --first byte-------   --second byte---   7    6 5 4 3 2  1 0   7 6 5  4 3 2 1 0   bit  --first--  --second---  --third--</PRE>The bit is set only on the last 2-byte word of the text, and so marks theend.<P><BR><B>3.2.1</B><P> There are three 'alphabets', A0 (lower case), A1 (upper case) andA2 (punctuation) and during printing one of these is current at any giventime.  Initially A0 is current.  The meaning of a Z-character may depend onwhich alphabet is current.<P><BR><B>3.2.2</B><P> In Versions 1 and 2, the current alphabet can be any of thethree.  The Z-characters 2 and 3 are called 'shift' characters and changethe alphabet for the next character only.  The new alphabet depends onwhat the current one is:<PRE>             from A0  from A1  from A2  Z-char 2      A1       A2       A0  Z-char 3      A2       A0       A1</PRE>Z-characters 4 and 5 permanently change alphabet, according to thesame table, and are called 'shift lock' characters.<P><BR><B>3.2.3</B><P> In Versions 3 and later, the current alphabet is always A0unless changed for 1 character only: Z-characters 4 and 5 are shiftcharacters.  Thus 4 means "the next character is in A1" and 5 means"the next is in A2".  There are no shift lock characters.<P><BR><B>3.2.4</B><P> An indefinite sequence of shift or shift lock characters islegal (but prints nothing).<P><A NAME="three"><BR><B>3.3</B><P> In Versions 3 and later, Z-characters 1, 2 and 3 representabbreviations, sometimes also called 'synonyms' (for traditional reasons):the next Z-character indicates which abbreviation string to print.  If zis the first Z-character (1, 2 or 3) and x the subsequent one, then theinterpreter must look up entry 32(z-1)+x in the abbreviations table andprint the string at that word address.  In Version 2, Z-character 1 has thiseffect (but 2 and 3 do not, so there are only 32 abbreviations).<P><BR><B>3.3.1</B><P> Abbreviation string-printing follows all the rules of this sectionexcept that an abbreviation string must not itself use abbreviations andmust not end with an incomplete multi-Z-character construction (see <B>S</B> 3.6.1below).<P><A NAME="four"><BR><B>3.4</B><P> Z-character 6 from A2 means that the two subsequent Z-charactersspecify a ten-bit ZSCII character code: the next Z-character gives thetop 5 bits and the one after the bottom 5.<P><A NAME="five"><BR><B>3.5</B><P> The remaining Z-characters are translated into ZSCII charactercodes using the "alphabet table".<P><BR><B>3.5.1</B><P> The Z-character 0 is printed as a space (ZSCII 32).<P><BR><B>3.5.2</B><P> In Version 1, Z-character 1 is printed as a new-line(ZSCII 13).<P><BR><B>3.5.3</B><P> In Versions 2 to 4, the alphabet table for convertingZ-characters into ZSCII character codes is as follows:<PRE>   Z-char 6789abcdef0123456789abcdefcurrent   --------------------------  A0      abcdefghijklmnopqrstuvwxyz  A1      ABCDEFGHIJKLMNOPQRSTUVWXYZ  A2       ^0123456789.,!?_#'"/\-:()          --------------------------</PRE>(Character 6 in A2 is printed as a space here, but is not translatedusing the alphabet table: see <B>S</B> 3.4 above.  Character 7 in A2,written here as a circumflex <B>^</B>, is a new-line.)  For example,in alphabet A1 the Z-character 12 is translated as a capital G(ZSCII character code 71).<P><BR><B>3.5.4</B><P> Version 1 has a slightly different A2 row in its alphabettable (new-line is not needed, making room for the <B> < </B> character):<PRE>          6789abcdef0123456789abcdef          --------------------------  A2       0123456789.,!?_#'"/\<-:()          --------------------------</PRE><P><BR><B>3.5.5</B><P> In Versions 5 and later, the interpreter should look atthe word at <B>$34</B> in the header.  If this is zero, then thealphabet table drawn out in <B>S</B> 3.5.3 continues in use.  Otherwiseit is interpreted as the byte address of an alphabet tablespecific to this story file.<P><BR><B>3.5.5.1</B><P> Such an alphabet table consists of 78 bytes arrangedas 3 blocks of 26 ZSCII values, translating Z-characters 6 to 31for alphabets A0, A1 and A2.  Z-characters 6 and 7 of A2, however,are still translated as escape and newline codes (as above).<P><A NAME="six"><BR><B>3.6</B><P> Since the end-bit only comes up once every three Z-characters,a string may have to be 'padded out' with null values.  This isconventionally achieved with a sequence of 5's, though a sequence of(for example) 4's would work equally well.<P><BR><B>3.6.1</B><P> It is legal for the string to end while a multi-Z-characterconstruction is incomplete: for instance, after only the top half ofan ASCII value has been given.  The partial construction is simplyignored.  (This can happen in printing dictionary words which havebeen guillotined to the dictionary resolution of 6 or 9 Z-characters.)<P><A NAME="seven"><BR><B>3.7</B><P> When an interpreter is encrypting typed-in text to match againstdictionary words, the following restrictions apply.  Text should beconverted to lower case (as a result A1 will not be needed unless thegame provides its own alphabet table).  Abbreviations may not be used.The pad character, if needed, must be 5.  The total string length mustbe 6 Z-characters (in Versions 1 to 3) or 9 (Versions 4 and later): anymulti-Z-character constructions should be left incomplete (rather thanomitted) if there's no room to finish them.  For example, "i" isencrypted as:<P><B>14, 5, 5, 5, 5, 5, 5, 5, 5</B><P><B>$48a5</B> <B>$14a5</B> <B>$94a5</B><P><P><A NAME="eight"><BR><B>3.8</B><P> The character set of the Z-machine is called ZSCII (ZorkStandard Code for Information Interchange; pronounced to rhyme with"xyzzy").  ZSCII codes are 10-bit unsigned values between 0 and1023.  Story files may only legally use the values which are definedbelow.  Note that some values are defined only for input and someonly for output.<P><TABLE Border><CAPTION><B>Table 2: summary of the ZSCII rules</B></CAPTION><TR><TD> 0           <TD>null                       <TD>Output<TR><TD> 1-7         <TD>----                       <TD><TR><TD> 8           <TD>delete                     <TD>Input<TR><TD> 9           <TD>tab (V6)                   <TD>Output<TR><TD> 10          <TD>----                       <TD><TR><TD> 11          <TD>sentence space (V6)        <TD>Output<TR><TD> 12          <TD>----                       <TD><TR><TD> 13          <TD>newline                    <TD>Input/Output<TR><TD> 14-26       <TD>----                       <TD><TR><TD> 27          <TD>escape                     <TD>Input<TR><TD> 28-31       <TD>----                       <TD><TR><TD> 32-126      <TD>standard ASCII             <TD>Input/Output<TR><TD> 127-128     <TD>----                       <TD><TR><TD> 129-132     <TD>cursor u/d/l/r             <TD>Input<TR><TD> 133-144     <TD>function keys f1 to f12    <TD>Input<TR><TD> 145-154     <TD>keypad 0 to 9              <TD>Input<TR><TD> 155-251     <TD>extra characters           <TD>Input/Output<TR><TD> 252         <TD>menu click (V6)            <TD>Input<TR><TD> 253         <TD>double-click (V6)          <TD>Input<TR><TD> 254         <TD>single-click               <TD>Input<TR><TD> 255-1023    <TD>----                       <TD></TABLE><P><BR><B>3.8.1</B><P> The codes 256 to 1023 are undefined, so that for allpractical purposes ZSCII is an 8-bit unsigned code.<P><BR><B>3.8.2</B><P> The codes 0 to 31 are undefined except as follows:<P><BR><B>3.8.2.1</B><P> ZSCII code 0 ("null") is defined for outputbut has no effect in any output stream.  (It is also used asa value meaning "no character" when reporting terminatingcharacter codes, but is not formally defined for input.)<P><BR><B>3.8.2.2</B><P> ZSCII code 8 ("delete") is defined for input only.<P><BR><B>3.8.2.3</B><P> ZSCII code 9 ("tab") is defined for output in Version 6 only.At the start of a screen line this should print a paragraph indentationsuitable for the font being used: if it is printed in the middle of ascreen line, it should be converted to a space (Infocom's owninterpreters do not do this, however).<P><BR><B>3.8.2.4</B><P> ZSCII code 11 ("sentence space") is defined for output inVersion 6 only.  This should be printed as a suitable gap between twosentences (in the same way that typographers normally place larger spacesafter the full stops ending sentences than after words or commas).<P><BR><B>3.8.2.5</B><P> ZSCII code 13 ("carriage return") is defined for input andoutput.<P><BR><B>3.8.2.6</B><P> ZSCII code 27 ("escape" or "break") is defined for inputonly.<P><BR><B>3.8.3</B><P> ZSCII codes between 32 ("space") and 126 ("tilde") aredefined for input and output, and agree with standard ASCII (as well asall of the ISO 8859 character sets and Unicode).  Specifically:<PRE>      0123456789abcdef0123456789abcdef      -------------------------------- $20   !"#$%&'()*+,-./0123456789:;<=>? $40  @ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_ $60  'abcdefghijklmnopqrstuvwxyz{!}~       --------------------------------</PRE>Note that code <B>$23</B> (35 decimal) is a hash mark, not a pound sign.(Code <B>$7c</B> (124 decimal) is a vertical stroke which is shown as <B>!</B>here for typesetting reasons.)<P><BR><B>3.8.3.1</B><P> ZSCII codes 127 ("delete" in some forms of ASCII)and 128 are undefined.<P><BR><B>3.8.4</B><P> ZSCII codes 129 to 154 are defined for input only:<PRE>129: cursor up  130: cursor down  131: cursor left  132: cursor right133: f1         134: f2           ....              144: f12145: keypad 0   146: keypad 1     ....              154: keypad 9</PRE><P><BR><B>3.8.5</B><P> The block of codes between 155 and 251 are the "extracharacters" and are used differently by different story files.Some will need accented Latin characters (such as French E-acute),others unusual punctuation (Spanish question mark), others newalphabets (Cyrillic or Hebrew); still others may want dingbatcharacters, mathematical or musical symbols, and so on.<P><BR><B>3.8.5.1</B><P> <B>***</B> To define which characters are required, the Unicode(or ISO 10646-1) character set is used: characters are specifiedby unsigned 16-bit codes.  These values agree with ISO 8859 Latin-1in the range 0 to 255, and with ASCII and ZSCII in the range32 to 126.  The Unicode standard leaves a range of values, thePrivate Use Area, free: however, an Internet group called theConScript Unicode Registry is organising a standard mapping ofinvented scripts (such as Klingon, or Tolkien's Elvish) into thePrivate Use Area, and this should be considered part of the Unicodestandard for Z-machine purposes.<P><BR><B>3.8.5.2</B><P> <B>***</B> The story file chooses its stock of extra characterswith a "Unicode translation table" as follows.  Under Versions1 to 4, the "default table" is always used (see below).In Version 5 or later, if Word 3 of the header extension table ispresent and non-zero then it is interpreted as the byte addressof the Unicode translation table.  If Word 3 is absent or zero,the default table is used.<P><BR><B>3.8.5.2.1</B><P> The table consists of one byte giving a number $N$,followed by $N$ two-byte words.<P><BR><B>3.8.5.2.2</B><P> This indicates that ZSCII characters 155 to $155+N-1$are defined for both input and output.  (It's possible for $N$ tobe zero, leaving the whole range 155 to 251 undefined.)<P><BR><B>3.8.5.2.3</B><P> The words in the table give Unicode character codesfor each of the ZSCII characters 155 to $155+N-1$ in turn.<P><BR><B>3.8.5.3</B><P> The default table is as shown in Table 1.<P><BR><B>3.8.5.4</B><P> The defined extra characters are entirely normalZSCII characters.  They can appear in a story file's alphabettable, in an array created by print stream 3 and so on.<P><BR><B>3.8.5.4.1</B><P> <B>***</B> The interpreter is required to be able to printrepresentations of every defined Unicode character under <B>$0100</B>(i.e. of every defined ISO 8859-1 Latin1 character).  If nosuitable letter forms are available, textual equivalents maybe used (such as "ss" in place of German sharp "s").<P><BR><B>3.8.5.4.2</B><P> Normally, and where sensibly possible, allpunctuation and letter characters in ISO 8859-1 Latin1should be readable from the interpreter's keyboard.  (However,some interpreters may want to provide alternative keyboardmappings, or to run in a different ISO 8859 set: Cyrillic,for example.)<P><BR><B>3.8.5.4.3</B><P> <B>***</B> An interpreter is not required to have suitableletter-forms for printing Unicode characters <B>$0100</B> to <B>$FFFF</B>.(It may, if it chooses, allow the user to configure certainfonts for certain Unicode ranges; but this is not required.)If a Unicode character must be printed which an interpreterhas no letter-form for, a question mark should be printedinstead.<P><BR><B>3.8.6</B><P> ZSCII codes 252 to 254 are defined for input only:<PRE>252: menu click   253: mouse double-click   254: mouse single-click</PRE>Menu clicks are available only in Version 6.  In Versions 5 and laterit is recommended that an interpreter should only send code 254,whether the mouse is clicked once or twice.<P><BR><B>3.8.7</B><P> ZSCII code 255 is undefined.  (This value is needed inthe "terminating characters table" as a wildcard, indicating"any Input-only character with code 128 or above."  However,it cannot itself be printed or read from the keyboard.)<HR><TABLE Border><CAPTION><B>Table 1: default Unicode translations (see S 3.8.5.3)</B><TR><TD>155<TD> 0e4  <TD>a-diaeresis   <TD><B>ae</B>        <TD>191<TD> 0e2  <TD>a-circumflex      <TD><B>a </B><TR><TD>156<TD> 0f6  <TD>o-diaeresis   <TD><B>oe</B>        <TD>192<TD> 0ea  <TD>e-circumflex      <TD><B>e </B><TR><TD>157<TD> 0fc  <TD>u-diaeresis   <TD><B>ue</B>        <TD>193<TD> 0ee  <TD>i-circumflex      <TD><B>i </B><TR><TD>158<TD> 0c4  <TD>A-diaeresis   <TD><B>Ae</B>        <TD>194<TD> 0f4  <TD>o-circumflex      <TD><B>o </B><TR><TD>159<TD> 0d6  <TD>O-diaeresis   <TD><B>Oe</B>        <TD>195<TD> 0fb  <TD>u-circumflex      <TD><B>u </B><TR><TD>160<TD> 0dc  <TD>U-diaeresis   <TD><B>Ue</B>        <TD>196<TD> 0c2  <TD>A-circumflex      <TD><B>A </B><TR><TD>161<TD> 0df  <TD>sz-ligature   <TD><B>ss</B>        <TD>197<TD> 0ca  <TD>E-circumflex      <TD><B>E </B><TR><TD>162<TD> 0bb  <TD>quotation     <TD><B>>></B> or <B>"</B>   <TD>198<TD> 0ce  <TD>I-circumflex      <TD><B>I </B><TR><TD>163<TD> 0ab  <TD>  marks       <TD><B><<</B> or <B>"</B>   <TD>199<TD> 0d4  <TD>O-circumflex      <TD><B>O </B><TR><TD>164<TD> 0eb  <TD>e-diaeresis   <TD><B>e </B>        <TD>200<TD> 0db  <TD>U-circumflex      <TD><B>U </B><TR><TD>165<TD> 0ef  <TD>i-diaeresis   <TD><B>i </B>        <TD>201<TD> 0e5  <TD>a-ring            <TD><B>a </B><TR><TD>166<TD> 0ff  <TD>y-diaeresis   <TD><B>y </B>        <TD>202<TD> 0c5  <TD>A-ring            <TD><B>A </B><TR><TD>167<TD> 0cb  <TD>E-diaeresis   <TD><B>E </B>        <TD>203<TD> 0f8  <TD>o-slash           <TD><B>o </B><TR><TD>168<TD> 0cf  <TD>I-diaeresis   <TD><B>I </B>        <TD>204<TD> 0d8  <TD>O-slash           <TD><B>O </B><TR><TD>169<TD> 0e1  <TD>a-acute       <TD><B>a </B>        <TD>205<TD> 0e3  <TD>a-tilde           <TD><B>a </B><TR><TD>170<TD> 0e9  <TD>e-acute       <TD><B>e </B>        <TD>206<TD> 0f1  <TD>n-tilde           <TD><B>n </B><TR><TD>171<TD> 0ed  <TD>i-acute       <TD><B>i </B>        <TD>207<TD> 0f5  <TD>o-tilde           <TD><B>o </B><TR><TD>172<TD> 0f3  <TD>o-acute       <TD><B>o </B>        <TD>208<TD> 0c3  <TD>A-tilde           <TD><B>A </B><TR><TD>173<TD> 0fa  <TD>u-acute       <TD><B>u </B>        <TD>209<TD> 0d1  <TD>N-tilde           <TD><B>N </B><TR><TD>174<TD> 0fd  <TD>y-acute       <TD><B>y </B>        <TD>210<TD> 0d5  <TD>O-tilde           <TD><B>O </B><TR><TD>175<TD> 0c1  <TD>A-acute       <TD><B>A </B>        <TD>211<TD> 0e6  <TD>ae-ligature       <TD><B>ae</B><TR><TD>176<TD> 0c9  <TD>E-acute       <TD><B>E </B>        <TD>212<TD> 0c6  <TD>AE-ligature       <TD><B>AE</B><TR><TD>177<TD> 0cd  <TD>I-acute       <TD><B>I </B>        <TD>213<TD> 0e7  <TD>c-cedilla         <TD><B>c </B><TR><TD>178<TD> 0d3  <TD>O-acute       <TD><B>O </B>        <TD>214<TD> 0c7  <TD>C-cedilla         <TD><B>C </B><TR><TD>179<TD> 0da  <TD>U-acute       <TD><B>U </B>        <TD>215<TD> 0fe  <TD>Icelandic thorn   <TD><B>th</B><TR><TD>180<TD> 0dd  <TD>Y-acute       <TD><B>Y </B>        <TD>216<TD> 0f0  <TD>Icelandic eth     <TD><B>th</B><TR><TD>181<TD> 0e0  <TD>a-grave       <TD><B>a </B>        <TD>217<TD> 0de  <TD>Icelandic Thorn   <TD><B>Th</B><TR><TD>182<TD> 0e8  <TD>e-grave       <TD><B>e </B>        <TD>218<TD> 0d0  <TD>Icelandic Eth     <TD><B>Th</B><TR><TD>183<TD> 0ec  <TD>i-grave       <TD><B>i </B>        <TD>219<TD> 0a3  <TD>pound symbol      <TD><B>L </B><TR><TD>184<TD> 0f2  <TD>o-grave       <TD><B>o </B>        <TD>220<TD> 153  <TD>oe-ligature       <TD><B>oe</B><TR><TD>185<TD> 0f9  <TD>u-grave       <TD><B>u </B>        <TD>221<TD> 152  <TD>OE-ligature       <TD><B>OE</B><TR><TD>186<TD> 0c0  <TD>A-grave       <TD><B>A </B>        <TD>222<TD> 0a1  <TD>inverted !        <TD><B>! </B><TR><TD>187<TD> 0c8  <TD>E-grave       <TD><B>E </B>        <TD>223<TD> 0bf  <TD>inverted ?        <TD><B>? </B><TR><TD>188<TD> 0cc  <TD>I-grave       <TD><B>I </B>        <TD><TD>      <TD>                  <TD><B>  </B><TR><TD>189<TD> 0d2  <TD>O-grave       <TD><B>O </B>        <TD><TD>      <TD>                  <TD><B>  </B><TR><TD>190<TD> 0d9  <TD>U-grave       <TD><B>U </B>        <TD><TD>      <TD>N = 69               <TD><B>  </B></TABLE><HR><H4><I>Remarks</I></H4><BR> In practice the text compression factor is not really very good: forinstance, 155000 characters of text squashes into 99000 bytes.  (Textusually accounts for about 75\% of a story file.)  Encoding doesat least encrypt the text so that casual browsers can't read it.Well-chosen abbreviations will reduce total story file size by 10\% or so.<P>The German translation of 'Zork I' uses an alphabet table to makeaccented letters (from the standard extra characters set) efficientin dictionary words.  In Version 6, 'Shogun' also uses an alphabettable.<P>Unicode translation tables are new in Standard 1.0: in Standard0.2, the extra characters were always mapped using the defaultUnicode translation table.<P>Note that if a random stretch of memory is accidentally printed asa string (due to an error in the story file), illegal ZSCII codesmay well be printed using the 4-Z-character escape sequence.  It'shelpful for interpreters to filter out any such illegal codesso that the resulting on-screen mess will not cause trouble for theterminal (e.g. by causing the interpreter to print ASCII 12,clear screen, or 7, bell sound).<P>The continental European quotation marks <B><<</B> and <B>>></B> should havespacing which looks sensible either in French style <B><<</B>Merci!<B>>></B>or in German style <B>>></B>Danke!<B><<</B>.<P>Ideally, an interpreter should be able to read time delays (for timed input)from stream 1 (i.e., from a script file).  See the remarks in <B>S</B> 7.<P>The 'Beyond Zork' story file is capable of receiving both mouse-clickcodes (253 and 254), listing both in its terminating characters tableand treating them equally.<P>The extant Infocom games in Versions 4 and 5 use the control characters1 to 31 only as follows: they all accept 10 or 13 as equivalent, exceptthat 'Bureaucracy' will only accept 13.  'Bureaucracy' needs either 127or 8 to be a delete code.  No other codes are used.<P>Curiously, 'Nord 'n' Bert Couldn't Make Head Nor Tail Of It' and'A Mind Forever Voyaging' allow some letter characters to be typedin with the top bit set.  That is, if reading an A, they would recognise65 or 91 (upper or lower case) and also 193 or 219.  Matthew Russottosuggests this was an accommodation for the Apple II, whose keyboardprimitives returned the last key pressed in the bottom 7 bits of abyte, plus a top bit flag indicating whether or not the keyboard hadbeen hit since last time.<P><HR><P><A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /<A HREF="overview.html">Overview</A><P>Section<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A><P>Appendix<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A></P><HR></BODY></HTML>
+<HTML>
+<HEAD><TITLE>The Z-Machine Standards Document</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#EEEEEE"><H1 align=center><IMG height=86 width=82
+SRC="icon03.gif" ALT="Z"></H1>
+<BR><H3 align=center><I>3. How text and characters are encoded</I></H3>
+<P>
+<BLOCKQUOTE>
+    This technique is similar to the five-bit Baudot code, which
+    was used by early Teletypes before ASCII was invented.
+<P>
+Marc S. Blank and S. W. Galley, <B>How to Fit a Large Program Into
+a Small Machine</B>
+</BLOCKQUOTE>
+<HR>
+3.1 <A HREF="#one">Text</A> / 
+3.2 <A HREF="#two">Alphabets</A> / 
+3.3 <A HREF="#three">Abbreviations</A> /
+3.4 <A HREF="#four">ZSCII escape</A> / 
+3.5 <A HREF="#five">Alphabet table</A> / 
+3.6 <A HREF="#six">Padding and incompleteness</A> / 
+3.7 <A HREF="#seven">Dictionary truncation</A> / 
+3.8 <A HREF="#eight">Definition of ZSCII and Unicode</A>
+<HR>
+<P><A NAME="one">
+<BR><B>3.1</B><P>  Z-machine text is a sequence of ZSCII character codes (ZSCII is
+a system similar to ASCII: see <B>S</B> 3.8 below).  These ZSCII values are
+encoded into memory using a string of Z-characters.  The process of
+converting between Z-characters and ZSCII values is given in <B>S</B><B>S</B> 3.2 to
+3.7 below.
+<P><A NAME="two">
+<BR><B>3.2</B><P> Text in memory consists of a sequence of 2-byte words.  Each word
+is divided into three 5-bit 'Z-characters', plus 1 bit left over, arranged
+as
+<PRE>
+   --first byte-------   --second byte---
+   7    6 5 4 3 2  1 0   7 6 5  4 3 2 1 0
+   bit  --first--  --second---  --third--
+</PRE>
+The bit is set only on the last 2-byte word of the text, and so marks the
+end.
+<P>
+<BR><B>3.2.1</B><P> There are three 'alphabets', A0 (lower case), A1 (upper case) and
+A2 (punctuation) and during printing one of these is current at any given
+time.  Initially A0 is current.  The meaning of a Z-character may depend on
+which alphabet is current.
+<P>
+<BR><B>3.2.2</B><P> In Versions 1 and 2, the current alphabet can be any of the
+three.  The Z-characters 2 and 3 are called 'shift' characters and change
+the alphabet for the next character only.  The new alphabet depends on
+what the current one is:
+<PRE>
+             from A0  from A1  from A2
+  Z-char 2      A1       A2       A0
+  Z-char 3      A2       A0       A1
+</PRE>
+Z-characters 4 and 5 permanently change alphabet, according to the
+same table, and are called 'shift lock' characters.
+<P>
+<BR><B>3.2.3</B><P> In Versions 3 and later, the current alphabet is always A0
+unless changed for 1 character only: Z-characters 4 and 5 are shift
+characters.  Thus 4 means "the next character is in A1" and 5 means
+"the next is in A2".  There are no shift lock characters.
+<P>
+<BR><B>3.2.4</B><P> An indefinite sequence of shift or shift lock characters is
+legal (but prints nothing).
+<P><A NAME="three">
+<BR><B>3.3</B><P> In Versions 3 and later, Z-characters 1, 2 and 3 represent
+abbreviations, sometimes also called 'synonyms' (for traditional reasons):
+the next Z-character indicates which abbreviation string to print.  If z
+is the first Z-character (1, 2 or 3) and x the subsequent one, then the
+interpreter must look up entry 32(z-1)+x in the abbreviations table and
+print the string at that word address.  In Version 2, Z-character 1 has this
+effect (but 2 and 3 do not, so there are only 32 abbreviations).
+<P>
+<BR><B>3.3.1</B><P> Abbreviation string-printing follows all the rules of this section
+except that an abbreviation string must not itself use abbreviations and
+must not end with an incomplete multi-Z-character construction (see <B>S</B> 3.6.1
+below).
+<P><A NAME="four">
+<BR><B>3.4</B><P> Z-character 6 from A2 means that the two subsequent Z-characters
+specify a ten-bit ZSCII character code: the next Z-character gives the
+top 5 bits and the one after the bottom 5.
+<P><A NAME="five">
+<BR><B>3.5</B><P> The remaining Z-characters are translated into ZSCII character
+codes using the "alphabet table".
+<P>
+<BR><B>3.5.1</B><P> The Z-character 0 is printed as a space (ZSCII 32).
+<P>
+<BR><B>3.5.2</B><P> In Version 1, Z-character 1 is printed as a new-line
+(ZSCII 13).
+<P>
+<BR><B>3.5.3</B><P> In Versions 2 to 4, the alphabet table for converting
+Z-characters into ZSCII character codes is as follows:
+<PRE>
+   Z-char 6789abcdef0123456789abcdef
+current   --------------------------
+  A0      abcdefghijklmnopqrstuvwxyz
+  A1      ABCDEFGHIJKLMNOPQRSTUVWXYZ
+  A2       ^0123456789.,!?_#'"/\-:()
+          --------------------------
+</PRE>
+(Character 6 in A2 is printed as a space here, but is not translated
+using the alphabet table: see <B>S</B> 3.4 above.  Character 7 in A2,
+written here as a circumflex <B>^</B>, is a new-line.)  For example,
+in alphabet A1 the Z-character 12 is translated as a capital G
+(ZSCII character code 71).
+<P>
+<BR><B>3.5.4</B><P> Version 1 has a slightly different A2 row in its alphabet
+table (new-line is not needed, making room for the <B> < </B> character):
+<PRE>
+          6789abcdef0123456789abcdef
+          --------------------------
+  A2       0123456789.,!?_#'"/\<-:()
+          --------------------------
+</PRE>
+<P>
+<BR><B>3.5.5</B><P> In Versions 5 and later, the interpreter should look at
+the word at <B>$34</B> in the header.  If this is zero, then the
+alphabet table drawn out in <B>S</B> 3.5.3 continues in use.  Otherwise
+it is interpreted as the byte address of an alphabet table
+specific to this story file.
+<P>
+<BR><B>3.5.5.1</B><P> Such an alphabet table consists of 78 bytes arranged
+as 3 blocks of 26 ZSCII values, translating Z-characters 6 to 31
+for alphabets A0, A1 and A2.  Z-characters 6 and 7 of A2, however,
+are still translated as escape and newline codes (as above).
+<P><A NAME="six">
+<BR><B>3.6</B><P> Since the end-bit only comes up once every three Z-characters,
+a string may have to be 'padded out' with null values.  This is
+conventionally achieved with a sequence of 5's, though a sequence of
+(for example) 4's would work equally well.
+<P>
+<BR><B>3.6.1</B><P> It is legal for the string to end while a multi-Z-character
+construction is incomplete: for instance, after only the top half of
+an ASCII value has been given.  The partial construction is simply
+ignored.  (This can happen in printing dictionary words which have
+been guillotined to the dictionary resolution of 6 or 9 Z-characters.)
+<P><A NAME="seven">
+<BR><B>3.7</B><P> When an interpreter is encrypting typed-in text to match against
+dictionary words, the following restrictions apply.  Text should be
+converted to lower case (as a result A1 will not be needed unless the
+game provides its own alphabet table).  Abbreviations may not be used.
+The pad character, if needed, must be 5.  The total string length must
+be 6 Z-characters (in Versions 1 to 3) or 9 (Versions 4 and later): any
+multi-Z-character constructions should be left incomplete (rather than
+omitted) if there's no room to finish them.  For example, "i" is
+encrypted as:
+<P><B>14, 5, 5, 5, 5, 5, 5, 5, 5</B>
+<P><B>$48a5</B> <B>$14a5</B> <B>$94a5</B>
+<P>
+
+<P><A NAME="eight">
+<BR><B>3.8</B><P> The character set of the Z-machine is called ZSCII (Zork
+Standard Code for Information Interchange; pronounced to rhyme with
+"xyzzy").  ZSCII codes are 10-bit unsigned values between 0 and
+1023.  Story files may only legally use the values which are defined
+below.  Note that some values are defined only for input and some
+only for output.
+<P>
+<TABLE Border>
+<CAPTION><B>Table 2: summary of the ZSCII rules</B></CAPTION>
+<TR><TD> 0           <TD>null                       <TD>Output
+<TR><TD> 1-7         <TD>----                       <TD>
+<TR><TD> 8           <TD>delete                     <TD>Input
+<TR><TD> 9           <TD>tab (V6)                   <TD>Output
+<TR><TD> 10          <TD>----                       <TD>
+<TR><TD> 11          <TD>sentence space (V6)        <TD>Output
+<TR><TD> 12          <TD>----                       <TD>
+<TR><TD> 13          <TD>newline                    <TD>Input/Output
+<TR><TD> 14-26       <TD>----                       <TD>
+<TR><TD> 27          <TD>escape                     <TD>Input
+<TR><TD> 28-31       <TD>----                       <TD>
+<TR><TD> 32-126      <TD>standard ASCII             <TD>Input/Output
+<TR><TD> 127-128     <TD>----                       <TD>
+<TR><TD> 129-132     <TD>cursor u/d/l/r             <TD>Input
+<TR><TD> 133-144     <TD>function keys f1 to f12    <TD>Input
+<TR><TD> 145-154     <TD>keypad 0 to 9              <TD>Input
+<TR><TD> 155-251     <TD>extra characters           <TD>Input/Output
+<TR><TD> 252         <TD>menu click (V6)            <TD>Input
+<TR><TD> 253         <TD>double-click (V6)          <TD>Input
+<TR><TD> 254         <TD>single-click               <TD>Input
+<TR><TD> 255-1023    <TD>----                       <TD>
+</TABLE>
+<P>
+<BR><B>3.8.1</B><P> The codes 256 to 1023 are undefined, so that for all
+practical purposes ZSCII is an 8-bit unsigned code.
+<P>
+<BR><B>3.8.2</B><P> The codes 0 to 31 are undefined except as follows:
+<P>
+<BR><B>3.8.2.1</B><P> ZSCII code 0 ("null") is defined for output
+but has no effect in any output stream.  (It is also used as
+a value meaning "no character" when reporting terminating
+character codes, but is not formally defined for input.)
+<P>
+<BR><B>3.8.2.2</B><P> ZSCII code 8 ("delete") is defined for input only.
+<P>
+<BR><B>3.8.2.3</B><P> ZSCII code 9 ("tab") is defined for output in Version 6 only.
+At the start of a screen line this should print a paragraph indentation
+suitable for the font being used: if it is printed in the middle of a
+screen line, it should be converted to a space (Infocom's own
+interpreters do not do this, however).
+<P>
+<BR><B>3.8.2.4</B><P> ZSCII code 11 ("sentence space") is defined for output in
+Version 6 only.  This should be printed as a suitable gap between two
+sentences (in the same way that typographers normally place larger spaces
+after the full stops ending sentences than after words or commas).
+<P>
+<BR><B>3.8.2.5</B><P> ZSCII code 13 ("carriage return") is defined for input and
+output.
+<P>
+<BR><B>3.8.2.6</B><P> ZSCII code 27 ("escape" or "break") is defined for input
+only.
+<P>
+<BR><B>3.8.3</B><P> ZSCII codes between 32 ("space") and 126 ("tilde") are
+defined for input and output, and agree with standard ASCII (as well as
+all of the ISO 8859 character sets and Unicode).  Specifically:
+<PRE>
+      0123456789abcdef0123456789abcdef
+      --------------------------------
+ $20   !"#$%&'()*+,-./0123456789:;<=>?
+ $40  @ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_
+ $60  'abcdefghijklmnopqrstuvwxyz{!}~ 
+      --------------------------------
+</PRE>
+Note that code <B>$23</B> (35 decimal) is a hash mark, not a pound sign.
+(Code <B>$7c</B> (124 decimal) is a vertical stroke which is shown as <B>!</B>
+here for typesetting reasons.)
+<P>
+<BR><B>3.8.3.1</B><P> ZSCII codes 127 ("delete" in some forms of ASCII)
+and 128 are undefined.
+<P>
+<BR><B>3.8.4</B><P> ZSCII codes 129 to 154 are defined for input only:
+<PRE>
+129: cursor up  130: cursor down  131: cursor left  132: cursor right
+133: f1         134: f2           ....              144: f12
+145: keypad 0   146: keypad 1     ....              154: keypad 9
+</PRE>
+<P>
+<BR><B>3.8.5</B><P> The block of codes between 155 and 251 are the "extra
+characters" and are used differently by different story files.
+Some will need accented Latin characters (such as French E-acute),
+others unusual punctuation (Spanish question mark), others new
+alphabets (Cyrillic or Hebrew); still others may want dingbat
+characters, mathematical or musical symbols, and so on.
+<P>
+<BR><B>3.8.5.1</B><P> <B>***</B> To define which characters are required, the Unicode
+(or ISO 10646-1) character set is used: characters are specified
+by unsigned 16-bit codes.  These values agree with ISO 8859 Latin-1
+in the range 0 to 255, and with ASCII and ZSCII in the range
+32 to 126.  The Unicode standard leaves a range of values, the
+Private Use Area, free: however, an Internet group called the
+ConScript Unicode Registry is organising a standard mapping of
+invented scripts (such as Klingon, or Tolkien's Elvish) into the
+Private Use Area, and this should be considered part of the Unicode
+standard for Z-machine purposes.
+<P>
+<BR><B>3.8.5.2</B><P> <B>***</B> The story file chooses its stock of extra characters
+with a "Unicode translation table" as follows.  Under Versions
+1 to 4, the "default table" is always used (see below).
+In Version 5 or later, if Word 3 of the header extension table is
+present and non-zero then it is interpreted as the byte address
+of the Unicode translation table.  If Word 3 is absent or zero,
+the default table is used.
+<P>
+<BR><B>3.8.5.2.1</B><P> The table consists of one byte giving a number $N$,
+followed by $N$ two-byte words.
+<P>
+<BR><B>3.8.5.2.2</B><P> This indicates that ZSCII characters 155 to $155+N-1$
+are defined for both input and output.  (It's possible for $N$ to
+be zero, leaving the whole range 155 to 251 undefined.)
+<P>
+<BR><B>3.8.5.2.3</B><P> The words in the table give Unicode character codes
+for each of the ZSCII characters 155 to $155+N-1$ in turn.
+<P>
+<BR><B>3.8.5.3</B><P> The default table is as shown in Table 1.
+<P>
+<BR><B>3.8.5.4</B><P> The defined extra characters are entirely normal
+ZSCII characters.  They can appear in a story file's alphabet
+table, in an array created by print stream 3 and so on.
+<P>
+<BR><B>3.8.5.4.1</B><P> <B>***</B> The interpreter is required to be able to print
+representations of every defined Unicode character under <B>$0100</B>
+(i.e. of every defined ISO 8859-1 Latin1 character).  If no
+suitable letter forms are available, textual equivalents may
+be used (such as "ss" in place of German sharp "s").
+<P>
+<BR><B>3.8.5.4.2</B><P> Normally, and where sensibly possible, all
+punctuation and letter characters in ISO 8859-1 Latin1
+should be readable from the interpreter's keyboard.  (However,
+some interpreters may want to provide alternative keyboard
+mappings, or to run in a different ISO 8859 set: Cyrillic,
+for example.)
+<P>
+<BR><B>3.8.5.4.3</B><P> <B>***</B> An interpreter is not required to have suitable
+letter-forms for printing Unicode characters <B>$0100</B> to <B>$FFFF</B>.
+(It may, if it chooses, allow the user to configure certain
+fonts for certain Unicode ranges; but this is not required.)
+If a Unicode character must be printed which an interpreter
+has no letter-form for, a question mark should be printed
+instead.
+<P>
+<BR><B>3.8.6</B><P> ZSCII codes 252 to 254 are defined for input only:
+<PRE>
+252: menu click   253: mouse double-click   254: mouse single-click
+</PRE>
+Menu clicks are available only in Version 6.  In Versions 5 and later
+it is recommended that an interpreter should only send code 254,
+whether the mouse is clicked once or twice.
+<P>
+<BR><B>3.8.7</B><P> ZSCII code 255 is undefined.  (This value is needed in
+the "terminating characters table" as a wildcard, indicating
+"any Input-only character with code 128 or above."  However,
+it cannot itself be printed or read from the keyboard.)
+<HR>
+<TABLE Border>
+<CAPTION><B>Table 1: default Unicode translations (see S 3.8.5.3)</B>
+<TR><TD>155<TD> 0e4  <TD>a-diaeresis   <TD><B>ae</B>        <TD>191<TD> 0e2  <TD>a-circumflex      <TD><B>a </B>
+<TR><TD>156<TD> 0f6  <TD>o-diaeresis   <TD><B>oe</B>        <TD>192<TD> 0ea  <TD>e-circumflex      <TD><B>e </B>
+<TR><TD>157<TD> 0fc  <TD>u-diaeresis   <TD><B>ue</B>        <TD>193<TD> 0ee  <TD>i-circumflex      <TD><B>i </B>
+<TR><TD>158<TD> 0c4  <TD>A-diaeresis   <TD><B>Ae</B>        <TD>194<TD> 0f4  <TD>o-circumflex      <TD><B>o </B>
+<TR><TD>159<TD> 0d6  <TD>O-diaeresis   <TD><B>Oe</B>        <TD>195<TD> 0fb  <TD>u-circumflex      <TD><B>u </B>
+<TR><TD>160<TD> 0dc  <TD>U-diaeresis   <TD><B>Ue</B>        <TD>196<TD> 0c2  <TD>A-circumflex      <TD><B>A </B>
+<TR><TD>161<TD> 0df  <TD>sz-ligature   <TD><B>ss</B>        <TD>197<TD> 0ca  <TD>E-circumflex      <TD><B>E </B>
+<TR><TD>162<TD> 0bb  <TD>quotation     <TD><B>>></B> or <B>"</B>   <TD>198<TD> 0ce  <TD>I-circumflex      <TD><B>I </B>
+<TR><TD>163<TD> 0ab  <TD>  marks       <TD><B><<</B> or <B>"</B>   <TD>199<TD> 0d4  <TD>O-circumflex      <TD><B>O </B>
+<TR><TD>164<TD> 0eb  <TD>e-diaeresis   <TD><B>e </B>        <TD>200<TD> 0db  <TD>U-circumflex      <TD><B>U </B>
+<TR><TD>165<TD> 0ef  <TD>i-diaeresis   <TD><B>i </B>        <TD>201<TD> 0e5  <TD>a-ring            <TD><B>a </B>
+<TR><TD>166<TD> 0ff  <TD>y-diaeresis   <TD><B>y </B>        <TD>202<TD> 0c5  <TD>A-ring            <TD><B>A </B>
+<TR><TD>167<TD> 0cb  <TD>E-diaeresis   <TD><B>E </B>        <TD>203<TD> 0f8  <TD>o-slash           <TD><B>o </B>
+<TR><TD>168<TD> 0cf  <TD>I-diaeresis   <TD><B>I </B>        <TD>204<TD> 0d8  <TD>O-slash           <TD><B>O </B>
+<TR><TD>169<TD> 0e1  <TD>a-acute       <TD><B>a </B>        <TD>205<TD> 0e3  <TD>a-tilde           <TD><B>a </B>
+<TR><TD>170<TD> 0e9  <TD>e-acute       <TD><B>e </B>        <TD>206<TD> 0f1  <TD>n-tilde           <TD><B>n </B>
+<TR><TD>171<TD> 0ed  <TD>i-acute       <TD><B>i </B>        <TD>207<TD> 0f5  <TD>o-tilde           <TD><B>o </B>
+<TR><TD>172<TD> 0f3  <TD>o-acute       <TD><B>o </B>        <TD>208<TD> 0c3  <TD>A-tilde           <TD><B>A </B>
+<TR><TD>173<TD> 0fa  <TD>u-acute       <TD><B>u </B>        <TD>209<TD> 0d1  <TD>N-tilde           <TD><B>N </B>
+<TR><TD>174<TD> 0fd  <TD>y-acute       <TD><B>y </B>        <TD>210<TD> 0d5  <TD>O-tilde           <TD><B>O </B>
+<TR><TD>175<TD> 0c1  <TD>A-acute       <TD><B>A </B>        <TD>211<TD> 0e6  <TD>ae-ligature       <TD><B>ae</B>
+<TR><TD>176<TD> 0c9  <TD>E-acute       <TD><B>E </B>        <TD>212<TD> 0c6  <TD>AE-ligature       <TD><B>AE</B>
+<TR><TD>177<TD> 0cd  <TD>I-acute       <TD><B>I </B>        <TD>213<TD> 0e7  <TD>c-cedilla         <TD><B>c </B>
+<TR><TD>178<TD> 0d3  <TD>O-acute       <TD><B>O </B>        <TD>214<TD> 0c7  <TD>C-cedilla         <TD><B>C </B>
+<TR><TD>179<TD> 0da  <TD>U-acute       <TD><B>U </B>        <TD>215<TD> 0fe  <TD>Icelandic thorn   <TD><B>th</B>
+<TR><TD>180<TD> 0dd  <TD>Y-acute       <TD><B>Y </B>        <TD>216<TD> 0f0  <TD>Icelandic eth     <TD><B>th</B>
+<TR><TD>181<TD> 0e0  <TD>a-grave       <TD><B>a </B>        <TD>217<TD> 0de  <TD>Icelandic Thorn   <TD><B>Th</B>
+<TR><TD>182<TD> 0e8  <TD>e-grave       <TD><B>e </B>        <TD>218<TD> 0d0  <TD>Icelandic Eth     <TD><B>Th</B>
+<TR><TD>183<TD> 0ec  <TD>i-grave       <TD><B>i </B>        <TD>219<TD> 0a3  <TD>pound symbol      <TD><B>L </B>
+<TR><TD>184<TD> 0f2  <TD>o-grave       <TD><B>o </B>        <TD>220<TD> 153  <TD>oe-ligature       <TD><B>oe</B>
+<TR><TD>185<TD> 0f9  <TD>u-grave       <TD><B>u </B>        <TD>221<TD> 152  <TD>OE-ligature       <TD><B>OE</B>
+<TR><TD>186<TD> 0c0  <TD>A-grave       <TD><B>A </B>        <TD>222<TD> 0a1  <TD>inverted !        <TD><B>! </B>
+<TR><TD>187<TD> 0c8  <TD>E-grave       <TD><B>E </B>        <TD>223<TD> 0bf  <TD>inverted ?        <TD><B>? </B>
+<TR><TD>188<TD> 0cc  <TD>I-grave       <TD><B>I </B>        <TD><TD>      <TD>                  <TD><B>  </B>
+<TR><TD>189<TD> 0d2  <TD>O-grave       <TD><B>O </B>        <TD><TD>      <TD>                  <TD><B>  </B>
+<TR><TD>190<TD> 0d9  <TD>U-grave       <TD><B>U </B>        <TD><TD>      <TD>N = 69               <TD><B>  </B>
+</TABLE>
+
+<HR><H4><I>Remarks</I></H4><BR> 
+In practice the text compression factor is not really very good: for
+instance, 155000 characters of text squashes into 99000 bytes.  (Text
+usually accounts for about 75\% of a story file.)  Encoding does
+at least encrypt the text so that casual browsers can't read it.
+Well-chosen abbreviations will reduce total story file size by 10\% or so.
+<P>
+The German translation of 'Zork I' uses an alphabet table to make
+accented letters (from the standard extra characters set) efficient
+in dictionary words.  In Version 6, 'Shogun' also uses an alphabet
+table.
+<P>
+Unicode translation tables are new in Standard 1.0: in Standard
+0.2, the extra characters were always mapped using the default
+Unicode translation table.
+<P>
+Note that if a random stretch of memory is accidentally printed as
+a string (due to an error in the story file), illegal ZSCII codes
+may well be printed using the 4-Z-character escape sequence.  It's
+helpful for interpreters to filter out any such illegal codes
+so that the resulting on-screen mess will not cause trouble for the
+terminal (e.g. by causing the interpreter to print ASCII 12,
+clear screen, or 7, bell sound).
+<P>
+The continental European quotation marks <B><<</B> and <B>>></B> should have
+spacing which looks sensible either in French style <B><<</B>Merci!<B>>></B>
+or in German style <B>>></B>Danke!<B><<</B>.
+<P>
+Ideally, an interpreter should be able to read time delays (for timed input)
+from stream 1 (i.e., from a script file).  See the remarks in <B>S</B> 7.
+<P>
+The 'Beyond Zork' story file is capable of receiving both mouse-click
+codes (253 and 254), listing both in its terminating characters table
+and treating them equally.
+<P>
+The extant Infocom games in Versions 4 and 5 use the control characters
+1 to 31 only as follows: they all accept 10 or 13 as equivalent, except
+that 'Bureaucracy' will only accept 13.  'Bureaucracy' needs either 127
+or 8 to be a delete code.  No other codes are used.
+<P>
+Curiously, 'Nord 'n' Bert Couldn't Make Head Nor Tail Of It' and
+'A Mind Forever Voyaging' allow some letter characters to be typed
+in with the top bit set.  That is, if reading an A, they would recognise
+65 or 91 (upper or lower case) and also 193 or 219.  Matthew Russotto
+suggests this was an accommodation for the Apple II, whose keyboard
+primitives returned the last key pressed in the bottom 7 bits of a
+byte, plus a top bit flag indicating whether or not the keyboard had
+been hit since last time.
+<P>
+<HR>
+<P>
+<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
+<A HREF="overview.html">Overview</A>
+<P>Section
+<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
+<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
+<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
+<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
+<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
+<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
+<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
+<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
+<P>Appendix
+<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
+<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
+<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
+</P>
+<HR>
+
+</BODY></HTML>

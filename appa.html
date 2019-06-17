@@ -1,1 +1,70 @@
-<HTML><HEAD><TITLE>The Z-Machine Standards Document</TITLE></HEAD><BODY BGCOLOR="#DDDDDD"><H1 align=center><IMG height=86 width=82SRC="iconaa.gif" ALT="Z"></H1><BR><H3 align=center><I>Appendix A. Error messages and debugging</I></H3><P>Older interpreters, such as <B>ITF</B>, are extremely curt when an error conditionis reached (for example, an illegal opcode).  It was assumed thatInfocom's shipped story files were bug-free, which is mostly true,so that errors could only arise through a bug elsewhere in theinterpreter.<P>In debugging Inform games, though, many error conditions can arise and it isextremely helpful to report these as fully as possible.  These include:<P><B>1.</B> An illegal opcode being hit;<P><B>2.</B> A call to what can't be a routine (because the initial byte is notbetween 0 and 15);<P><B>3.</B> A jump or call to an address beyond the size of the story file;<P><B>4.</B> An attempt to <B>print_obj</B>, or otherwise access, an objectwhich doesn't exist, such as object number 0.<P><B>5.</B> An attempt to write to, or get the property length of, anonexistent property.<P><B>6.</B> An attempt to access an attribute outside the range 0 to 31or 0 to 47 (depending on Version).  (But note that Infocom's 'Sherlock'contains a bug causing it to try setting or clearing attribute number48.)<P><B>7.</B> Division by zero. The player sometimes then has the annoying task of working outwhere the error took place in source code.  Providing a stack back-tracewould be a help.<P>As mentioned in <B>S</B> 3, it's helpful to screen out any illegal ZSCIIcharacters between 0 and 31 which are accidentally printed: crashescan be very mysterious when they cause interpreters to send controlcodes to the terminal.<P>In addition, an interpreter might provide options for keeping track ofmaximum stack usage and the typical number of opcodes executed betweeneach read from the keyboard.  (But watching these is a time-wastingactivity, so they should be options.)<P>Finally, infinite loops fairly often happen, as in any programminglanguage.  On a system without pre-emptive multi-tasking, this may lockup the whole machine, as the usual way that porters implement multi-taskingis to return control to the host operating system only when the keyboardis read.  This can be avoided by providing a point in the code whichcould return control to the OS from time to time (say, every 2000instructions).<HR><P><A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /<A HREF="overview.html">Overview</A><P>Section<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A><P>Appendix<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A></P><HR></BODY></HTML>
+<HTML>
+<HEAD><TITLE>The Z-Machine Standards Document</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#DDDDDD"><H1 align=center><IMG height=86 width=82
+SRC="iconaa.gif" ALT="Z"></H1>
+<BR><H3 align=center><I>Appendix A. Error messages and debugging</I></H3>
+<P>
+Older interpreters, such as <B>ITF</B>, are extremely curt when an error condition
+is reached (for example, an illegal opcode).  It was assumed that
+Infocom's shipped story files were bug-free, which is mostly true,
+so that errors could only arise through a bug elsewhere in the
+interpreter.
+<P>
+In debugging Inform games, though, many error conditions can arise and it is
+extremely helpful to report these as fully as possible.  These include:
+<P><B>1.</B> An illegal opcode being hit;
+<P><B>2.</B> A call to what can't be a routine (because the initial byte is not
+between 0 and 15);
+<P><B>3.</B> A jump or call to an address beyond the size of the story file;
+<P><B>4.</B> An attempt to <B>print_obj</B>, or otherwise access, an object
+which doesn't exist, such as object number 0.
+<P><B>5.</B> An attempt to write to, or get the property length of, a
+nonexistent property.
+<P><B>6.</B> An attempt to access an attribute outside the range 0 to 31
+or 0 to 47 (depending on Version).  (But note that Infocom's 'Sherlock'
+contains a bug causing it to try setting or clearing attribute number
+48.)
+<P><B>7.</B> Division by zero.
+ The player sometimes then has the annoying task of working out
+where the error took place in source code.  Providing a stack back-trace
+would be a help.
+<P>
+As mentioned in <B>S</B> 3, it's helpful to screen out any illegal ZSCII
+characters between 0 and 31 which are accidentally printed: crashes
+can be very mysterious when they cause interpreters to send control
+codes to the terminal.
+<P>
+In addition, an interpreter might provide options for keeping track of
+maximum stack usage and the typical number of opcodes executed between
+each read from the keyboard.  (But watching these is a time-wasting
+activity, so they should be options.)
+<P>
+Finally, infinite loops fairly often happen, as in any programming
+language.  On a system without pre-emptive multi-tasking, this may lock
+up the whole machine, as the usual way that porters implement multi-tasking
+is to return control to the host operating system only when the keyboard
+is read.  This can be avoided by providing a point in the code which
+could return control to the OS from time to time (say, every 2000
+instructions).
+<HR>
+<P>
+<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
+<A HREF="overview.html">Overview</A>
+<P>Section
+<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
+<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
+<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
+<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
+<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
+<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
+<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
+<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
+<P>Appendix
+<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
+<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
+<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
+</P>
+<HR>
+</BODY></HTML>

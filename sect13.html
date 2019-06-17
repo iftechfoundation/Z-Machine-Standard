@@ -1,1 +1,119 @@
-<HTML><HEAD><TITLE>The Z-Machine Standards Document</TITLE></HEAD><BODY BGCOLOR="#EEEEEE"><H1 align=center><IMG height=86 width=82SRC="icon13.gif" ALT="Z"></H1><BR><H3 align=center><I>13. The dictionary and lexical analysis</I></H3><HR>13.1 <A HREF="#one">Storage</A> / 13.2 <A HREF="#two">Header</A> / 13.3 <A HREF="#three">Entries (V1 to V3)</A> /13.4 <A HREF="#four">Entries (later versions)</A> / 13.5 <A HREF="#five">Ordering</A> / 13.6 <A HREF="#six">Lexical analysis</A><HR><A NAME="one"><BR><B>1</B><P> The dictionary table is held in static memory and its byteaddress is stored in the word at <B>$08</B> in the header.<P><A NAME="two"><BR><B>2</B><P> The table begins with a short header:<PRE>  n     list of keyboard input codes   entry-length  number-of-entries byte  ------n bytes-----------------      byte         2-byte word</PRE>The keyboard input codes are "word-separators": typically (and underInform mandatorily) these are the ZSCII codes for full stop, comma anddouble-quote.  Note that a space character (32) should never be aword-separator.  The "entry length" is the length of each word'sentry in the dictionary table.  (It must be at least 4 in Versions1 to 3, and at least 6 in later Versions.)<P><BR><B>2.1</B><P> Note that the word-separators table can only contain codeswhich are defined in ZSCII for both input and output.<P><A NAME="three"><BR><B>3</B><P> In Versions 1 to 3, each word has an entry in the form<PRE>   encoded text of word        bytes of data  ------- 4 bytes ------   (entry length-4) bytes</PRE>The interpreter ignores the bytes of data (presumably the game's parser willuse them).  The encoded text contains 6 Z-characters (it is always paddedout with Z-character 5's to make up 4 bytes: see <B>S</B> 3).The text may include spaces or other word-separators(though, if so, the interpreter will never match any text to thedictionary word in question: surprisingly, this can be useful and isa trick used in the Inform library).<P><A NAME="four"><BR><B>4</B><P> In Versions 4 and later, the encoded text has 6 bytes andalways contains 9 Z-characters.<P><A NAME="five"><BR><B>5</B><P> The word entries follow immediately after the dictionary headerand must be given in numerical order of the encoded text (when the encodedtext is regarded as a 32 or 48-bit binary number with most-significantbyte first).  It must not contain two entries with the same encoded text.<P><A NAME="six"><BR><B>6</B><P> Lexical analysis takes place in two circumstances: on requestof a <B>tokenise</B> opcode (in which case it can use any dictionary tableit likes, in the format above) and during acceptance of a game command(in which case the standard dictionary is used).<P><BR><B>6.1</B><P> First, the text is broken up into words.  Spaces divide upwords and are otherwise ignored.  Word separators also divide words,but each one of them is considered a word in its own right.  Thus,the erratically-spaced text "fred,go  fishing" is divided into fourwords:<PRE>fred / , / go / fishing</PRE><P><BR><B>6.2</B><P> Each word is then encoded as a Z-machine string indictionary form, and searched for in the dictionary.<P><BR><B>6.3</B><P> A "parse table" is then written, recording the number ofwords, the length and position of each word and the dictionaryaddress of each word which is recognised.  For the format, see the<B>read</B> opcode.<P><HR><H4><I>Remarks</I></H4><BR>Usually (under Inform, mandatorily) there are three bytes of datain the word entries, so that dictionary entry lengths are 7 and 9in the early and late Z-machine, respectively.<P>It is essential that dictionary entries are in numerical order of thebytes of encrypted text so that interpreters can search the dictionaryefficiently (e.g. by a binary-chop algorithm).  Because the letters inA0 are in alphabetical order, because the bits are ordered in the rightway and because the pad character 5 is less than the values for theletters, the numerical ordering corresponds to normal English alphabeticalorder for ordinary words.  (For instance "an" comes before"anaconda".)<P>Both Infocom and Inform-compiled games contain words whose initialcharacter is not a letter (for instance, "#record").<P>Linards Ticmanis reports that some of Infocom's interpreters convertquestion marks to spaces before lexical analysis.  This is <I>not</I>Standard behaviour.  (Thus, typing "What is a grue?" into 'Zork I'no longer works: the player must type "What is a grue" instead.)<P><HR><P><A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /<A HREF="overview.html">Overview</A><P>Section<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A><P>Appendix<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A></P><HR></BODY></HTML>
+<HTML>
+<HEAD><TITLE>The Z-Machine Standards Document</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#EEEEEE"><H1 align=center><IMG height=86 width=82
+SRC="icon13.gif" ALT="Z"></H1>
+<BR><H3 align=center><I>13. The dictionary and lexical analysis</I></H3>
+<HR>
+13.1 <A HREF="#one">Storage</A> / 
+13.2 <A HREF="#two">Header</A> / 
+13.3 <A HREF="#three">Entries (V1 to V3)</A> /
+13.4 <A HREF="#four">Entries (later versions)</A> / 
+13.5 <A HREF="#five">Ordering</A> / 
+13.6 <A HREF="#six">Lexical analysis</A>
+<HR><A NAME="one">
+<BR><B>1</B><P> The dictionary table is held in static memory and its byte
+address is stored in the word at <B>$08</B> in the header.
+<P><A NAME="two">
+<BR><B>2</B><P> The table begins with a short header:
+<PRE>
+  n     list of keyboard input codes   entry-length  number-of-entries
+ byte  ------n bytes-----------------      byte         2-byte word
+</PRE>
+The keyboard input codes are "word-separators": typically (and under
+Inform mandatorily) these are the ZSCII codes for full stop, comma and
+double-quote.  Note that a space character (32) should never be a
+word-separator.  The "entry length" is the length of each word's
+entry in the dictionary table.  (It must be at least 4 in Versions
+1 to 3, and at least 6 in later Versions.)
+<P>
+<BR><B>2.1</B><P> Note that the word-separators table can only contain codes
+which are defined in ZSCII for both input and output.
+<P><A NAME="three">
+<BR><B>3</B><P> In Versions 1 to 3, each word has an entry in the form
+<PRE>
+   encoded text of word        bytes of data
+  ------- 4 bytes ------   (entry length-4) bytes
+</PRE>
+The interpreter ignores the bytes of data (presumably the game's parser will
+use them).  The encoded text contains 6 Z-characters (it is always padded
+out with Z-character 5's to make up 4 bytes: see <B>S</B> 3).
+The text may include spaces or other word-separators
+(though, if so, the interpreter will never match any text to the
+dictionary word in question: surprisingly, this can be useful and is
+a trick used in the Inform library).
+<P><A NAME="four">
+<BR><B>4</B><P> In Versions 4 and later, the encoded text has 6 bytes and
+always contains 9 Z-characters.
+<P><A NAME="five">
+<BR><B>5</B><P> The word entries follow immediately after the dictionary header
+and must be given in numerical order of the encoded text (when the encoded
+text is regarded as a 32 or 48-bit binary number with most-significant
+byte first).  It must not contain two entries with the same encoded text.
+<P><A NAME="six">
+<BR><B>6</B><P> Lexical analysis takes place in two circumstances: on request
+of a <B>tokenise</B> opcode (in which case it can use any dictionary table
+it likes, in the format above) and during acceptance of a game command
+(in which case the standard dictionary is used).
+<P>
+<BR><B>6.1</B><P> First, the text is broken up into words.  Spaces divide up
+words and are otherwise ignored.  Word separators also divide words,
+but each one of them is considered a word in its own right.  Thus,
+the erratically-spaced text "fred,go  fishing" is divided into four
+words:
+<PRE>
+fred / , / go / fishing
+</PRE>
+<P>
+<BR><B>6.2</B><P> Each word is then encoded as a Z-machine string in
+dictionary form, and searched for in the dictionary.
+<P>
+<BR><B>6.3</B><P> A "parse table" is then written, recording the number of
+words, the length and position of each word and the dictionary
+address of each word which is recognised.  For the format, see the
+<B>read</B> opcode.
+<P>
+<HR><H4><I>Remarks</I></H4><BR>
+Usually (under Inform, mandatorily) there are three bytes of data
+in the word entries, so that dictionary entry lengths are 7 and 9
+in the early and late Z-machine, respectively.
+<P>
+It is essential that dictionary entries are in numerical order of the
+bytes of encrypted text so that interpreters can search the dictionary
+efficiently (e.g. by a binary-chop algorithm).  Because the letters in
+A0 are in alphabetical order, because the bits are ordered in the right
+way and because the pad character 5 is less than the values for the
+letters, the numerical ordering corresponds to normal English alphabetical
+order for ordinary words.  (For instance "an" comes before
+"anaconda".)
+<P>
+Both Infocom and Inform-compiled games contain words whose initial
+character is not a letter (for instance, "#record").
+<P>
+Linards Ticmanis reports that some of Infocom's interpreters convert
+question marks to spaces before lexical analysis.  This is <I>not</I>
+Standard behaviour.  (Thus, typing "What is a grue?" into 'Zork I'
+no longer works: the player must type "What is a grue" instead.)
+<P>
+<HR>
+<P>
+<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
+<A HREF="overview.html">Overview</A>
+<P>Section
+<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
+<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
+<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
+<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
+<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
+<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
+<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
+<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
+<P>Appendix
+<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
+<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
+<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
+</P>
+<HR>
+
+</BODY></HTML>

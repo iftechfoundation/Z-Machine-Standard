@@ -1,1 +1,162 @@
-<HTML><HEAD><TITLE>The Z-Machine Standards Document</TITLE></HEAD><BODY BGCOLOR="#EEEEEE"><H1 align=center><IMG height=86 width=82SRC="icon10.gif" ALT="Z"></H1><BR><H3 align=center><I>10. Input streams and devices</I></H3><HR>10.1 <A HREF="#one">Keyboard only in V1</A> /10.2 <A HREF="#two">Input streams</A> /10.3 <A HREF="#three">Mouse support</A> /10.4 <A HREF="#four">Menu support</A> /10.5 <A HREF="#five">Terminating characters and timed input</A> /10.6 <A HREF="#six">Single keypresses</A> /10.7 <A HREF="#seven">Reading ZSCII from the keyboard</A><HR><A NAME="one"><BR><B>10.1</B><P> In Versions 1 and 2, the player's commands can only bedrawn from the keyboard.<P><A NAME="two"><BR><B>10.2</B><P> In Versions 3 and later, the player's keypresses are drawnfrom the current "input stream".  There are two input streams:numbered 0 (the keyboard) and 1 (a file containing commands).Other inputs (mouse clicks or menu selections), if available,are also implemented as keypresses (see below).<P><BR><B>10.2.1</B><P> The format of a file containing commands must be the same asthat written in output stream 4.<P><BR><B>10.2.2</B><P> The game can change the current input stream itself, usingthe opcode <B>input_stream</B>.  It has no way of finding out which inputstream is currently in use.  An interpreter is free to change theinput stream whenever it likes (e.g. at the player's request) or,indeed, to run the entire game under input stream 1 (for testingpurposes).<P><BR><B>10.2.3</B><P> When input stream 1 is first selected, the interpreter mayuse any method of choosing a file name for the file of commands.  (Goodpractice is to use the same conventions as when choosing a filenamefor output to stream 4.)<P><BR><B>10.2.4</B><P> When the the current stream is stream 1, the interpretershould not hold up long passages of text (by printing "[MORE]"and waiting for a keypress, for instance).<P><A NAME="three"><BR><B>10.3</B><P> Mouse support is optional but can be provided in Versions 5 andlater.<P><BR><B>10.3.1</B><P> In a game which wishes to use the mouse, bit 5 of 'Flags 2'in the header should be set in the story file.  If it wishes to readthe mouse position after clicks, it must provide at least the firsttwo words of a header extension table.  (Note that Inform 6.12 andlater always provide a header extension table at least this large,but Inform 6.11 and earlier never provide an extension table at all.)<P><BR><B>10.3.1.1</B><P> If the interpreter cannot offer mouse support, then itshould clear bit 5 of 'Flags 2' to signal this to the game.<P><BR><B>10.3.2</B><P> Whenever a mouse click takes place (and provided the headerextension table exists and contains at least 2 words) the interpretershould update the coordinates as follows:<PRE>   Word 1:  x coordinate where click took place   Word 2:  y coordinate where click took place</PRE><P><BR><B>10.3.3</B><P> The mouse is presumed to have between 0 and 16 buttons.The state of these buttons can be read by the <B>read_mouse</B> opcodein Version 6.  Otherwise, mouse clicks are treated as keyboardinput codes (see below).<P><BR><B>10.3.4</B><P> In Version 6, the mouse can either be free or constrainedto one of the 8 windows: if so, clicks outside the 'mouse window'must be ignored, and the interpreter is at liberty to confine themouse's movement to the boundary of its window.<P><A NAME="four"><BR><B>10.4</B><P> Menu support can optionally be provided in Version 6.<P><BR><B>10.4.1</B><P> In a game which wishes to use menus, bit 8 of 'Flags 2'in the header should be set in the story file.<P><BR><B>10.4.1.1</B><P> If the interpreter cannot offer menu support, then itshould clear bit 8 of 'Flags 2' to signal this to the game.<P><BR><B>10.4.2</B><P> Menus are numbered from 0 upwards.  0, 1 and 2 are reserved forthe interpreter to manage (this system has only been implemented onthe Macintosh, wherein 0 is the Apple menu, 1 the File menu and 2 theEdit menu).  Menus numbered 3 and upwards can be created or removed withthe <B>make_menu</B> opcode.<P><BR><B>10.4.3</B><P> Menu selection is reported to the game as a keypress(see below).  Details of what selection has been made are read with<B>read_mouse</B>.<P><A NAME="five"><BR><B>10.5</B><P> Whole commands are read from the input stream using the <B>read</B>opcode.  (Note that this has two different internal names in Inform,<B>sread</B> for Versions 1 to 4 and <B>aread</B> subsequently.)<P><BR><B>10.5.1</B><P> In Versions 1 to 3, the interpreter must redisplay the statusline before it begins accepting input.<P><BR><B>10.5.2</B><P> Commands are normally terminated by a new-line (a carriagereturn or a line feed as appropriate for the machine's keyboard orfile format).<P><BR><B>10.5.2.1</B><P> In Versions 5 and later, the game may provide a"terminating characters table" by giving its byte address inthe word at <B>$2e</B> in the header.  This table is a zero-terminatedlist of input character codes which cause <B>aread</B> to finish thecommand (in addition to new-line).  Only function key codes arepermitted: these are defined as those between 129 and 154inclusive, together with 252, 253 and 254.  The special value255 means "any function key code is terminating".<P><BR><B>10.5.3</B><P> <B>***</B> In Versions 4 and later, an interpreter should ideallybe able to time input and to call a (game) routine at periodicintervals: see the <B>read</B> opcode.  If it is able to do this, itshould set bit 7 of 'Flags 1' in the header.<P><A NAME="six"><BR><B>10.6</B><P> In Versions 4 and later, individual characters can be readfrom the current input stream, using <B>read_char</B>.  Again, the interpretershould ideally be able to time input and to call a (game) routine atperiodic intervals.  If it is able to do this, it should set bit 7 of 'Flags1' in the header.<P><A NAME="seven"><BR><B>10.7</B><P> The only characters which can be read from the keyboardare ZSCII characters defined for input (see <B>S</B> 3).<P><BR><B>10.7.1</B><P> Every ZSCII character defined for input can be returnedby <B>read_char</B>.<P><BR><B>10.7.2</B><P> Only ZSCII characters defined for both input and output canbe stored in the text buffer supplied to the <B>read</B> opcode.<P><BR><B>10.7.3</B><P> The "escape" code is optional: that is, an interpreterneed not provide an escape key.  (The Inform library clears andquits menus if this code is returned to <B>read_char</B>.)<P><HR><H4><I>Remarks</I></H4><BR>Menus in 'Beyond Zork' define cursor up and cursor down as terminatingcharacters, and make use of <B>read</B> in the upper window.<P><HR><P><A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /<A HREF="overview.html">Overview</A><P>Section<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A><P>Appendix<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A></P><HR></BODY></HTML>
+<HTML>
+<HEAD><TITLE>The Z-Machine Standards Document</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#EEEEEE"><H1 align=center><IMG height=86 width=82
+SRC="icon10.gif" ALT="Z"></H1>
+<BR><H3 align=center><I>10. Input streams and devices</I></H3>
+<HR>
+10.1 <A HREF="#one">Keyboard only in V1</A> /
+10.2 <A HREF="#two">Input streams</A> /
+10.3 <A HREF="#three">Mouse support</A> /
+10.4 <A HREF="#four">Menu support</A> /
+10.5 <A HREF="#five">Terminating characters and timed input</A> /
+10.6 <A HREF="#six">Single keypresses</A> /
+10.7 <A HREF="#seven">Reading ZSCII from the keyboard</A>
+<HR><A NAME="one">
+<BR><B>10.1</B><P> In Versions 1 and 2, the player's commands can only be
+drawn from the keyboard.
+<P><A NAME="two">
+<BR><B>10.2</B><P> In Versions 3 and later, the player's keypresses are drawn
+from the current "input stream".  There are two input streams:
+numbered 0 (the keyboard) and 1 (a file containing commands).
+Other inputs (mouse clicks or menu selections), if available,
+are also implemented as keypresses (see below).
+<P>
+<BR><B>10.2.1</B><P> The format of a file containing commands must be the same as
+that written in output stream 4.
+<P>
+<BR><B>10.2.2</B><P> The game can change the current input stream itself, using
+the opcode <B>input_stream</B>.  It has no way of finding out which input
+stream is currently in use.  An interpreter is free to change the
+input stream whenever it likes (e.g. at the player's request) or,
+indeed, to run the entire game under input stream 1 (for testing
+purposes).
+<P>
+<BR><B>10.2.3</B><P> When input stream 1 is first selected, the interpreter may
+use any method of choosing a file name for the file of commands.  (Good
+practice is to use the same conventions as when choosing a filename
+for output to stream 4.)
+<P>
+<BR><B>10.2.4</B><P> When the the current stream is stream 1, the interpreter
+should not hold up long passages of text (by printing "[MORE]"
+and waiting for a keypress, for instance).
+<P><A NAME="three">
+<BR><B>10.3</B><P> Mouse support is optional but can be provided in Versions 5 and
+later.
+<P>
+<BR><B>10.3.1</B><P> In a game which wishes to use the mouse, bit 5 of 'Flags 2'
+in the header should be set in the story file.  If it wishes to read
+the mouse position after clicks, it must provide at least the first
+two words of a header extension table.  (Note that Inform 6.12 and
+later always provide a header extension table at least this large,
+but Inform 6.11 and earlier never provide an extension table at all.)
+<P>
+<BR><B>10.3.1.1</B><P> If the interpreter cannot offer mouse support, then it
+should clear bit 5 of 'Flags 2' to signal this to the game.
+<P>
+<BR><B>10.3.2</B><P> Whenever a mouse click takes place (and provided the header
+extension table exists and contains at least 2 words) the interpreter
+should update the coordinates as follows:
+<PRE>
+   Word 1:  x coordinate where click took place
+   Word 2:  y coordinate where click took place
+</PRE>
+<P>
+<BR><B>10.3.3</B><P> The mouse is presumed to have between 0 and 16 buttons.
+The state of these buttons can be read by the <B>read_mouse</B> opcode
+in Version 6.  Otherwise, mouse clicks are treated as keyboard
+input codes (see below).
+<P>
+<BR><B>10.3.4</B><P> In Version 6, the mouse can either be free or constrained
+to one of the 8 windows: if so, clicks outside the 'mouse window'
+must be ignored, and the interpreter is at liberty to confine the
+mouse's movement to the boundary of its window.
+<P><A NAME="four">
+<BR><B>10.4</B><P> Menu support can optionally be provided in Version 6.
+<P>
+<BR><B>10.4.1</B><P> In a game which wishes to use menus, bit 8 of 'Flags 2'
+in the header should be set in the story file.
+<P>
+<BR><B>10.4.1.1</B><P> If the interpreter cannot offer menu support, then it
+should clear bit 8 of 'Flags 2' to signal this to the game.
+<P>
+<BR><B>10.4.2</B><P> Menus are numbered from 0 upwards.  0, 1 and 2 are reserved for
+the interpreter to manage (this system has only been implemented on
+the Macintosh, wherein 0 is the Apple menu, 1 the File menu and 2 the
+Edit menu).  Menus numbered 3 and upwards can be created or removed with
+the <B>make_menu</B> opcode.
+<P>
+<BR><B>10.4.3</B><P> Menu selection is reported to the game as a keypress
+(see below).  Details of what selection has been made are read with
+<B>read_mouse</B>.
+<P><A NAME="five">
+<BR><B>10.5</B><P> Whole commands are read from the input stream using the <B>read</B>
+opcode.  (Note that this has two different internal names in Inform,
+<B>sread</B> for Versions 1 to 4 and <B>aread</B> subsequently.)
+<P>
+<BR><B>10.5.1</B><P> In Versions 1 to 3, the interpreter must redisplay the status
+line before it begins accepting input.
+<P>
+<BR><B>10.5.2</B><P> Commands are normally terminated by a new-line (a carriage
+return or a line feed as appropriate for the machine's keyboard or
+file format).
+<P>
+<BR><B>10.5.2.1</B><P> In Versions 5 and later, the game may provide a
+"terminating characters table" by giving its byte address in
+the word at <B>$2e</B> in the header.  This table is a zero-terminated
+list of input character codes which cause <B>aread</B> to finish the
+command (in addition to new-line).  Only function key codes are
+permitted: these are defined as those between 129 and 154
+inclusive, together with 252, 253 and 254.  The special value
+255 means "any function key code is terminating".
+<P>
+<BR><B>10.5.3</B><P> <B>***</B> In Versions 4 and later, an interpreter should ideally
+be able to time input and to call a (game) routine at periodic
+intervals: see the <B>read</B> opcode.  If it is able to do this, it
+should set bit 7 of 'Flags 1' in the header.
+<P><A NAME="six">
+<BR><B>10.6</B><P> In Versions 4 and later, individual characters can be read
+from the current input stream, using <B>read_char</B>.  Again, the interpreter
+should ideally be able to time input and to call a (game) routine at
+periodic intervals.  If it is able to do this, it should set bit 7 of 'Flags
+1' in the header.
+<P><A NAME="seven">
+<BR><B>10.7</B><P> The only characters which can be read from the keyboard
+are ZSCII characters defined for input (see <B>S</B> 3).
+<P>
+<BR><B>10.7.1</B><P> Every ZSCII character defined for input can be returned
+by <B>read_char</B>.
+<P>
+<BR><B>10.7.2</B><P> Only ZSCII characters defined for both input and output can
+be stored in the text buffer supplied to the <B>read</B> opcode.
+<P>
+<BR><B>10.7.3</B><P> The "escape" code is optional: that is, an interpreter
+need not provide an escape key.  (The Inform library clears and
+quits menus if this code is returned to <B>read_char</B>.)
+<P>
+<HR><H4><I>Remarks</I></H4><BR>
+Menus in 'Beyond Zork' define cursor up and cursor down as terminating
+characters, and make use of <B>read</B> in the upper window.
+<P>
+<HR>
+<P>
+<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
+<A HREF="overview.html">Overview</A>
+<P>Section
+<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
+<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
+<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
+<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
+<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
+<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
+<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
+<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
+<P>Appendix
+<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
+<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
+<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
+</P>
+<HR>
+
+</BODY></HTML>

@@ -1,1 +1,100 @@
-<HTML><HEAD><TITLE>The Z-Machine Standards Document</TITLE></HEAD><BODY BGCOLOR="#DDDDDD"><H1 align=center><IMG height=86 width=82SRC="iconab.gif" ALT="Z"></H1><BR><H3 align=center><I>Appendix B. Conventional contents of the header</I></H3><P>The header table in <A HREF="sect11.html">section 11</A>details everything the interpreter needs to knowabout the header's contents.  A few other slots in the header are meaningfulbut only by convention (since existing Infocom and Inform games write them). These additional slots are described here.<P>As in <B>S</B> 11, "Hex" means the address, in hexadecimal; "V" theearliest version in which the feature appeared; "Dyn" means that the byteor bit may legally be changed by the game during play (no others may legallybe changed by the game); "Int" means that the interpreter may (in somecases must) do so.<TABLE Border><CAPTION><B>Conventional usage of unspecified header memory</B></CAPTION><TR><TD><B> Hex  </B><TD><B>V  </B><TD><B>Dyn </B><TD><B>Int </B><TD><B> Contents</B><TR><TD>  1   <TD>1  <TD>    <TD>    <TD> <I>Flags 1:</I><TR><TD>      <TD><I>3</I> <TD>    <TD> *  <TD>   Bit 3:    The legendary "Tandy" bit (see note)<TR><TD>  2   <TD>1  <TD>    <TD>    <TD> Release number (word)<TR><TD> 10   <TD>1  <TD> *  <TD>    <TD> <I>Flags 2:</I><TR><TD>      <TD><I>3</I> <TD>    <TD>    <TD>   Bit 4:    Set in the Amiga version of The Lurking Horror so presumably to do with sound effects?<TR><TD>      <TD>? <TD> ?  <TD> *  <TD>      10:    Possibly set by interpreter to indicate an error with the printer during transcription<TR><TD> 12   <TD>2  <TD>    <TD>    <TD> Serial code (six characters of ASCII)<TR><TD>      <TD>3  <TD>    <TD>    <TD> Serial number (ASCII for the compilation date in the form YYMMDD)<TR><TD> 38   <TD>6  <TD>    <TD> *  <TD> Infocom used this as 8 bytes of ASCII: the player's user-name on their own mainframe,useful to identify which person played a saved-game(however, the bytes are all 0 in shipped story files)<TR><TD> 3C   <TD>   <TD>    <TD>    <TD> Inform 6 stores 4 bytes of ASCII here, giving theversion of Inform used to compile the file:for instance, "6.11".</TABLE>1. In Versions 1 to 3, bits 0 and 7 of 'Flags 1' are unused.  (The meaningof bit 2 has recently been discovered: see<A HREF="sect11.html">section 11</A>.)  In laterVersions, bits 0, 6 and 7 are unused.  In 'Flags 2', bits 9 and 11-15 areunused.  Infocom used up almost the whole header: only the bytes at <B>$32</B>and <B>$33</B> are unused in any Version, and those are now allocated forstandard interpreters to give their Revision numbers.<P>2. Some early Infocom games were sold by the Tandy Corporation, whoseem to have been sensitive souls.  'Zork I' pretends not to have sequelsif it finds the Tandy bit set.  And to quote Paul David Doherty:<BLOCKQUOTE>   In 'The Witness', the Tandy Flag can be set while playing the game,   by typing <B>$DB</B> and then <B>$TA</B>.   If it is set, some of the prose will be   less offensive. For example, "private dicks" become "private eyes",   "bastards" are only "idiots", and all references to "slanteyes" and   "necrophilia" are removed.</BLOCKQUOTE>We live in an age of censorship.<P>3. For comment on interpreter numbers,see <B>S</B> 11. Infocom's own interpreterswere generally rewritten for each of versions 3 to 6.  For instance,interpreters known to have been shipped with the Macintosh gave versionletters B, C, G, I (Version 3), E, H, I (Version 4), A, B, C (Version 5) andfinally 6.1 for Version 6.  (Version 6 interpreters seem to have versionnumbers rather than letters.)  See the "Infocom fact sheet" for fullerdetails.<P>4. Inform 6 story files are easily distinguished from all other story filesby their usage of the last four header bytes.  Inform 1 to 5 story filesare best distinguished from Infocom ones by the serial code date: anythingbefore 930000 is either an Infocom file, or a fake.(The author of 'Jigsaw' is tempted to compile a millenial version withserial code 991231 when the time comes, but then the next day serial codeswill clock over to 000101.  The decision of how to continue serial codespast the year 2079 is deferred to a future revision of this Standard.)Clearly there is no point going to any trouble to prevent fakes, but witha little practice it's easy to tell whether Zilch or Inform compiled afile from the style of code generated.<P><HR><P><A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /<A HREF="overview.html">Overview</A><P>Section<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A><P>Appendix<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A></P><HR></BODY></HTML>
+<HTML>
+<HEAD><TITLE>The Z-Machine Standards Document</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#DDDDDD"><H1 align=center><IMG height=86 width=82
+SRC="iconab.gif" ALT="Z"></H1>
+<BR><H3 align=center><I>Appendix B. Conventional contents of the header</I></H3>
+<P>
+The header table in <A HREF="sect11.html">section 11</A>
+details everything the interpreter needs to know
+about the header's contents.  A few other slots in the header are meaningful
+but only by convention (since existing Infocom and Inform games write them). 
+These additional slots are described here.
+<P>
+As in <B>S</B> 11, "Hex" means the address, in hexadecimal; "V" the
+earliest version in which the feature appeared; "Dyn" means that the byte
+or bit may legally be changed by the game during play (no others may legally
+be changed by the game); "Int" means that the interpreter may (in some
+cases must) do so.
+<TABLE Border>
+<CAPTION><B>Conventional usage of unspecified header memory</B></CAPTION>
+<TR><TD><B> Hex  </B><TD><B>V  </B><TD><B>Dyn </B><TD><B>Int </B><TD><B> Contents</B>
+<TR><TD>  1   <TD>1  <TD>    <TD>    <TD> <I>Flags 1:</I>
+<TR><TD>      <TD><I>3</I> <TD>    <TD> *  <TD>   Bit 3:    The legendary "Tandy" bit (see note)
+<TR><TD>  2   <TD>1  <TD>    <TD>    <TD> Release number (word)
+<TR><TD> 10   <TD>1  <TD> *  <TD>    <TD> <I>Flags 2:</I>
+<TR><TD>      <TD><I>3</I> <TD>    <TD>    <TD>   Bit 4:    Set in the Amiga version of The Lurking Horror so presumably to do with sound effects?
+<TR><TD>      <TD>? <TD> ?  <TD> *  <TD>      10:    Possibly set by interpreter to indicate an error with the printer during transcription
+<TR><TD> 12   <TD>2  <TD>    <TD>    <TD> Serial code (six characters of ASCII)
+<TR><TD>      <TD>3  <TD>    <TD>    <TD> Serial number (ASCII for the compilation date in the form YYMMDD)
+<TR><TD> 38   <TD>6  <TD>    <TD> *  <TD> Infocom used this as 8 bytes of ASCII: the player's user-name on their own mainframe,
+useful to identify which person played a saved-game
+(however, the bytes are all 0 in shipped story files)
+<TR><TD> 3C   <TD>   <TD>    <TD>    <TD> Inform 6 stores 4 bytes of ASCII here, giving the
+version of Inform used to compile the file:
+for instance, "6.11".
+</TABLE>
+1. In Versions 1 to 3, bits 0 and 7 of 'Flags 1' are unused.  (The meaning
+of bit 2 has recently been discovered: see
+<A HREF="sect11.html">section 11</A>.)  In later
+Versions, bits 0, 6 and 7 are unused.  In 'Flags 2', bits 9 and 11-15 are
+unused.  Infocom used up almost the whole header: only the bytes at <B>$32</B>
+and <B>$33</B> are unused in any Version, and those are now allocated for
+standard interpreters to give their Revision numbers.
+<P>
+2. Some early Infocom games were sold by the Tandy Corporation, who
+seem to have been sensitive souls.  'Zork I' pretends not to have sequels
+if it finds the Tandy bit set.  And to quote Paul David Doherty:
+<BLOCKQUOTE>
+   In 'The Witness', the Tandy Flag can be set while playing the game,
+   by typing <B>$DB</B> and then <B>$TA</B>.
+   If it is set, some of the prose will be
+   less offensive. For example, "private dicks" become "private eyes",
+   "bastards" are only "idiots", and all references to "slanteyes" and
+   "necrophilia" are removed.
+</BLOCKQUOTE>
+We live in an age of censorship.
+<P>
+3. For comment on interpreter numbers,
+see <B>S</B> 11. Infocom's own interpreters
+were generally rewritten for each of versions 3 to 6.  For instance,
+interpreters known to have been shipped with the Macintosh gave version
+letters B, C, G, I (Version 3), E, H, I (Version 4), A, B, C (Version 5) and
+finally 6.1 for Version 6.  (Version 6 interpreters seem to have version
+numbers rather than letters.)  See the "Infocom fact sheet" for fuller
+details.
+<P>
+4. Inform 6 story files are easily distinguished from all other story files
+by their usage of the last four header bytes.  Inform 1 to 5 story files
+are best distinguished from Infocom ones by the serial code date: anything
+before 930000 is either an Infocom file, or a fake.
+(The author of 'Jigsaw' is tempted to compile a millenial version with
+serial code 991231 when the time comes, but then the next day serial codes
+will clock over to 000101.  The decision of how to continue serial codes
+past the year 2079 is deferred to a future revision of this Standard.)
+Clearly there is no point going to any trouble to prevent fakes, but with
+a little practice it's easy to tell whether Zilch or Inform compiled a
+file from the style of code generated.
+<P>
+<HR>
+<P>
+<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
+<A HREF="overview.html">Overview</A>
+<P>Section
+<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
+<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
+<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
+<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
+<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
+<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
+<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
+<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
+<P>Appendix
+<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
+<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
+<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
+</P>
+<HR>
+
+</BODY></HTML>
