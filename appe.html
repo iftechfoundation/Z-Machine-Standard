@@ -1,81 +1,99 @@
-<HTML>
-<HEAD><TITLE>The Z-Machine Standards Document</TITLE>
-</HEAD>
+<!DOCTYPE html>
 
-<BODY BGCOLOR="#DDDDDD"><H1 align=center><IMG height=86 width=82
-SRC="iconae.gif" ALT="Z"></H1>
-<BR><H3 align=center><I>Appendix E. Statistics</I></H3>
-<P>
-<BLOCKQUOTE>
-LORD DIMWIT FLATHEAD:  "It must have two hundred thousand rooms, four
-million takeable objects, and understand a vocabulary of every single word
-ever spoken in every language ever invented."
-<P><B>The New Zork Times (Winter 1984)</B>
-</BLOCKQUOTE>
-To give some idea of the sizes found in typical story files, here are a few
-statistics, mostly gathered by Paul David Doherty, whose "Infocom fact
-sheet" file is the definitive reference.
-<P>
-<BR>
-(i) <I>Length</I><P>
-  The shortest files are those dating from the time of the 'Zork'
-  trilogy, at about 85K; middle-period Version 3 games are typically 105K,
-  and only the latest use the full memory map.  In Versions 4 and 5, only
-  'Trinity', 'A Mind Forever Voyaging' and 'Beyond Zork' use the full 256K.
-  'Border Zone' and 'Sherlock', for instance, are about 180K.  (The author's
-  short story 'Balances' is about 50K, an edition of 'Adventure' takes 80K,
-  and 'Curses' takes 256K (it's padded out to the maximum size with
-  background information; the actual game comprises only about 245K).  Under
-  Inform, the library occupies about 35K regardless of the size of game.)
-<P>
+<html>
+<head>
+<title>The Z-Machine Standards Document</title>
+<link rel="stylesheet" type="text/css" href="zspec.css">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
 
-<BR>
-(ii) <I>Code size</I><P>
-  'Zork I' uses only about 5500 opcodes, but the number rises
-  steeply with later games; 'Hollywood Hijinx' has 10355 and, e.g.
-  'Moonmist' has 15900 (both these being Version 3).  Against this, 'A Mind
-  Forever Voyaging' has only 18700, and only 'Trinity' and 'Beyond Zork'
-  reach 32000 or so.  (Inform games are more efficiently compiled and make
-  better use of common code -- the library -- so perform much better here:
-  the old Version 3, release 10 of 'Curses' (128K long, and a larger game
-  than any Infocom Version 3 game) has only 6720 opcodes.)
-<P>
-<BR>
-(iii) <I>Objects and rooms</I><P>
-  This varies greatly with the style of game.
-  'Zork I' has 110 rooms and 60 takeable objects, but several quite
-  complex games have as few as 30 rooms (the mysteries, or 'Hitch-hikers'). 
-  The average for Version 3 games is 69 rooms, 39 takeable objects.
-<P>
-  'A Mind Forever Voyaging' contains many rooms (178) but few objects (30). 
-  'Trinity', a more typical style of game, contains 134 rooms and 49
-  objects: the Version 5 'Curses' has a few more of each.  Of the Version 6
-  games, only 'Zork Zero' scores highly here, with 215 rooms and 106
-  objects.  The average for Version 4/5 games is 105 rooms and 54 objects.
-<P>
-  The total number of objects tends to be close to the limit of 255 in
-  Version 3 games.  'Curses' contains 508.
-<P>
+<body class="appendix">
 
-<BR>
-(iv) <I>Dictionary</I><P>
-  Early games such as 'Zork I' know about 600 words, but
-  again this rises steeply to about 1000 even in Version 3.
-  Later games know 1569 ('Beyond Zork') to the record, 2120 ('Trinity').
-  (This is achieved by heroic inclusion of unlikely synonyms: e.g. the
-  Japanese lady with the umbrella can be called WOMAN, LADY, CRONE,
-  MADAM, MADAME, MATRON, DAME or FACE with any of the adjectives
-  OLD, AGED, ANCIENT, JAP, JAPANESE, ORIENTAL or YELLOW.)
-  Version 6 games have smaller dictionaries.  So has 'Curses', at 1364.
-<P>
-<BR>
-(v) <I>Opcodes</I><P>
-(a) Of the 1426854 opcodes in the shipped Infocom story files in Paul David
-Doherty's collection, here are the top and bottom ten most popular.
-(Leaving out those which never occur and so score 0:
-<B>nop</B>, <B>art_shift</B>, <B>piracy</B> and the two post-Infocom opcodes,
-<B>print_unicode</B> and <B>check_unicode</B>.)
-<PRE>
+<img class="icon" src="iconae.gif" alt="">
+
+<h1>Appendix E. Statistics</h1>
+
+<blockquote>
+  <p>LORD DIMWIT FLATHEAD:  "It must have two hundred thousand rooms, four
+     million takeable objects, and understand a vocabulary of every single word
+     ever spoken in every language ever invented."
+  </p>
+  <p><strong>The New Zork Times (Winter 1984)</strong></p>
+</blockquote>
+
+<p>[Note: the information below has not been updated since the 20th June 1997 revision of
+   this document.]
+</p>
+
+<p>To give some idea of the sizes found in typical story files, here are a few
+   statistics, mostly gathered by Paul David Doherty, whose "Infocom fact
+   sheet" file is the definitive reference.
+</p>
+
+
+<p>(i) <em>Length</em></p>
+<p>The shortest files are those dating from the time of the 'Zork'
+   trilogy, at about 85K; middle-period Version 3 games are typically 105K,
+   and only the latest use the full memory map.  In Versions 4 and 5, only
+   'Trinity', 'A Mind Forever Voyaging' and 'Beyond Zork' use the full 256K.
+   'Border Zone' and 'Sherlock', for instance, are about 180K.  (The author's
+   short story 'Balances' is about 50K, an edition of 'Adventure' takes 80K,
+   and 'Curses' takes 256K (it's padded out to the maximum size with
+   background information; the actual game comprises only about 245K).  Under
+   Inform, the library occupies about 35K regardless of the size of game.)
+</p>
+
+
+<p>(ii) <em>Code size</em></p>
+<p>'Zork I' uses only about 5500 opcodes, but the number rises
+   steeply with later games; 'Hollywood Hijinx' has 10355 and, e.g.
+   'Moonmist' has 15900 (both these being Version 3).  Against this, 'A Mind
+   Forever Voyaging' has only 18700, and only 'Trinity' and 'Beyond Zork'
+   reach 32000 or so.  (Inform games are more efficiently compiled and make
+   better use of common code -- the library -- so perform much better here:
+   the old Version 3, release 10 of 'Curses' (128K long, and a larger game
+   than any Infocom Version 3 game) has only 6720 opcodes.)
+</p>
+
+<p>(iii) <em>Objects and rooms</em></p>
+<p>This varies greatly with the style of game.
+   'Zork I' has 110 rooms and 60 takeable objects, but several quite
+   complex games have as few as 30 rooms (the mysteries, or 'Hitch-hikers'). 
+   The average for Version 3 games is 69 rooms, 39 takeable objects.
+</p>
+<p>'A Mind Forever Voyaging' contains many rooms (178) but few objects (30). 
+   'Trinity', a more typical style of game, contains 134 rooms and 49
+   objects: the Version 5 'Curses' has a few more of each.  Of the Version 6
+   games, only 'Zork Zero' scores highly here, with 215 rooms and 106
+   objects.  The average for Version 4/5 games is 105 rooms and 54 objects.
+</p>
+<p>The total number of objects tends to be close to the limit of 255 in
+   Version 3 games.  'Curses' contains 508.
+</p>
+
+
+
+<p>(iv) <em>Dictionary</em></p>
+<p>Early games such as 'Zork I' know about 600 words, but
+   again this rises steeply to about 1000 even in Version 3.
+   Later games know 1569 ('Beyond Zork') to the record, 2120 ('Trinity').
+   (This is achieved by heroic inclusion of unlikely synonyms: e.g. the
+   Japanese lady with the umbrella can be called WOMAN, LADY, CRONE,
+   MADAM, MADAME, MATRON, DAME or FACE with any of the adjectives
+   OLD, AGED, ANCIENT, JAP, JAPANESE, ORIENTAL or YELLOW.)
+   Version 6 games have smaller dictionaries.  So has 'Curses', at 1364.
+</p>
+
+
+<p>(v) <em>Opcodes</em></p>
+<p>(a) Of the 1426854 opcodes in the shipped Infocom story files in Paul David
+   Doherty's collection, here are the top and bottom ten most popular.
+   (Leaving out those which never occur and so score 0:
+   <strong>nop</strong>, <strong>art_shift</strong>, <strong>piracy</strong> and the two post-Infocom opcodes,
+   <strong>print_unicode</strong> and <strong>check_unicode</strong>.)
+</p>
+
+<pre>
     Top Ten Opcodes Chart          Bottom Ten Opcodes Chart
     1.   je          195959        1.   print_form       2
     2.   print       142755        2.   erase_picture    3
@@ -87,18 +105,21 @@ Doherty's collection, here are the top and bottom ten most popular.
     8.   jump         56534        8.   pop_stack       17
     9.   new_line     52553        9.   restore_undo    18
     10.  test_attr    46627        10.  mouse_window    22
-</PRE>
-So about 2/3rds of all opcodes are those in the top ten; 1 in 8 opcodes is a
-<B>je</B>, and only 1 in 710000 is a <B>print_form</B>.
-<P>
-(b) An experiment (conducted with the help of Kevin Bracey) sheds some
-light on the opcodes most frequently interpreted in typical play.  Two
-very different games ('Zork I', Version 5 "solid gold" edition;
-'Museum of Inform', a complex Inform example game) were played for
-about 50000 cycles of the Z-machine (about 20 moves in 'Zork I', rather
-less in the 'Museum').  The following table records all opcodes with
-a frequency of at least 1% (i.e., 0.01):
-<PRE>
+</pre>
+
+<p>So about 2/3rds of all opcodes are those in the top ten; 1 in 8 opcodes is a
+   <strong>je</strong>, and only 1 in 710000 is a <strong>print_form</strong>.
+</p>
+
+<p>(b) An experiment (conducted with the help of Kevin Bracey) sheds some
+   light on the opcodes most frequently interpreted in typical play.  Two
+   very different games ('Zork I', Version 5 "solid gold" edition;
+   'Museum of Inform', a complex Inform example game) were played for
+   about 50000 cycles of the Z-machine (about 20 moves in 'Zork I', rather
+   less in the 'Museum').  The following table records all opcodes with
+   a frequency of at least 1% (i.e., 0.01):
+</p>
+<pre>
     Zork I Solid Gold (Infocom)    Museum of Inform (Inform)
     0.116110  loadb                0.104952  je
     0.103990  storeb               0.101151  jz
@@ -120,33 +141,42 @@ a frequency of at least 1% (i.e., 0.01):
                                    0.011879  test_attr
                                    0.011824  dec
                                    0.011687  ret
-</PRE>
-Adventure games spend most of the time parsing, and the differences
-between these tables reflect different parser designs (byte arrays
-versus word arrays and arrays stored in properties) as well as
-different compiler code generators (Inform does not use <B>inc_chk</B>
-or <B>dec_chk</B>, so it uses <B>inc</B>, <B>dec</B>, <B>jl</B> and <B>jg</B> correspondingly
-more).  In the case of 'Zork I', about a third of all opcodes are
-branches: in the case of 'Museum', almost half.
+</pre>
+<p>Adventure games spend most of the time parsing, and the differences
+   between these tables reflect different parser designs (byte arrays
+   versus word arrays and arrays stored in properties) as well as
+   different compiler code generators (Inform does not use <strong>inc_chk</strong>
+   or <strong>dec_chk</strong>, so it uses <strong>inc</strong>, <strong>dec</strong>, <strong>jl</strong> and <strong>jg</strong> correspondingly
+   more).  In the case of 'Zork I', about a third of all opcodes are
+   branches: in the case of 'Museum', almost half.
+</p>
 
-<HR>
-<P>
-<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
-<A HREF="overview.html">Overview</A>
-<P>Section
-<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
-<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
-<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
-<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
-<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
-<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
-<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
-<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
-<P>Appendix
-<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
-<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
-<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
-</P>
-<HR>
+<hr>
 
-</BODY></HTML>
+<p>
+  <a href="index.html">Contents</a> / 
+  <a href="preface.html">Preface</a> /
+  <a href="overview.html">Overview</a>
+</p>
+
+<p>Section
+  <a href="sect01.html">1</a> / <a href="sect02.html">2</a> /
+  <a href="sect03.html">3</a> / <a href="sect04.html">4</a> /
+  <a href="sect05.html">5</a> / <a href="sect06.html">6</a> /
+  <a href="sect07.html">7</a> / <a href="sect08.html">8</a> /
+  <a href="sect09.html">9</a> / <a href="sect10.html">10</a> /
+  <a href="sect11.html">11</a> / <a href="sect12.html">12</a> /
+  <a href="sect13.html">13</a> / <a href="sect14.html">14</a> /
+  <a href="sect15.html">15</a> / <a href="sect16.html">16</a>
+</p>
+
+<p>Appendix
+  <a href="appa.html">A</a> / <a href="appb.html">B</a> /
+  <a href="appc.html">C</a> / <a href="appd.html">D</a> /
+  <a href="appe.html">E</a> / <a href="appf.html">F</a>
+</p>
+
+<hr>
+
+</body>
+</html>

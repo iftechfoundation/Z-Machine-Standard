@@ -1,70 +1,126 @@
-<HTML>
-<HEAD><TITLE>The Z-Machine Standards Document</TITLE>
-</HEAD>
+<!DOCTYPE html>
 
-<BODY BGCOLOR="#DDDDDD"><H1 align=center><IMG height=86 width=82
-SRC="iconaa.gif" ALT="Z"></H1>
-<BR><H3 align=center><I>Appendix A. Error messages and debugging</I></H3>
-<P>
-Older interpreters, such as <B>ITF</B>, are extremely curt when an error condition
-is reached (for example, an illegal opcode).  It was assumed that
-Infocom's shipped story files were bug-free, which is mostly true,
-so that errors could only arise through a bug elsewhere in the
-interpreter.
-<P>
-In debugging Inform games, though, many error conditions can arise and it is
-extremely helpful to report these as fully as possible.  These include:
-<P><B>1.</B> An illegal opcode being hit;
-<P><B>2.</B> A call to what can't be a routine (because the initial byte is not
-between 0 and 15);
-<P><B>3.</B> A jump or call to an address beyond the size of the story file;
-<P><B>4.</B> An attempt to <B>print_obj</B>, or otherwise access, an object
-which doesn't exist, such as object number 0.
-<P><B>5.</B> An attempt to write to, or get the property length of, a
-nonexistent property.
-<P><B>6.</B> An attempt to access an attribute outside the range 0 to 31
-or 0 to 47 (depending on Version).  (But note that Infocom's 'Sherlock'
-contains a bug causing it to try setting or clearing attribute number
-48.)
-<P><B>7.</B> Division by zero.
- The player sometimes then has the annoying task of working out
-where the error took place in source code.  Providing a stack back-trace
-would be a help.
-<P>
-As mentioned in <B>S</B> 3, it's helpful to screen out any illegal ZSCII
-characters between 0 and 31 which are accidentally printed: crashes
-can be very mysterious when they cause interpreters to send control
-codes to the terminal.
-<P>
-In addition, an interpreter might provide options for keeping track of
-maximum stack usage and the typical number of opcodes executed between
-each read from the keyboard.  (But watching these is a time-wasting
-activity, so they should be options.)
-<P>
-Finally, infinite loops fairly often happen, as in any programming
-language.  On a system without pre-emptive multi-tasking, this may lock
-up the whole machine, as the usual way that porters implement multi-tasking
-is to return control to the host operating system only when the keyboard
-is read.  This can be avoided by providing a point in the code which
-could return control to the OS from time to time (say, every 2000
-instructions).
-<HR>
-<P>
-<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
-<A HREF="overview.html">Overview</A>
-<P>Section
-<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
-<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
-<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
-<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
-<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
-<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
-<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
-<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
-<P>Appendix
-<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
-<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
-<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
-</P>
-<HR>
-</BODY></HTML>
+<html>
+<head>
+<title>The Z-Machine Standards Document</title>
+<link rel="stylesheet" type="text/css" href="zspec.css">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
+
+<body class="appendix">
+
+<img class="icon" src="iconaa.gif" alt="">
+
+<h1>Appendix A. Error messages and debugging</h1>
+
+<p>Older interpreters, such as <strong>ITF</strong>, are extremely curt when an error condition
+   is reached (for example, an illegal opcode).  It was assumed that
+   Infocom's shipped story files were bug-free, which is mostly true,
+   so that errors could only arise through a bug elsewhere in the
+   interpreter.
+</p>
+
+<p>In debugging Inform games, though, many error conditions can arise and it is
+   extremely helpful to report these as fully as possible.  These include:
+</p>
+
+<ol>
+  <li>An illegal opcode being hit;</li>
+  <li>A call to what can't be a routine (because the initial byte is not
+      between 0 and 15);
+  </li>
+  <li>A jump or call to an address beyond the size of the story file;</li>
+  <li>An attempt to <strong>print_obj</strong>, or otherwise access, an object
+      which doesn't exist, such as object number 0.
+  </li>
+  <li>An attempt to write to, or get the property length of, a
+      nonexistent property.
+  </li>
+  <li>An attempt to access an attribute outside the range 0 to 31
+      or 0 to 47 (depending on Version).  (But note that Infocom's 'Sherlock'
+      contains a bug causing it to try setting or clearing attribute number
+      48.)
+  </li>
+  <li>Division by zero.
+      The player sometimes then has the annoying task of working out
+      where the error took place in source code.  Providing a stack back-trace
+      would be a help.
+  </li>
+</ol>
+
+<p>As mentioned in <strong>S</strong> 3, it's helpful to screen out any illegal ZSCII
+   characters between 0 and 31 which are accidentally printed: crashes
+   can be very mysterious when they cause interpreters to send control
+   codes to the terminal.
+</p>
+
+<p>In addition, an interpreter might provide options for keeping track of
+   maximum stack usage and the typical number of opcodes executed between
+   each read from the keyboard.  (But watching these is a time-wasting
+   activity, so they should be options.)
+</p>
+
+<p>Finally, infinite loops fairly often happen, as in any programming
+   language.  On a system without pre-emptive multi-tasking, this may lock
+   up the whole machine, as the usual way that porters implement multi-tasking
+   is to return control to the host operating system only when the keyboard
+   is read.  This can be avoided by providing a point in the code which
+   could return control to the OS from time to time (say, every 2000
+   instructions).
+</p>
+
+<hr>
+
+<p>A number of post-Infocom games have been released which contain
+   errors, most often trying to perform illegal operations on object 0.
+   Many interpreters silently ignored these errors, which can make it 
+   very to notice and track down bugs.
+</p>
+
+<p>It is desirable for modern interpreters to be able to notify players
+   about these bugs, but this can also ruin gameplay. It is highly recommended, 
+   then, that interpreters have four levels of error checking, selectable by
+   the user (through a command-line or menu option, or similar):
+</p>
+
+
+<ul>
+  <li>Never report the bug.</li>
+  <li>Report the first instance of each type of error.</li>
+  <li>Report every error.</li>
+  <li>Fatal error and close the interpreter on any error.</li>
+</ul>
+
+
+<hr>
+
+
+<p>
+  <a href="index.html">Contents</a> / 
+  <a href="preface.html">Preface</a> /
+  <a href="overview.html">Overview</a>
+</p>
+
+<p>Section
+  <a href="sect01.html">1</a> / <a href="sect02.html">2</a> /
+  <a href="sect03.html">3</a> / <a href="sect04.html">4</a> /
+  <a href="sect05.html">5</a> / <a href="sect06.html">6</a> /
+  <a href="sect07.html">7</a> / <a href="sect08.html">8</a> /
+  <a href="sect09.html">9</a> / <a href="sect10.html">10</a> /
+  <a href="sect11.html">11</a> / <a href="sect12.html">12</a> /
+  <a href="sect13.html">13</a> / <a href="sect14.html">14</a> /
+  <a href="sect15.html">15</a> / <a href="sect16.html">16</a>
+</p>
+
+<p>Appendix
+  <a href="appa.html">A</a> / <a href="appb.html">B</a> /
+  <a href="appc.html">C</a> / <a href="appd.html">D</a> /
+  <a href="appe.html">E</a> / <a href="appf.html">F</a>
+</p>
+
+<hr>
+
+</body>
+</html>
+
+

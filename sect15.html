@@ -1,1225 +1,1500 @@
-<HTML>
-<HEAD><TITLE>The Z-Machine Standards Document</TITLE>
-</HEAD>
+<!DOCTYPE html>
 
-<BODY BGCOLOR="#EEEEEE"><H1 align=center><IMG height=86 width=82
-SRC="icon15.gif" ALT="Z"><A NAME="dict"></H1>
-<BR><H3 align=center><I>15. Dictionary of opcodes</I></H3>
-<P>
-<BLOCKQUOTE>
-The highest ideal of a translation... is achieved when the
-reader flings it impatiently into the fire, and begins
-patiently to learn the language for himself.
-<P>Philip Vellacott
-</BLOCKQUOTE>
-<HR>
-<P align="center">
-<A HREF="#add">A</A> /
-<A HREF="#buffer_mode">B</A> /
-<A HREF="#call">C</A> /
-<A HREF="#dec">D</A> /
-<A HREF="#encode_text">E</A> /
-<A HREF="#get_child">F</A> /
-<A HREF="#get_child">G</A> /
-<A HREF="#inc">H</A> /
-<A HREF="#inc">I</A> /
-<A HREF="#je">J</A> /
-<A HREF="#load">K</A> /
-<A HREF="#load">L</A> /
-<A HREF="#make_menu">M</A> /
-<A HREF="#new_line">N</A> /
-<A HREF="#or">O</A> /
-<A HREF="#picture_data">P</A> /
-<A HREF="#quit">Q</A> /
-<A HREF="#random">R</A> /
-<A HREF="#save">S</A> /
-<A HREF="#test">T</A> /
-<A HREF="#verify">U</A> /
-<A HREF="#verify">V</A> /
-<A HREF="#window_size">W</A> /
-<A HREF="#window_style">X</A> /
-<A HREF="#window_style">Y</A> /
-<A HREF="#window_style">Z</A>
-</P>
-<HR>
-<BR><B>15.1</B><P>
-The dictionary below is alphabetical and includes entries on every
-opcode listed in the table above, as well as brief notes on a few opcodes
-once thought to exist but now disproved.
-<P>
-<BR><B>15.2</B><P>
-The Z-machine has the same concept of "table" (as an internal
-data structure) as Inform.  Specifically, a table is an array of words
-(in dynamic or static memory) of which the initial entry is the number
-of subsequent words in the table.  For example, a table with three
-entries occupies 8 bytes, arranged as the words 3, x, y, z.
-<P>
-<BR><B>15.3</B><P>
-In all cases below where one operand is supposed to be in
-a particular range, behaviour is undefined if it is not.  For instance
-an interpreter complies with the Standard even if it crashes when an
-illegal object number (including 0) is given for an object operand.
-However, see <B>S</B> A for guidelines on detecting and dealing with errors.
-<P>
-<BR>
-<P>
-<A NAME="add"><HR>
-<B>add</B><P><B><A href="sect14.html#2OP">2OP</A>:20  14     add             a b -> (result)</B>
-    <P>
-    Signed 16-bit addition.
-<P>
-<A NAME="and"><HR>
-<B>and</B><P><B><A href="sect14.html#2OP">2OP</A>:9    9     and             a b -> (result)</B>
-    <P>
-    Bitwise AND.
-<P>
-<A NAME="aread"><HR>
-<B>aread</B><P>This is the Inform name for the keyboard-reading opcode
-    under Version 5 and later.  (Inform calls the same opcode <B>sread</B>
-    under Versions 3 and 4.)  See <B>read</B> for the specification.
-<P>
-<A NAME="art_shift"><HR>
-<B>art_shift</B><P><B><A href="sect14.html#EXT">EXT</A>:3    3 5/- art_shift       number places -> (result)</B>
-    <P>
-    Does an arithmetic shift of <B>number</B> by the given number
-    of places, shifting left (i.e. increasing) if places is positive, right
-    if negative.  In a right shift, the sign bit is preserved as well as
-    being shifted on down.  (The alternative behaviour is <B>log_shift</B>.)
-<P>
-<A NAME="buffer_mode"><HR>
-<B>buffer_mode</B><P><B><A href="sect14.html#VAR">VAR</A>:242 12  4  buffer_mode     flag</B>
-    <P>
-    If set to 1, text output on the lower window in stream 1
-    is buffered up so that it can be word-wrapped properly.  If set to 0, it
-    isn't.
-    <P>
-    In Version 6, this opcode is redundant (the "buffering" window
-    attribute can be set instead).  It is used twice in each of Infocom's
-    Version 6 story files, in the <B>$verify</B> routine.  <B>Frotz</B> responds by
-    setting the current window's "buffering" attribute, while Infocom's
-    own interpreters respond by doing nothing.  This standard leaves the
-    result of <B>buffer_mode</B> undefined in Version 6.
-<P>
-<A NAME="call"><HR>
-<B>call</B><P><B><A href="sect14.html#VAR">VAR</A>:224  0  1  call            routine ...up to 3 args... -> (result)</B>
-    <P>
-    The only call instruction in Version 3, Inform reads this as
-    <B>call_vs</B> in higher versions: it calls the routine with 0, 1, 2 or 3
-    arguments as supplied and stores the resulting return value.  (When the
-    address 0 is called as a routine, nothing happens and the return value
-    is false.)
-<P>
-<A NAME="call_1n"><HR>
-<B>call_1n</B><P><B><A href="sect14.html#1OP">1OP</A>:143  F  5  call_1n         routine</B>
-    <P>
-    Executes <B>routine()</B> and throws away result.
-<P>
-<A NAME="call_1s"><HR>
-<B>call_1s</B><P><B><A href="sect14.html#1OP">1OP</A>:136  8  4  call_1s         routine -> (result)</B>
-    <P>
-    Stores <B>routine()</B>.
-<P>
-<A NAME="call_2n"><HR>
-<B>call_2n</B><P><B><A href="sect14.html#2OP">2OP</A>:26  1A  5  call_2n         routine arg1</B>
-    <P>
-    Executes <B>routine(arg1)</B> and throws away result.
-<P>
-<A NAME="call_2s"><HR>
-<B>call_2s</B><P><B><A href="sect14.html#2OP">2OP</A>:25  19  4  call_2s         routine arg1 -> (result)</B>
-    <P>
-    Stores <B>routine(arg1)</B>.
-<P>
-<A NAME="call_vn"><HR>
-<B>call_vn</B><P><B><A href="sect14.html#VAR">VAR</A>:249 19  5  call_vn         routine ...up to 3 args...</B>
-    <P>
-    Like <B>call</B>, but throws away result.
-<P>
-<A NAME="call_vs"><HR>
-<B>call_vs</B><P><B><A href="sect14.html#VAR">VAR</A>:224  0  4  call_vs         routine ...up to 3 args... -> (result)</B>
-    <P>
-    See <B>call</B>.
-<P>
-<A NAME="call_vn2"><HR>
-<B>call_vn2</B><P><B><A href="sect14.html#VAR">VAR</A>:250 1A  5  call_vn2        routine ...up to 7 args...</B>
-    <P>
-    Call with a variable number (from 0 to 7) of arguments, then
-    throw away the result.  This (and <B>call_vs2</B>) uniquely have an extra byte
-    of opcode types to specify the types of arguments 4 to 7.  Note that it is
-    legal to use these opcodes with fewer than 4 arguments (in which case the
-    second byte of type information will just be <B>$ff</B>).
-<P>
-<A NAME="call_vs2"><HR>
-<B>call_vs2</B><P><B><A href="sect14.html#VAR">VAR</A>:236  C  4  call_vs2        routine ...up to 7 args... -> (result)</B>
-    <P>
-    See <B>call_vn2</B>.
-<P>
-<A NAME="catch"><HR>
-<B>catch</B><P><B><A href="sect14.html#0OP">0OP</A>:185  9 5/6  catch           -> (result)</B>
-    <P>
-    Opposite to <B>throw</B> (and occupying the same opcode that <B>pop</B>
-    used in Versions 3 and 4).  <B>catch</B> returns the current "stack frame".
-<P>
-<A NAME="check_arg_count"><HR>
-<B>check_arg_count</B><P><B><A href="sect14.html#VAR">VAR</A>:255 1F  5  check_arg_count argument-number</B>
-    <P>
-    Branches if the given argument-number (counting
+<html>
+<head>
+<title>The Z-Machine Standards Document</title>
+<link rel="stylesheet" type="text/css" href="zspec.css">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
+
+<body>
+
+<img class="icon" src="icon15.gif" alt="">
+<hr>
+
+<h1 id="dict">15. Dictionary of opcodes</h1>
+
+<blockquote>
+  <p>The highest ideal of a translation... is achieved when the
+     reader flings it impatiently into the fire, and begins
+     patiently to learn the language for himself.</p>
+  <p>Philip Vellacott</p>
+</blockquote>
+
+<hr>
+
+<p class="dictindex">
+  <a href="#add">A</a> /
+  <a href="#buffer_mode">B</a> /
+  <a href="#call">C</a> /
+  <a href="#dec">D</a> /
+  <a href="#encode_text">E</a> /
+  <a href="#get_child">F</a> /
+  <a href="#get_child">G</a> /
+  <a href="#inc">H</a> /
+  <a href="#inc">I</a> /
+  <a href="#je">J</a> /
+  <a href="#load">K</a> /
+  <a href="#load">L</a> /
+  <a href="#make_menu">M</a> /
+  <a href="#new_line">N</a> /
+  <a href="#or">O</a> /
+  <a href="#picture_data">P</a> /
+  <a href="#quit">Q</a> /
+  <a href="#random">R</a> /
+  <a href="#save">S</a> /
+  <a href="#test">T</a> /
+  <a href="#verify">U</a> /
+  <a href="#verify">V</a> /
+  <a href="#window_size">W</a> /
+  <a href="#window_style">X</a> /
+  <a href="#window_style">Y</a> /
+  <a href="#window_style">Z</a>
+</p>
+
+<hr>
+
+<h2>15.1</h2>
+<p>The dictionary below is alphabetical and includes entries on every
+   opcode listed in the table above, as well as brief notes on a few opcodes
+   once thought to exist but now disproved.
+</p>
+
+<h2>15.2</h2>
+<p>The Z-machine has the same concept of "table" (as an internal
+   data structure) as Inform.  Specifically, a table is an array of words
+   (in dynamic or static memory) of which the initial entry is the number
+   of subsequent words in the table.  For example, a table with three
+   entries occupies 8 bytes, arranged as the words 3, x, y, z.
+</p>
+
+<h2>15.3</h2>
+<p>In all cases below where one operand is supposed to be in
+   a particular range, behaviour is undefined if it is not.  For instance
+   an interpreter complies with the Standard even if it crashes when an
+   illegal object number (including 0) is given for an object operand.
+   However, see <strong>S</strong> A for guidelines on detecting and dealing with errors.
+</p>
+
+<hr>
+
+<h2 id="add">add</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:20  14     add             a b -> (result)</strong></p>
+<p>Signed 16-bit addition.</p>
+
+<hr>
+
+<h2 id="and">and</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:9    9     and             a b -> (result)</strong></p>
+<p>Bitwise AND.</p>
+
+<hr>
+
+<h2 id="aread">aread</h2>
+<p>This is the Inform name for the keyboard-reading opcode
+   under Version 5 and later.  (Inform calls the same opcode <strong>sread</strong>
+   under Versions 3 and 4.)  See <strong>read</strong> for the specification.
+</p>
+
+<hr>
+
+<h2 id="art_shift">art_shift</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:3    3 5/- art_shift       number places -> (result)</strong></p>
+<p>Does an arithmetic shift of <strong>number</strong> by the given number
+   of places, shifting left (i.e. increasing) if places is positive, right
+   if negative.  In a right shift, the sign bit is preserved as well as
+   being shifted on down.  (The alternative behaviour is <strong>log_shift</strong>.)
+</p>
+
+<p>The "places" operand must be in the range -15 to +15, otherwise behaviour
+   is undefined.
+</p>
+
+<hr>
+
+<h2 id="buffer_mode">buffer_mode</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:242 12  4  buffer_mode     flag</strong></p>
+<p>If set to 1, text output on the lower window in stream 1
+   is buffered up so that it can be word-wrapped properly.  If set to 0, it
+   isn't.
+</p>
+
+<p>In Version 6, this opcode is redundant (the "buffering" window
+   attribute can be set instead).  It is used twice in each of Infocom's
+   Version 6 story files, in the <strong>$verify</strong> routine.  <strong>Frotz</strong> responds by
+   setting the current window's "buffering" attribute, while Infocom's
+   own interpreters respond by doing nothing.  This standard leaves the
+   result of <strong>buffer_mode</strong> undefined in Version 6.
+</p>
+
+<hr>
+
+<h2 id="call">call</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:224  0  1  call            routine ...up to 3 args... -> (result)</strong></p>
+<p>The only call instruction in Version 3, Inform reads this as
+   <strong>call_vs</strong> in higher versions: it calls the routine with 0, 1, 2 or 3
+   arguments as supplied and stores the resulting return value.  (When the
+   address 0 is called as a routine, nothing happens and the return value
+   is false.)
+</p>
+
+<hr>
+
+<h2 id="call_1n">call_1n</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:143  F  5  call_1n         routine</strong></p>
+<p>Executes <strong>routine()</strong> and throws away result.</p>
+
+<hr>
+
+<h2 id="call_1s">call_1s</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:136  8  4  call_1s         routine -> (result)</strong></p>
+<p>Stores <strong>routine()</strong>.</p>
+
+<hr>
+
+<h2 id="call_2n">call_2n</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:26  1A  5  call_2n         routine arg1</strong></p>
+<p>Executes <strong>routine(arg1)</strong> and throws away result.</p>
+
+<hr>
+
+<h2 id="call_2s">call_2s</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:25  19  4  call_2s         routine arg1 -> (result)</strong></p>
+<p>Stores <strong>routine(arg1)</strong>.</p>
+
+<hr>
+
+<h2 id="call_vn">call_vn</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:249 19  5  call_vn         routine ...up to 3 args...</strong></p>
+<p>Like <strong>call</strong>, but throws away result.</p>
+
+<hr>
+
+<h2 id="call_vs">call_vs</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:224  0  4  call_vs         routine ...up to 3 args... -> (result)</strong></p>
+<p>See <strong>call</strong>.</p>
+
+<hr>
+
+<h2 id="call_vn2">call_vn2</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:250 1A  5  call_vn2        routine ...up to 7 args...</strong></p>
+<p>Call with a variable number (from 0 to 7) of arguments, then
+   throw away the result.  This (and <strong>call_vs2</strong>) uniquely have an extra byte
+   of opcode types to specify the types of arguments 4 to 7.  Note that it is
+   legal to use these opcodes with fewer than 4 arguments (in which case the
+   second byte of type information will just be <strong>$ff</strong>).
+</p>
+
+<hr>
+
+<h2 id="call_vs2">call_vs2</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:236  C  4  call_vs2        routine ...up to 7 args... -> (result)</strong></p>
+<p>See <strong>call_vn2</strong>.</p>
+
+<hr>
+
+<h2 id="catch">catch</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:185  9 5/6  catch           -> (result)</strong></p>
+<p>Opposite to <strong>throw</strong> (and occupying the same opcode that <strong>pop</strong>
+   used in Versions 3 and 4).  <strong>catch</strong> returns the current "stack frame".
+</p>
+
+<hr>
+
+<h2 id="check_arg_count">check_arg_count</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:255 1F  5  check_arg_count argument-number</strong></p>
+<p>Branches if the given argument-number (counting
     from 1) has been provided by the routine call to the current routine.
     (This allows routines in Versions 5 and later to distinguish between
-    the calls <B>routine(1)</B> and <B>routine(1,0)</B>, which would otherwise be
+    the calls <strong>routine(1)</strong> and <strong>routine(1,0)</strong>, which would otherwise be
     impossible to tell apart.)
-<P>
-<A NAME="check_unicode"><HR>
-<B>check_unicode</B><P><B><A href="sect14.html#EXT">EXT</A>:12   C 5/* check_unicode   char-number -> (result)</B>
-    <P>
-    Determines whether or not the interpreter can print, or receive from
-    the keyboard, the given Unicode character.  Bit 0 of the result should
-    be set if and only if the interpreter can print the character; bit 1
-    if and only if the interpreter can receive it from the keyboard.
-    Bits 2 to 15 are undefined.
-    <P>
-    <B>***</B> This opcode will only be present in interpreters obeying Standard
-    1.0 or later, so story files should check the standard number of the
-    interpreter before executing this opcode.
-<P>
-<A NAME="clear_attr"><HR>
-<B>clear_attr</B><P><B><A href="sect14.html#2OP">2OP</A>:12   C     clear_attr      object attribute</B>
-    <P>
-    Make <B>object</B> not have the attribute numbered <B>attribute</B>.
-<P>
-<A NAME="clear_flag"><HR>
-<B>"clear_flag"</B><P>A name once used for one of the not-really-present
+</p>
+
+<hr>
+
+<h2 id="check_unicode">check_unicode</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:12   C 5/* check_unicode   char-number -> (result)</strong></p>
+<p>Determines whether or not the interpreter can print, or receive from
+   the keyboard, the given Unicode character.  Bit 0 of the result should
+   be set if and only if the interpreter can print the character; bit 1
+   if and only if the interpreter can receive it from the keyboard.
+   Bits 2 to 15 are undefined.
+</p>
+<p><strong>***</strong> This opcode will only be present in interpreters obeying Standard
+   1.0 or later, so story files should check the standard number of the
+   interpreter before executing this opcode.
+</p>
+
+<hr>
+
+<h2 id="clear_attr">clear_attr</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:12   C     clear_attr      object attribute</strong></p>
+<p>Make <strong>object</strong> not have the attribute numbered <strong>attribute</strong>.</p>
+
+<hr>
+
+<h2 id="clear_flag">"clear_flag"</h2>
+<p>A name once used for one of the not-really-present
     extended Version 5 opcodes (now removed from the specification).
-<P>
-<A NAME="copy_table"><HR>
-<B>copy_table</B><P><B><A href="sect14.html#VAR">VAR</A>:253 1D  5  copy_table      first second size</B>
-    <P>
-    If <B>second</B> is zero, then <B>size</B> bytes of <B>first</B> are zeroed.
-    <P>
-    Otherwise <B>first</B> is copied into <B>second</B>, its length in bytes
-    being the absolute value of <B>size</B> (i.e., <B>size</B> if <B>size</B> is positive,
-    <B>-size</B> if <B>size</B> is negative).
-    <P>   
-    The tables are allowed to overlap.  If <B>size</B> is positive, the
-    interpreter must copy either forwards or backwards so as
-    to avoid corrupting <B>first</B> in the copying process.
-    If <B>size</B> is negative, the interpreter must copy forwards
-    even if this corrupts <B>first</B>.  ('Beyond Zork' uses this to fill an
-    array with spaces.)
-    <P>
-    (Version 0.2 of this document wrongly specified that if <B>size</B> is
-    positive then copying should always run backward.  This results in
-    the player being unable to cross the river near the start of
-    'Journey', as the game uses <B>copy_table</B> to shuffle menu options,
-    and the menu "Downstream, Upstream, Cross, Return" is changed
-    to "Return, Return, Return".)
-<P>
-<A NAME="dec"><HR>
-<B>dec</B><P><B><A href="sect14.html#1OP">1OP</A>:134  6     dec             (variable)</B>
-    <P>
-    Decrement variable by 1.  This is signed, so 0 decrements to -1.
-<P>
-<A NAME="dec_chk"><HR>
-<B>dec_chk</B><P><B><A href="sect14.html#2OP">2OP</A>:4    4     dec_chk         (variable) value ?(label)</B>
-    <P>
-    Decrement variable, and branch if it is now less than the given value.
-<P>
-<A NAME="div"><HR>
-<B>div</B><P><B><A href="sect14.html#2OP">2OP</A>:23  17     div             a b -> (result)</B>
-    <P>
-    Signed 16-bit division.  Division by zero
-    should halt the interpreter with a suitable error message.
-<P>
-<A NAME="draw_picture"><HR>
-<B>draw_picture</B><P><B><A href="sect14.html#EXT">EXT</A>:5    5  6  draw_picture    picture-number y x</B>
-    <P>
-    Displays the picture with the given number.  (y,x)
-    coordinates (of the top left of the picture) are each optional, in that
-    a value of zero for y or x means the cursor y or x coordinate
-    in the current window.  It is illegal to call this with an invalid
-    picture number.
-<P>
-<A NAME="encode_text"><HR>
-<B>encode_text</B><P><B><A href="sect14.html#VAR">VAR</A>:252 1C  5  encode_text     zscii-text length from coded-text</B>
-    <P>
-    Translates a ZSCII word to Z-encoded text format
-    (stored at <B>coded-text</B>), as if it were an entry in the dictionary.
-    The text begins at <B>from</B> in the <B>zscii-text</B> buffer and is <B>length</B>
-    characters long.  (Some interpreters ignore this and keep translating
-    until they hit a 0 character anyway, or have already filled up the 6-byte
-    Z-encoded string.)
-<P>
-<A NAME="erase_line"><HR>
-<B>erase_line</B><P><B><A href="sect14.html#VAR">VAR</A>:238  E 4/6 erase_line      value</B>
-    <P>
-    Versions 4 and 5: if the value is 1, erase from the current
-    cursor position to the end of its line in the current window.
-    If the value is anything other than 1, do nothing.
-    <P>
-    Version 6: if the value is 1, erase from the current
-    cursor position to the end of the its line in the current window.
-    If not, erase the given number of pixels minus one across
-    from the cursor (clipped to stay inside the right margin).
-    The cursor does not move.
-<P>
-<A NAME="erase_picture"><HR>
-<B>erase_picture</B><P><B><A href="sect14.html#EXT">EXT</A>:7    7  6  erase_picture   picture-number y x</B>
-    <P>
-    Like <B>draw_picture</B>, but paints the appropriate region
-    to the background colour for the given window.  It is illegal to call this
-    with an invalid picture number.
-<P>
-<A NAME="erase_window"><HR>
-<B>erase_window</B><P><B><A href="sect14.html#VAR">VAR</A>:237  D  4  erase_window    window</B>
-    <P>
-    Erases window with given number (to background colour);
-    or if -1 it unsplits the screen and clears the lot; or if -2 it
-    clears the screen without unsplitting it.  In cases -1 and -2, the
-    cursor may move (see <B>S</B> 8 for precise details).
-<P>
-<A NAME="extended"><HR>
-<B>"extended"</B><P>This byte (decimal 190) is not an instruction, but
-    indicates that the opcode is "extended": the next byte contains the
-    number in the extended set.
-<P>
-<A NAME="get_child"><HR>
-<B>get_child</B><P><B><A href="sect14.html#1OP">1OP</A>:130  2     get_child       object -> (result) ?(label)</B>
-    <P>
-    Get first object contained in given object, branching if
-    this exists, i.e. is not <B>nothing</B> (i.e., is not 0).
-<P>
-<A NAME="get_cursor"><HR>
-<B>get_cursor</B><P><B><A href="sect14.html#VAR">VAR</A>:240 10 4/6 get_cursor      array</B>
-    <P>
-    Puts the current cursor row into the word 0 of the
-    given array, and the current cursor column into word 1.
-    (The array is not a table and has no size information in its initial entry.)
-<P>
-<A NAME="get_next_prop"><HR>
-<B>get_next_prop</B><P><B><A href="sect14.html#2OP">2OP</A>:19  13     get_next_prop   object property -> (result)</B>
-    <P>
-    Gives the number of the next property provided by the
-    quoted object.  This may be zero, indicating the end of the property list;
-    if called with zero, it gives the first property number present.  It is
-    illegal to try to find the next property of a property which does not
-    exist, and an interpreter should halt with an error message (if it can
-    efficiently check this condition).
-<P>
-<A NAME="get_parent"><HR>
-<B>get_parent</B><P><B><A href="sect14.html#1OP">1OP</A>:131  3     get_parent      object -> (result)</B>
-    <P>
-    Get parent object (note that this has no "branch if
-    exists" clause).
-<P>
-<A NAME="get_prop"><HR>
-<B>get_prop</B><P><B><A href="sect14.html#2OP">2OP</A>:17  11     get_prop        object property -> (result)</B>
-    <P>
-    Read property from object (resulting in the default value
-    if it had no such declared property).  If the property has length 1, the
-    value is only that byte.  If it has length 2, the first two bytes
-    of the property are taken as a word value.  It is illegal for the
-    opcode to be used if the property has length greater than 2, and
-    the result is unspecified.
-<P>
-<A NAME="get_prop_addr"><HR>
-<B>get_prop_addr</B><P><B><A href="sect14.html#2OP">2OP</A>:18  12     get_prop_addr   object property -> (result)</B>
-    <P>
-    Get the byte address (in dynamic memory) of the
-    property data for the given object's property.  This must return 0 if
-    the object hasn't got the property.
-<P>
-<A NAME="get_prop_len"><HR>
-<B>get_prop_len</B><P><B><A href="sect14.html#1OP">1OP</A>:132  4     get_prop_len    property-address -> (result)</B>
-    <P>
-    Get length of property data (in bytes) for the given
-    object's property.  It is illegal to try to find the property length
-    of a property which does not exist for the given object, and an
-    interpreter should halt with an error message (if it can efficiently
-    check this condition).
-<P>
-<A NAME="get_sibling"><HR>
-<B>get_sibling</B><P><B><A href="sect14.html#1OP">1OP</A>:129  1     get_sibling     object -> (result) ?(label)</B>
-    <P>
-    Get next object in tree, branching if this exists, i.e.
-    is not 0.
-<P>
-<A NAME="get_wind_prop"><HR>
-<B>get_wind_prop</B><P><B><A href="sect14.html#EXT">EXT</A>:19  13  6  get_wind_prop   window property-number -> (result)</B>
-    <P>
-    Reads the given property of the given window (see
-    <B>S</B> 8).
-<P>
-<A NAME="inc"><HR>
-<B>inc</B><P><B><A href="sect14.html#1OP">1OP</A>:133  5     inc             (variable)</B>
-    <P>
-    Increment variable by 1.  (This is signed, so -1 increments
-    to 0.)
-<P>
-<A NAME="inc_chk"><HR>
-<B>inc_chk</B><P><B><A href="sect14.html#2OP">2OP</A>:5    5     inc_chk         (variable) value ?(label)</B>
-    <P>
-    Increment variable, and branch if now greater than value.
-<P>
-<A NAME="input_stream"><HR>
-<B>input_stream</B><P><B><A href="sect14.html#VAR">VAR</A>:244 14  3  input_stream    number</B>
-    <P>
-    Selects the current input stream.
-<P>
-<A NAME="insert_obj"><HR>
-<B>insert_obj</B><P><B><A href="sect14.html#2OP">2OP</A>:14   E     insert_obj      object destination</B>
-    <P>
-    Moves object O to become the first child of the
-    destination object D.  (Thus, after the operation the <B>child</B> of D
-    is O, and the <B>sibling</B> of O is whatever was previously the
-    <B>child</B> of D.)  All children of O move with it.
-    (Initially O can be at
-    any point in the object tree; it may legally have <B>parent</B> zero.)
-<P>
-<A NAME="je"><HR>
-<B>je</B><P><B><A href="sect14.html#2OP">2OP</A>:1    1     je              a b ?(label)</B>
-    <P>
-    Jump if <B>a</B> is equal to any of the subsequent operands.  (Thus
-    <B>@je a</B> never jumps and <B>@je a b</B> jumps if <B>a = b</B>.)
-<P>
-<A NAME="jg"><HR>
-<B>jg</B><P><B><A href="sect14.html#2OP">2OP</A>:3    3     jg              a b ?(label)</B>
-    <P>
-    Jump if <B>a > b</B> (using a signed 16-bit comparison).
-<P>
-<A NAME="jin"><HR>
-<B>jin</B><P><B><A href="sect14.html#2OP">2OP</A>:6    6     jin             obj1 obj2 ?(label)</B>
-    <P>
-    Jump if object <B>a</B> is a direct child of <B>b</B>, i.e., if
-    <B>parent</B> of <B>a</B> is <B>b</B>.
-<P>
-<A NAME="jl"><HR>
-<B>jl</B><P><B><A href="sect14.html#2OP">2OP</A>:2    2     jl              a b ?(label)</B>
-    <P>
-    Jump if <B>a < b</B> (using a signed 16-bit comparison).
-<P>
-<A NAME="jump"><HR>
-<B>jump</B><P><B><A href="sect14.html#1OP">1OP</A>:140  C     jump            ?(label)</B>
-    <P>
-    Jump (unconditionally) to the given label.  (This is not a
-    branch instruction and the operand is a 2-byte signed offset to apply
-    to the program counter.)  It is legal for this to jump into a different
-    routine (which should not change the routine call state), although it
-    is considered bad practice to do so and the <B>Txd</B> disassembler is
-    confused by it.
-<P>
-<A NAME="jz"><HR>
-<B>jz</B><P><B><A href="sect14.html#1OP">1OP</A>:128  0     jz              a ?(label)</B>
-    <P>
-    Jump if <B>a = 0</B>.
-<P>
-<A NAME="load"><HR>
-<B>load</B><P><B><A href="sect14.html#1OP">1OP</A>:142  E     load            (variable) -> (result)</B>
-    <P>
-    The value of the variable referred to by the operand
-    is stored in the result.  (Inform doesn't use this; see the notes to
-    <B>S</B> 14.)
-<P>
-<A NAME="loadb"><HR>
-<B>loadb</B><P><B><A href="sect14.html#2OP">2OP</A>:16  10     loadb           array byte-index -> (result)</B>
-    <P>
-    Stores <B>array->byte-index</B> (i.e., the byte at address
-    <B>array+byte-index</B>, which must lie in static or dynamic memory).
-<P>
-<A NAME="loadw"><HR>
-<B>loadw</B><P><B><A href="sect14.html#2OP">2OP</A>:15   F     loadw           array word-index -> (result)</B>
-    <P>
-    Stores <B>array-->word-index</B> (i.e., the word at address
-    <B>array+2*word-index</B>, which must lie in static or dynamic memory).
-<P>
-<A NAME="log_shift"><HR>
-<B>log_shift</B><P><B><A href="sect14.html#EXT">EXT</A>:2    2  5  log_shift       number places -> (result)</B>
-    <P>
-    Does a logical shift of <B>number</B> by the given number of
-    <B>places</B>, shifting left (i.e. increasing) if <B>places</B> is positive, right
-    if <B>negative</B>.  In a right shift, the sign is zeroed instead of being
-    shifted on.  (See also <B>art_shift</B>.)
-<P>
-<A NAME="make_menu"><HR>
-<B>make_menu</B><P><B><A href="sect14.html#EXT">EXT</A>:27  1B  6  make_menu       number table ?(label)</B>
-    <P>
-    Controls menus with numbers greater than 2 (i.e., it
-    doesn't control the three system menus).  If the table supplied is 0,
-    the menu is removed.  Otherwise it is a table of tables.  Each table is
-    a ZSCII string: the first item being a menu name, subsequent ones the
-    entries.
-<P>
-<A NAME="mod"><HR>
-<B>mod</B><P><B><A href="sect14.html#2OP">2OP</A>:24  18     mod             a b -> (result)</B>
-    <P>
-    Remainder after signed 16-bit division.  Division by zero
-    should halt the interpreter with a suitable error message.
-<P>
-<A NAME="mouse_window"><HR>
-<B>mouse_window</B><P><B><A href="sect14.html#EXT">EXT</A>:23  17  6  mouse_window    window</B>
-    <P>
-    Constrain the mouse arrow to sit inside the given window.
-    By default it sits in window 1.  Setting to -1 takes all restriction away.
-    (The mouse clicks are not reported if the arrow is outside the window
-    and interpreters are presumably supposed to hold the arrow there by
-    hardware means if possible.)
-<P>
-<A NAME="move_window"><HR>
-<B>move_window</B><P><B><A href="sect14.html#EXT">EXT</A>:16  10  6  move_window     window y x</B>
-    <P>
-    Moves the given window to pixels (y,x): (1,1) being
-    the top left.  Nothing actually happens (since windows are entirely
-    notional transparencies): but any future plotting happens in the new place.
-<P>
-<A NAME="mul"><HR>
-<B>mul</B><P><B><A href="sect14.html#2OP">2OP</A>:22  16     mul             a b -> (result)</B>
-    <P>
-    Signed 16-bit multiplication.
-<P>
-<A NAME="new_line"><HR>
-<B>new_line</B><P><B><A href="sect14.html#0OP">0OP</A>:187  B     new_line</B>
-    <P>
-    Print carriage return.
-<P>
-<A NAME="nop"><HR>
-<B>nop</B><P><B><A href="sect14.html#0OP">0OP</A>:180  4 1/- nop</B>
-    <P>
-    Probably the official "no operation" instruction, which,
-    appropriately, was never operated (in any of the Infocom datafiles):
-    it may once have been a breakpoint.
-<P>
-<A NAME="not"><HR>
-<B>not</B><P><B><A href="sect14.html#1OP">1OP</A>:143  F 1/4 not             value -> (result)</B>
-    <P>
-    <B><A href="sect14.html#VAR">VAR</A>:248 18 5/6 not             value -> (result)</B>
-    <P>
-    Bitwise NOT (i.e., all 16 bits reversed).  Note that in Versions
-    3 and 4 this is a 1OP instruction, reasonably since it has 1 operand,
-    but in later Versions it was moved into the extended set
-    to make room for <B>call_1n</B>.
-<P>
-<A NAME="or"><HR>
-<B>or</B><P><B><A href="sect14.html#2OP">2OP</A>:8    8     or              a b -> (result)</B>
-    <P>
-    Bitwise OR.
-<P>
-<A NAME="output_stream"><HR>
-<B>output_stream</B><P>
-<B><A href="sect14.html#VAR">VAR</A>:243 13  3  output_stream   number</B>
-    <P>
-    <B>            5  output_stream   number table</B>
-    <P>
-    <B>            6  output_stream   number table width</B>
-    <P>
-    If <B>stream</B> is 0, nothing happens.  If it is
-    positive, then that stream is selected; if negative, deselected.
-    (Recall that several different streams can be selected at once.)
-    <P>
-    When stream 3 is selected, a <B>table</B> must be given into which text
-    can be printed.  The first word always holds the number of characters
-    printed, the actual text being stored at bytes <B>table+2</B> onward.
-    It is not the interpreter's responsibility to worry about the length
-    of this table being overrun.
-    <P>
-    In Version 6, a <B>width</B> field may optionally be given: if this is
-    non-zero, text will then be justified as if it were in the window with
-    that number (if width is positive) or a box -<B>width</B> pixels wide (if
-    negative).  Then the table will contain not ordinary text but formatted
-    text: see <B>print_form</B>.
-<P>
-<A NAME="picture_data"><HR>
-<B>picture_data</B><P><B><A href="sect14.html#EXT">EXT</A>:6    6  6  picture_data    picture-number array ?(label)</B>
-    <P>
-    Asks the interpreter for data on the picture with
-    the given number.  If the picture number is valid, a branch occurs and
-    information is written to the array: the height in word 0,
-    the width in word 1, in pixels.  (This is an array, not a "table"
-    with initial size information.)
-    <P>
-    Otherwise, if the picture number is zero, the interpreter writes the
-    number of available pictures into word 0 of the array and
-    the release number of the picture file into word 1.  (Infocom's
-    first Version 6 Amiga interpreter did not handle this case properly,
-    and early releases of 'Zork Zero' did not use it.  The feature may
-    have been added on the MSDOS release of 'Zork Zero'.)
-    <P>
-    Otherwise, nothing happens.
-<P>
-<A NAME="picture_table"><HR>
-<B>picture_table</B><P><B><A href="sect14.html#EXT">EXT</A>:28  1C  6  picture_table   table</B>
-    <P>
-    Given a table of picture numbers, the interpreter may if it
-    wishes load or unpack these pictures from disc into a cache
-    for convenient rapid plotting later.  'Zork Zero' makes
-    frequent use of this, for instance for its peggleboard
-    display.  Moreover, it expects rapid plotting only for those
-    images listed in the last call to <B>picture_table</B>.  In other words,
-    any images still in the cache when <B>picture_table</B> is called
-    can safely be thrown away.  (The Amiga interpreter 6.14
-    uses a cache of size 5K and never caches any individual
-    image larger than 1K.)
-<P>
-<A NAME="piracy"><HR>
-<B>piracy</B><P><B><A href="sect14.html#0OP">0OP</A>:191  F 5/- piracy          ?(label)</B>
-    <P>
-    Branches if the game disc is believed to be genuine by the
-    interpreter (which is assumed to have some arcane way of finding out).
-    Interpreters are asked to be gullible and to unconditionally branch.
-<P>
-<A NAME="pop"><HR>
-<B>pop</B><P><B><A href="sect14.html#0OP">0OP</A>:185  9  1  pop</B>
-    <P>
-    Throws away the top item on the stack.  (This was useful to
-    lose unwanted routine call results in early Versions.)
-<P>
-<A NAME="pop_stack"><HR>
-<B>pop_stack</B><P><B><A href="sect14.html#EXT">EXT</A>:21  15  6  pop_stack       items stack</B>
-    <P>
-    The given number of items are thrown away from the top
-    of a stack: by default the system stack, otherwise the one given as a
-    second operand.
-<P>
-<A NAME="print"><HR>
-<B>print</B><P><B><A href="sect14.html#0OP">0OP</A>:178  2     print           <literal-string></B>
-    <P>
-    Print the quoted (literal) Z-encoded string.
-<P>
-<A NAME="print_addr"><HR>
-<B>print_addr</B><P><B><A href="sect14.html#1OP">1OP</A>:135  7     print_addr      byte-address-of-string</B>
-    <P>
-    Print (Z-encoded) string at given byte address,
-    in dynamic or static memory.
-<P>
-<A NAME="print_char"><HR>
-<B>print_char</B><P><B><A href="sect14.html#VAR">VAR</A>:229  5     print_char      output-character-code</B>
-    <P>
-    Print a ZSCII character.  The operand must be a character code
-    defined in ZSCII for output (see <B>S</B> 3).  In particular, it must
-    certainly not be negative or larger than 1023.
-<P>
-<A NAME="print_form"><HR>
-<B>print_form</B><P><B><A href="sect14.html#EXT">EXT</A>:26  1A  6  print_form      formatted-table</B>
-    <P>
-    Prints a formatted table of the kind written to
-    output stream 3 when formatting is on.  This is an elaborated version
-    of <B>print_table</B> to cope with
-    fonts, pixels and other impedimenta.  It is a sequence of lines,
-    terminated with a zero word.  Each line is a word containing the number
-    of characters, followed by that many bytes which hold the characters
-    concerned.
-<P>
-<A NAME="print_num"><HR>
-<B>print_num</B><P><B><A href="sect14.html#VAR">VAR</A>:230  6     print_num       value</B>
-    <P>
-    Print (signed) number in decimal.
-<P>
-<A NAME="print_obj"><HR>
-<B>print_obj</B><P><B><A href="sect14.html#1OP">1OP</A>:138  A     print_obj       object</B>
-    <P>
-    Print short name of object (the Z-encoded string in the
-    object header, not a property).  If the object number is invalid, the
-    interpreter should halt with a suitable error message.
-<P>
-<A NAME="print_paddr"><HR>
-<B>print_paddr</B><P><B><A href="sect14.html#1OP">1OP</A>:141  D     print_paddr     packed-address-of-string</B>
-    <P>
-    Print the (Z-encoded) string at the given packed
-    address in high memory.
-<P>
-<A NAME="print_ret"><HR>
-<B>print_ret</B><P><B><A href="sect14.html#0OP">0OP</A>:179  3     print_ret       <literal-string></B>
-    <P>
-    Print the quoted (literal) Z-encoded string, then print
-    a new-line and then return true (i.e., 1).
-<P>
-<A NAME="print_table"><HR>
-<B>print_table</B><P><B><A href="sect14.html#VAR">VAR</A>:254 1E  5  print_table     zscii-text width height skip</B>
-    <P>
-    Print a rectangle of text on screen spreading right and
-    down from the current cursor position, of given <B>width</B> and <B>height</B>, from
-    the table of ZSCII text given.  (Height is optional and defaults to 1.)
-    If a <B>skip</B> value is given, then that many characters of text are skipped
-    over in between each line and the next.  (So one could make this display,
-    for instance, a 2 by 3 window onto a giant 40 by 40 character graphics
-    map.)
-<P>
-<A NAME="print_unicode"><HR>
-<B>print_unicode</B><P><B><A href="sect14.html#EXT">EXT</A>:11   B 5/* print_unicode   char-number</B>
-    <P>
-    Print a Unicode character.  See <B>S</B> 3.8.5.4 and <B>S</B> 7.5 for details.
-    The given character code must be defined in Unicode.
-    <P>
-    <B>***</B> This opcode will only be present in interpreters obeying Standard
-    1.0 or later, so story files should check the standard number of the
-    interpreter before executing this opcode.
-<P>
-<A NAME="pull"><HR>
-<B>pull</B><P><B><A href="sect14.html#VAR">VAR</A>:233  9  1  pull            (variable)</B>
-    <P>
-    <B>            6  pull            stack -> (result)</B>
-    <P>
-    Pulls value off a stack.  (If the stack underflows, the
-    interpreter should halt with a suitable error message.)  In Version 6,
-    the stack in question may be specified as a user one: otherwise it
-    is the game stack.
-<P>
-<A NAME="push"><HR>
-<B>push</B><P><B><A href="sect14.html#VAR">VAR</A>:232  8     push            value</B>
-    <P>
-    Pushes value onto the game stack.
-<P>
-<A NAME="push_stack"><HR>
-<B>push_stack</B><P><B><A href="sect14.html#EXT">EXT</A>:24  18  6  push_stack      value stack ?(label)</B>
-    <P>
-    Pushes the value onto the specified user stack, and
-    branching if this was successful.  If the stack overflows, nothing
-    happens (this is not an error condition).
-<P>
-<A NAME="put_prop"><HR>
-<B>put_prop</B><P><B><A href="sect14.html#VAR">VAR</A>:227  3     put_prop        object property value</B>
-    <P>
-    Writes the given value to the given property of the
-    given object.  If the property does not exist for that object, the
-    interpreter should halt with a suitable error message.  If the
-    property length is 1, then the interpreter should store only the
-    least significant byte of the value.  (For instance, storing -1
-    into a 1-byte property results in the property value 255.)
-    As with <B>get_prop</B> the property length must not be more than 2:
-    if it is, the behaviour of the opcode is undefined.
-<P>
-<A NAME="put_wind_prop"><HR>
-<B>put_wind_prop</B><P><B><A href="sect14.html#EXT">EXT</A>:25  19  6  put_wind_prop   window property-number value</B>
-    <P>
-    Writes a window property (see <B>get_wind_prop</B>).
-    This should only be used when there is no direct command (such as
-    <B>move_window</B>) to use instead, as some such operations may have
-    side-effects.
-<P>
-<A NAME="quit"><HR>
-<B>quit</B><P><B><A href="sect14.html#0OP">0OP</A>:186  A     quit</B>
-    <P>
-    Exit the game immediately.  (Any "Are you sure?" question
-    must be asked by the game, not the interpreter.)  It is not legal to
-    return from the main routine (that is, from where execution first
-    begins) and this must be used instead.
-<P>
-<A NAME="random"><HR>
-<B>random</B><P><B><A href="sect14.html#VAR">VAR</A>:231  7     random          range -> (result)</B>
-    <P>
-    If <B>range</B> is positive, returns a uniformly random number
-    between 1 and <B>range</B>.  If <B>range</B> is negative, the random number generator
-    is seeded to that value and the return value is 0.  Most interpreters
-    consider giving 0 as <B>range</B> illegal (because they attempt a division
-    with remainder by the <B>range</B>), but correct behaviour is to reseed the
-    generator in as random a way as the interpreter can (e.g. by using the
-    time in milliseconds).
-    <P>
-    (Some version 3 games, such as 'Enchanter' release 29, had a debugging
-    verb <B>#random</B> such that typing, say, <B>#random 14</B> caused a call of
-    <B>random</B> with -14.)
-<P>
-<A NAME="read"><HR>
-<B>read</B><P><B><A href="sect14.html#VAR">VAR</A>:228  4  1  sread           text parse</B>
-    <P>
-    <B>            4  sread           text parse time routine</B>
-    <P>
-    <B>            5  aread           text parse time routine -> (result)</B>
-    <P>
-    (Note that Inform internally names the <B>read</B> opcode as <B>aread</B>
-    in Versions 5 and later and <B>sread</B> in Versions 3 and 4.)
-    <P>
-    This opcode reads a whole command from the keyboard (no prompt is
-    automatically displayed).  It is legal for this to be called with the
-    cursor at any position on any window.
-    <P>
-    In Versions 1 to 3, the status line is automatically redisplayed first.
-    <P>
-    A sequence of characters is read in from the current input stream until
-    a carriage return (or, in Versions 5 and later, any terminating character)
-    is found.
-    <P>
-    In Versions 1 to 4, byte 0 of the <B>text-buffer</B> should initially contain
-    the maximum number of letters which can be typed, minus 1 (the interpreter
-    should not accept more than this).  The text typed is reduced to lower case
-    (so that it can tidily be printed back by the program if need be)
-    and stored in bytes 1 onward, with a zero terminator (but without any other
-    terminator, such as a carriage return code).  (This means that
-    if byte 0 contains n then the buffer must contain n+1 bytes, which
-    makes it a <B>string</B> array of length n in Inform terminology.)
-    <P>
-    In Versions 5 and later, byte 0 of the <B>text-buffer</B> should initially contain
-    the maximum number of letters which can be typed (the interpreter should
-    not accept more than this).  The interpreter stores the number of characters
-    actually typed in byte 1 (not counting the terminating character), and the
-    characters themselves in bytes 2 onward (not storing the terminating
-    character).  (Some interpreters wrongly add a zero byte after the text anyway,
-    so it is wise for the buffer to contain at least n+3 bytes.)
-    <P>
-    Moreover, if byte 1 contains a positive value at the start of the
-    input, then <B>read</B> assumes that number of characters are left over from an
-    interrupted previous input, and writes the new characters after those
-    already there.  Note that the interpreter does not redisplay the
-    characters left over: the game does this, if it wants to.  This is
-    unfortunate for any interpreter wanting to give input text a distinctive
-    appearance on-screen, but 'Beyond Zork', 'Zork Zero' and 'Shogun'
-    clearly require it.  ("Just a tremendous pain in my butt" -- Andrew
-    Plotkin; "the most unfortunate feature of the Z-machine design"
-    -- Stefan Jokisch.)
-    <P>
-    In Version 4 and later, if the operands <B>time</B> and <B>routine</B> are
-    supplied (and non-zero) then the routine call <B>routine()</B> is
-    made every <B>time/10</B> seconds during the keyboard-reading process.  If
-    this routine returns true, all input is erased (to zero) and the
-    reading process is terminated at once.  (The terminating character code
-    is 0.)  The <B>routine</B> is permitted to print to the screen even if it
-    returns false to signal "carry on": the interpreter should notice and
-    redraw the input line so far, before input continues.  (<B>Frotz</B> notices
-    by looking to see if the cursor position is at the left-hand margin
-    after the interrupt routine has returned.)
-    <P>
-    If input was terminated in the usual way, by the player typing a
-    carriage return, then a carriage return is printed (so the cursor moves
-    to the next line).  If it was interrupted, the cursor is left at
-    the rightmost end of the text typed in so far.
-    <P>
-    Next, lexical analysis is performed on the text (except that in Versions 5
-    and later, if <B>parse-buffer</B> is zero then this is omitted).  Initially,
-    byte 0 of the <B>parse-buffer</B> should hold the maximum number of textual
-    words which can be parsed.  (If this is n, the buffer must be at least
-    2 + 4*n  bytes long to hold the results of the analysis.)
-    <P>
-    The interpreter divides the text into words and looks them up in the
-    dictionary, as described in <B>S</B> 13.  The number of words is written in
-    byte 1 and one 4-byte block is
-    written for each word, from byte 2 onwards (except that it should stop
-    before going beyond the maximum number of words specified).  Each block
-    consists of the byte address
-    of the word in the dictionary, if it is in the dictionary, or 0 if it isn't;
-    followed by a byte giving the number of letters in the word; and finally
-    a byte giving the position in the <B>text-buffer</B> of the first letter of
-    the word.
-    <P> 
-    In Version 5 and later, this is a store instruction: the return value
-    is the terminating character (note that the user pressing his "enter"
-    key may cause either 10 or 13 to be returned; the author recommends
-    that interpreters return 10).  A timed-out input returns 0.
-    <P>
-    (Versions 1 and 2 and early Version 3 games mistakenly write the parse buffer
-    length 240 into byte 0 of the parse buffer: later games fix this bug and
-    write 59, because 2+4*59 = 238 so that 59 is the maximum number
-    of textual words which can be parsed into a buffer of length 240 bytes.  Old
-    versions of the Inform 5 library commit the same error.  Neither mistake
-    has very serious consequences.)
-    <P>
-    (Interpreters are asked to halt with a suitable error message if
-    the text or parse buffers have length of less than 3 or 6 bytes,
-    respectively: this sometimes occurs due to a previous array being
-    overrun, causing bugs which are very difficult to find.)
-<P>
-<A NAME="read_char"><HR>
-<B>read_char</B><P><B><A href="sect14.html#VAR">VAR</A>:246 16  4  read_char       1 time routine -> (result)</B>
-    <P>
-    Reads a single character from input stream 0 (the
-    keyboard).  The first operand must be 1 (presumably it was provided
-    to support multiple input devices, but only the keyboard was ever
-    used).  <B>time</B> and <B>routine</B> are optional (in Versions 4 and
-    later only) and dealt with as in <B>read</B> above.
-<P>
-<A NAME="read_mouse"><HR>
-<B>read_mouse</B><P><B><A href="sect14.html#EXT">EXT</A>:22  16  6  read_mouse      array</B>
-    <P>
-    The four words in the <B>array</B> are written with the mouse
-    y coordinate, x coordinate, button bits (low bits on the right of the
-    mouse, rising as one looks left), and a menu word.  In the menu word,
-    the upper byte is the menu number and the lower byte is the
-    item number (from 0).  (Note that the array isn't a table and
-    has no initial size information.  The data is written to words
-    0 to 3 in the array.)
-<P>
-<A NAME="remove_obj"><HR>
-<B>remove_obj</B><P><B><A href="sect14.html#1OP">1OP</A>:137  9     remove_obj      object</B>
-    <P>
-    Detach the object from its parent, so that it no longer
-    has any parent.  (Its children remain in its possession.)
-<P>
-<A NAME="restart"><HR>
-<B>restart</B><P><B><A href="sect14.html#0OP">0OP</A>:183  7  1  restart</B>
-    <P>
-    Restart the game.  (Any "Are you sure?" question
-    must be asked by the game, not the interpreter.)  The only pieces of
-    information surviving from the previous state are the "transcribing
-    to printer" bit (bit 0 of 'Flags 2' in the header, at address <B>$10</B>)
-    and the "use fixed pitch font" bit (bit 1 of 'Flags 2').
-    <P>
-    In particular, changing the program start address before a restart will
-    not have the effect of restarting from this new address.
-<P>
-<A NAME="restore"><HR>
-<B>restore</B><P><B><A href="sect14.html#0OP">0OP</A>:182  6  1  restore         ?(label)</B>
-    <P>
-    <B><A href="sect14.html#0OP">0OP</A>:182  5  4  restore         -> (result)</B>
-    <P>
-    <B><A href="sect14.html#EXT">EXT</A>:1    1  5  restore         table bytes name -> (result)</B>
-    <P>
-    See <B>save</B>.  In Version 3, the branch is never actually made,
-    since either the game has successfully picked up again from where it
-    was saved, or it failed to load the save game file.
-    <P>
-    As with <B>restart</B>, the transcription and fixed font bits survive.
-    The interpreter gives the game a way of knowing that a restore has
-    just happened (see <B>save</B>).
-    <P>
-    <B>***</B> From Version 5 it can have optional parameters as
-    <B>save</B> does, and returns the number of bytes loaded if so.  (Whether
-    Infocom intended these options as part of Version 5 is doubtful,
-    but it's too useful a feature to exclude from this Standard.)
-    <P>
-    If the restore fails, 0 is returned, but once again this necessarily
-    happens since otherwise control is already elsewhere.
-<P>
-<A NAME="restore_undo"><HR>
-<B>restore_undo</B><P><B><A href="sect14.html#EXT">EXT</A>:10   A  5  restore_undo    -> (result)</B>
-    <P>
-    Like <B>restore</B>, but restores the state saved to memory
-    by <B>save_undo</B>.  (The optional parameters of <B>restore</B> may not be
-    supplied.)  The behaviour of <B>restore_undo</B> is unspecified if no
-    <B>save_undo</B> has previously occurred (and a game may not legally use it):
-    an interpreter might simply ignore this.
-<P>
-<A NAME="ret"><HR>
-<B>ret</B><P><B><A href="sect14.html#1OP">1OP</A>:139  B     ret             value</B>
-    <P>
-    Returns from the current routine with the value given.
-<P>
-<A NAME="ret_popped"><HR>
-<B>ret_popped</B><P><B><A href="sect14.html#0OP">0OP</A>:184  8     ret_popped</B>
-    <P>
-    Pops top of stack and returns that.  (This is equivalent
-    to <B>ret sp</B>, but is one byte cheaper.)
-<P>
-<A NAME="rfalse"><HR>
-<B>rfalse</B><P><B><A href="sect14.html#0OP">0OP</A>:177  1     rfalse</B>
-    <P>
-    Return false (i.e., 0) from the current routine.
-<P>
-<A NAME="rtrue"><HR>
-<B>rtrue</B><P><B><A href="sect14.html#0OP">0OP</A>:176  0     rtrue</B>
-    <P>
-    Return true (i.e., 1) from the current routine.
-<P>
-<A NAME="save"><HR>
-<B>save</B><P><B><A href="sect14.html#0OP">0OP</A>:181  5  1  save            ?(label)</B>
-    <P>
-    <B><A href="sect14.html#0OP">0OP</A>:181  5  4  save            -> (result)</B>
-    <P>
-    <B><A href="sect14.html#EXT">EXT</A>:0    0  5  save            table bytes name -> (result)</B>
-    <P>
-    On Versions 3 and 4, attempts to save the game (all questions
-    about filenames are asked by interpreters) and branches if successful.
-    From Version 5 it is a store rather than a branch instruction;
-    the store value is 0 for failure, 1 for "save succeeded" and 2 for
-    "the game is being restored and is resuming execution again from here,
-    the point where it was saved".
-    <P>
-    It is illegal to use this opcode within an interrupt routine
-    (one called asynchronously by a sound effect, or keyboard timing,
-    or newline counting).
-    <P>
-    <B>***</B> The extension also has (optional) parameters, which save a region of
-    the save area, whose address and length are in bytes, and provides a
-    suggested filename: name is a pointer to an array of ASCII characters
-    giving this name (as usual preceded by a byte giving the number of
-    characters).  See <B>S</B> 7.6.  (Whether Infocom intended these options
-    as part of Version 5 is doubtful, but it's too useful a feature to
-    exclude from this Standard.)
-<P>
-<A NAME="save_undo"><HR>
-<B>save_undo</B><P><B><A href="sect14.html#EXT">EXT</A>:9    9  5  save_undo       -> (result)</B>
-    <P>
-    Like <B>save</B>, except that the optional parameters may not
-    be specified: it saves the game into a cache of memory held by the
-    interpreter.  If the interpreter is unable to provide this feature, it
-    must return -1: otherwise it returns the <B>save</B> return value.
-    <P>
-    It is illegal to use this opcode within an interrupt routine
-    (one called asynchronously by a sound effect, or keyboard timing,
-    or newline counting).
-    <P>
-    (This call is typically needed once per turn, in order to implement
-    "UNDO", so it needs to be quick.)
-<P>
-<A NAME="scan_table"><HR>
-<B>scan_table</B><P><B><A href="sect14.html#VAR">VAR</A>:247 17  4  scan_table      x table len form -> (result)</B>
-    <P>
-    Is <B>x</B> one of the words in <B>table</B>, which is <B>len</B> words
-    long?  If so, return the address where it first occurs and branch.  If not,
-    return 0 and don't.
-    <P>
-    The <B>form</B> is optional (and only used in Version 5?): bit 8 is set for
-    words, clear for bytes: the rest contains the length of each field in
-    the table.  (The first word or byte in each field being the one looked
-    at.)  Thus <B>$82</B> is the default.
-<P>
-<A NAME="scroll_window"><HR>
-<B>scroll_window</B><P><B><A href="sect14.html#EXT">EXT</A>:20  14  6  scroll_window   window pixels</B>
-    <P>
-    Scrolls the given window by the given number of pixels
-    (a negative value scrolls backwards, i.e., down) writing in blank
-    (background colour) pixels in the new lines.  This can be done to any
-    window and is not related to the "scrolling" attribute of a window.
-<P>
-<A NAME="set_attr"><HR>
-<B>set_attr</B><P><B><A href="sect14.html#2OP">2OP</A>:11   B     set_attr        object attribute</B>
-    <P>
-    Make <B>object</B> have the attribute numbered <B>attribute</B>.
-<P>
-<A NAME="set_colour"><HR>
-<B>set_colour</B><P><B><A href="sect14.html#2OP">2OP</A>:27  1B  5  set_colour      foreground background</B>
-<P>
-<B>                6  set_colour      foreground background window</B>
-    <P>
-    If coloured text is available, set text to be
-    foreground-against-background.
-    (Flush any buffered text to screen, in the old colours, first.)  In
-    version 6, the <B>window</B> argument is optional and is by default
-    the current window.  (This option is supported in Infocom's Amiga
-    and DOS interpreters.)
-    <P>
-    (One Version 5 game uses this: 'Beyond Zork' (Paul David Doherty reports
-    it as used "76 times in 870915 and 870917, 58 times in 871221") and from
-    the structure of the table it clearly logically belongs in version 5.)
-<P>
-<A NAME="set_cursor"><HR>
-<B>set_cursor</B><P><B><A href="sect14.html#VAR">VAR</A>:239  F  4  set_cursor      line column</B>
-    <P>
-    <B>            6  set_cursor      line column window</B>
-    <P>
-    Move cursor in the current window to the position (x,y) (in units)
-    relative to (1,1) in the top left.  (In Version 6 the
-    window is supplied and need not be the current one. Also, if
-    the cursor would lie outside the current margin settings, it is
-    moved to the left margin of the current line.)
-    <P>
-    In Version 6, <B>set_cursor -1</B> turns the cursor off, and either
-    <B>set_cursor -2</B> or <B>set_cursor -2 0</B> turn it back on.  It is not known
-    what, if anything, this second argument means: in all known cases it is 0.
-<P>
-<A NAME="set_flag"><HR>
-<B>"set_flag"</B><P>See <B>clear_flag</B>.
-<P>
-<A NAME="set_font"><HR>
-<B>set_font</B><P><B><A href="sect14.html#EXT">EXT</A>:4    4  5  set_font        font -> (result)</B>
-    <P>
-    If the requested font is available, then it is chosen for the
-    current window, and the store value is the font ID of
-    the previous font (which is always positive).  If the font is
-    unavailable, nothing will happen and the store value is 0.
-    <P>
-    (Infocom's old interpreters did not store 0 for an unavailable font,
-    but the feature is clearly useful and so was introduced in release
-    0.2 of this Standard.  The opcode had an optional extra
-    <B>window</B> operand in Version 6, but this has never been used and
-    is now withdrawn from the Standard.)
-<P>
-<A NAME="set_margins"><HR>
-<B>set_margins</B><P><B><A href="sect14.html#EXT">EXT</A>:8    8  6  set_margins     left right window</B>
-    <P>
-    Sets the margin widths (in pixels) on the left and right
-    for the given window (which are by default 0). If the cursor is
-    overtaken and now lies outside the margins altogether, move it
-    back to the left margin of the current line (see <B>S</B> 8.8.3.2.2.1).
-<P>
-<A NAME="set_text_style"><HR>
-<B>set_text_style</B><P><B><A href="sect14.html#VAR">VAR</A>:241 11  4  set_text_style  style</B>
-    <P>
-    Sets the text style to: Roman (if 0), Reverse
-    Video (if 1), Bold (if 2), Italic (4), Fixed Pitch (8).  In some
-    interpreters (though this is not required) a combination of styles is
-    possible (such as reverse video and bold).  In these, changing to
-    Roman should turn off all the other styles currently set.
-<P>
-<A NAME="set_window"><HR>
-<B>set_window</B><P><B><A href="sect14.html#VAR">VAR</A>:235  B  3  set_window      window</B>
-    <P>
-    Selects the given window for text output.
-<P>
-<A NAME="show_status"><HR>
-<B>show_status</B><P><B><A href="sect14.html#0OP">0OP</A>:188  C  3  show_status</B>
-    <P>
-    (In Version 3 only.)  Display and update the
-    status line now (don't wait until the next keyboard input).  (In theory
-    this opcode is illegal in later Versions but an interpreter should treat
-    it as <B>nop</B>, because Version 5 Release 23 of 'Wishbringer' contains
-    this opcode by accident.)
-<P>
-<A NAME="sound_effect"><HR>
-<B>sound_effect</B><P><B><A href="sect14.html#VAR">VAR</A>:245 15 5/3 sound_effect    number effect volume routine</B>
-    <P>
-    The given effect happens to the given sound number.  The low byte of
-    <B>volume</B> holds the volume level, the high byte the number of repeats.
-    (The value 255 means "loudest possible" and "forever" respectively.)
-    (In Version 3, repeats are unsupported and the high byte must be 0.)
-    <P>
-    Note that sound effect numbers 1 and 2 are bleeps (see <B>S</B> 9) and in
-    these cases the other operands must be omitted.  Conversely, if any
-    of the other operands are present, the sound effect number must be
-    3 or higher.
-    <P>
-    The <B>effect</B> can be: 1 (prepare), 2 (start), 3 (stop), 4 (finish with).
-    <P>
-    In Versions 5 and later, the <B>routine</B> is called (with no parameters)
-    after the sound has been finished (it has been playing in the background
-    while the Z-machine has been working on other things).  (This is used by
-    'Sherlock' to implement fading in and out, which explains why mysterious
-    numbers like <B>$34FB</B> were previously thought to be to do with fading.)
-    The routine is not called if the sound is stopped by another sound or by
-    an effect 3 call.
-    <P>
-    See the remarks to <B>S</B> 9 for which forms of this opcode were actually
-    used by Infocom.
-    <P>
-    In theory, <B>@sound_effect;</B> (with no operands at all) is illegal.
-    However interpreters are asked to beep (as if the operand were 1) if
-    possible, and in any case not to halt.
-<P>
-<A NAME="split_window"><HR>
-<B>split_window</B><P><B><A href="sect14.html#VAR">VAR</A>:234  A  3  split_window    lines</B>
-    <P>
-    Splits the screen so that the upper window has the
-    given number of lines: or, if this is zero, unsplits the screen again.
-    In Version 3 (only) the upper window should be cleared after the
-    split.
-    <P>
-    In Version 6, this is supposed to roughly emulate the earlier Version 5
-    behaviour (see <B>S</B> 8), though the line count is in units rather than
-    lines.  (Existing Version 6 games seem to use this opcode
-    only for bounding cursor movement.  'Journey' creates a status region
-    which is the whole screen and then overlays it with two other windows.)
-    The width and x-coordinates of windows 0 and 1 are not altered.
-    A cursor remains in the same absolute screen position (which means
-    that its y-coordinate will be different relative to the window origin,
-    since this origin will have moved) unless this position is no longer
-    in the window at all, in which case it is moved to the window origin
-    (at the top left of the window).
-<P>
-<A NAME="sread"><HR>
-<B>sread</B><P>This is the Inform name for the keyboard-reading opcode
-    under Versions 3 and 4.  (Inform calls the same opcode <B>aread</B> in later
-    Versions.)  See <B>read</B> for the specification.
-<P>
-<A NAME="store"><HR>
-<B>store</B><P><B><A href="sect14.html#2OP">2OP</A>:13   D     store           (variable) value</B>
-    <P>
-    Set the <B><A href="sect14.html#VAR">VAR</A>iable</B> referenced by the operand to <B>value</B>.
-<P>
-<A NAME="storeb"><HR>
-<B>storeb</B><P><B><A href="sect14.html#VAR">VAR</A>:226  2     storeb          array byte-index value</B>
-    <P>
-    <B>array->byte-index = value</B>, i.e. stores the given value
-    in the byte at address <B>array+byte-index</B> (which must lie in dynamic
-    memory).  (See <B>loadb</B>.)
-<P>
-<A NAME="storew"><HR>
-<B>storew</B><P><B><A href="sect14.html#VAR">VAR</A>:225  1     storew          array word-index value</B>
-    <P>
-    <B>array-->word-index = value</B>, i.e. stores the given value
-    in the word at address <B>array+2*word-index</B> (which must lie in dynamic
-    memory).  (See <B>loadw</B>.)
-<P>
-<A NAME="sub"><HR>
-<B>sub</B><P><B><A href="sect14.html#2OP">2OP</A>:21  15     sub             a b -> (result)</B>
-    <P>
-    Signed 16-bit subtraction.
-<P>
-<A NAME="test"><HR>
-<B>test</B><P><B><A href="sect14.html#2OP">2OP</A>:7    7     test            bitmap flags ?(label)</B>
-    <P>
-    Jump if all of the flags in bitmap are set
-    (i.e. if <B>bitmap & flags == flags</B>).
-<P>
-<A NAME="test_array"><HR>
-<B>"test_array"</B><P>See <B>clear_flag</B>.  (<B>ITF</B> implements this as
-    unconditionally false.)
-<P>
-<A NAME="test_attr"><HR>
-<B>test_attr</B><P><B><A href="sect14.html#2OP">2OP</A>:10   A     test_attr       object attribute ?(label)</B>
-    <P>
-    Jump if <B>object</B> has <B>attribute</B>.
-<P>
-<A NAME="throw"><HR>
-<B>throw</B><P><B><A href="sect14.html#2OP">2OP</A>:28  1C 5/6 throw           value stack-frame</B>
-    <P>
-    Opposite of <B>catch</B>: resets the routine call state to
-    the state it had when the given stack frame value was 'caught', and
-    then returns.  In other words, it returns as if from the routine
-    which executed the <B>catch</B> which found this stack frame value.
-<P>
-<A NAME="tokenise"><HR>
-<B>tokenise</B><P><B><A href="sect14.html#VAR">VAR</A>:251 1B  5  tokenise        text parse dictionary flag</B>
-    <P>
-    This performs lexical analysis (see <B>read</B> above).
-    <P>
-    If a non-zero <B>dictionary</B> is supplied, it is used (if not, the ordinary
-    game dictionary is).  If the <B>flag</B> is set, unrecognised words are not
-    written into the parse buffer and their slots are left unchanged: this
-    is presumably so that if several <B>tokenise</B> instructions are performed
-    in a row, each fills in more slots without wiping those
-    filled by the others.
-    <P>
-    Parsing a user dictionary is slightly different.  A user dictionary
-    should look just like the main one but need not be alphabetically sorted.
-    If the number of entries is given as -n, then the interpreter reads
-    this as "n entries unsorted".  This is very convenient if the table
-    is being altered in play: if, for instance, the player is naming things.
-<P>
-<A NAME="verify"><HR>
-<B>verify</B><P><B><A href="sect14.html#0OP">0OP</A>:189  D  3  verify          ?(label)</B>
-    <P>
-    Verification counts a (two byte, unsigned) checksum of the
-    file from <B>$0040</B> onwards (by taking the sum of the values of each byte
-    in the file, modulo <B>$10000</B>) and compares this against the value in the
-    game header, branching if the two values agree.  (Early Version 3 games
-    do not have the necessary checksums to make this possible.)
-    <P>
-    The interpreter may stop calculating when the file length (as given in
-    the header) is reached.  It is legal for the file to contain more bytes
-    than this, but if so the extra bytes must all be 0, which would contribute
-    nothing the checksum anyway.  (Some story files are padded
-    out to an exact number of virtual-memory pages using 0s.)
-<P>
-<A NAME="window_size"><HR>
-<B>window_size</B><P><B><A href="sect14.html#EXT">EXT</A>:17  11  6  window_size     window y x</B>
-    <P>
-    Change size of window in pixels.  (Does not change the
-    current display.)
-<P>
-<A NAME="window_style"><HR>
-<B>window_style</B><P><B><A href="sect14.html#EXT">EXT</A>:18  12  6  window_style    window flags operation</B>
-    <P>
-    Changes attributes for a given window.  A bitmap of
-    attributes is given, in which the bits are: 0 -- keep text within margins,
-    1 -- scroll when at bottom, 2 -- copy text to output stream 2 (the printer),
-    3 -- buffer text to word-wrap it between the margins of the window.
-    <P>
-    The operation, by default, is 0, meaning "set to these settings".  1 means
-    "set the bits supplied".  2 means "clear the ones supplied", and 3 means
-    "reverse the bits supplied" (i.e. eXclusive OR).
-<P>
-<HR>
-<P>
-<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
-<A HREF="overview.html">Overview</A>
-<P>Section
-<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
-<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
-<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
-<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
-<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
-<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
-<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
-<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
-<P>Appendix
-<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
-<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
-<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
-</P>
-<HR>
-</BODY></HTML>
+</p>
+
+<hr>
+
+<h2 id="copy_table">copy_table</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:253 1D  5  copy_table      first second size</strong></p>
+<p>If <strong>second</strong> is zero, then <strong>size</strong> bytes of <strong>first</strong> are zeroed.</p>
+<p>Otherwise <strong>first</strong> is copied into <strong>second</strong>, its length in bytes
+   being the absolute value of <strong>size</strong> (i.e., <strong>size</strong> if <strong>size</strong> is positive,
+   <strong>-size</strong> if <strong>size</strong> is negative).
+</p>   
+<p>The tables are allowed to overlap.  If <strong>size</strong> is positive, the
+   interpreter must copy either forwards or backwards so as
+   to avoid corrupting <strong>first</strong> in the copying process.
+   If <strong>size</strong> is negative, the interpreter must copy forwards
+   even if this corrupts <strong>first</strong>.  ('Beyond Zork' uses this to fill an
+   array with spaces.)
+</p>
+<p>(Version 0.2 of this document wrongly specified that if <strong>size</strong> is
+   positive then copying should always run backward.  This results in
+   the player being unable to cross the river near the start of
+   'Journey', as the game uses <strong>copy_table</strong> to shuffle menu options,
+   and the menu "Downstream, Upstream, Cross, Return" is changed
+   to "Return, Return, Return".)
+</p>
+
+<hr>
+
+<h2 id="dec">dec</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:134  6     dec             (variable)</strong></p>
+<p>Decrement variable by 1.  This is signed, so 0 decrements to -1.</p>
+
+<hr>
+
+<h2 id="dec_chk">dec_chk</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:4    4     dec_chk         (variable) value ?(label)</strong></p>
+<p>Decrement variable, and branch if it is now less than the given value.</p>
+
+<hr>
+
+<h2 id="div">div</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:23  17     div             a b -> (result)</strong></p>
+<p>Signed 16-bit division.  Division by zero should halt the interpreter with a suitable error message.</p>
+
+<hr>
+
+<h2 id="draw_picture">draw_picture</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:5    5  6  draw_picture    picture-number y x</strong></p>
+<p>Displays the picture with the given number.  (y,x)
+   coordinates (of the top left of the picture) are each optional, in that
+   a value of zero for y or x means the cursor y or x coordinate
+   in the current window.  It is illegal to call this with an invalid
+   picture number.
+</p>
+
+<hr>
+
+<h2 id="encode_text">encode_text</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:252 1C  5  encode_text     zscii-text length from coded-text</strong></p>
+<p>Translates a ZSCII word to Z-encoded text format
+   (stored at <strong>coded-text</strong>), as if it were an entry in the dictionary.
+   The text begins at <strong>from</strong> in the <strong>zscii-text</strong> buffer and is <strong>length</strong>
+   characters long.  (Some interpreters ignore this and keep translating
+   until they hit a 0 character anyway, or have already filled up the 6-byte
+   Z-encoded string.)
+</p>
+
+<hr>
+
+<h2 id="erase_line">erase_line</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:238  E 4/6 erase_line      value</strong></p>
+<p>Versions 4 and 5: if the value is 1, erase from the current
+   cursor position to the end of its line in the current window.
+   If the value is anything other than 1, do nothing.
+</p>
+<p>Version 6: if the value is 1, erase from the current
+   cursor position to the end of the its line in the current window.
+   If not, erase the given number of pixels minus one across
+   from the cursor (clipped to stay inside the right margin).
+   The cursor does not move.
+</p>
+
+<hr>
+
+<h2 id="erase_picture">erase_picture</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:7    7  6  erase_picture   picture-number y x</strong></p>
+<p>Like <strong>draw_picture</strong>, but paints the appropriate region
+   to the background colour for the given window.  It is illegal to call this
+   with an invalid picture number.
+</p>
+
+<hr>
+
+<h2 id="erase_window">erase_window</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:237  D  4  erase_window    window</strong></p>
+<p>Erases window with given number (to background colour);
+   or if -1 it unsplits the screen and clears the lot; or if -2 it
+   clears the screen without unsplitting it.  In cases -1 and -2, the
+   cursor may move (see <strong>S</strong> 8 for precise details).
+</p>
+
+<hr>
+
+<h2 id="extended">"extended"</h2>
+<p>This byte (decimal 190) is not an instruction, but
+   indicates that the opcode is "extended": the next byte contains the
+   number in the extended set.
+</p>
+
+<hr>
+
+<h2 id="get_child">get_child</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:130  2     get_child       object -> (result) ?(label)</strong></p>
+<p>Get first object contained in given object, branching if
+   this exists, i.e. is not <strong>nothing</strong> (i.e., is not 0).
+</p>
+
+<hr>
+
+<h2 id="get_cursor">get_cursor</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:240 10 4/6 get_cursor      array</strong></p>
+<p>Puts the current cursor row into the word 0 of the
+   given array, and the current cursor column into word 1.
+   (The array is not a table and has no size information in its initial entry.)
+</p>
+
+<hr>
+
+<h2 id="get_next_prop">get_next_prop</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:19  13     get_next_prop   object property -> (result)</strong></p>
+<p>Gives the number of the next property provided by the
+   quoted object.  This may be zero, indicating the end of the property list;
+   if called with zero, it gives the first property number present.  It is
+   illegal to try to find the next property of a property which does not
+   exist, and an interpreter should halt with an error message (if it can
+   efficiently check this condition).
+</p>
+
+<hr>
+
+<h2 id="get_parent">get_parent</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:131  3     get_parent      object -> (result)</strong></p>
+<p>Get parent object (note that this has no "branch if
+   exists" clause).
+</p>
+
+<hr>
+
+<h2 id="get_prop">get_prop</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:17  11     get_prop        object property -> (result)</strong></p>
+<p>Read property from object (resulting in the default value
+   if it had no such declared property).  If the property has length 1, the
+   value is only that byte.  If it has length 2, the first two bytes
+   of the property are taken as a word value.  It is illegal for the
+   opcode to be used if the property has length greater than 2, and
+   the result is unspecified.
+</p>
+
+<hr>
+
+<h2 id="get_prop_addr">get_prop_addr</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:18  12     get_prop_addr   object property -> (result)</strong></p>
+<p>Get the byte address (in dynamic memory) of the
+   property data for the given object's property.  This must return 0 if
+   the object hasn't got the property.
+</p>
+
+<hr>
+
+<h2 id="get_prop_len">get_prop_len</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:132  4     get_prop_len    property-address -> (result)</strong></p>
+<p>Get length of property data (in bytes) for the given
+   object's property.  It is illegal to try to find the property length
+   of a property which does not exist for the given object, and an
+   interpreter should halt with an error message (if it can efficiently
+   check this condition).
+</p>
+<p>@get_prop_len 0 must return 0. This is required by some Infocom games and
+   files generated by old versions of Inform.
+</p>
+
+<hr>
+
+<h2 id="get_sibling">get_sibling</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:129  1     get_sibling     object -> (result) ?(label)</strong></p>
+<p>Get next object in tree, branching if this exists, i.e.
+   is not 0.
+</p>
+
+<hr>
+
+<h2 id="get_wind_prop">get_wind_prop</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:19  13  6  get_wind_prop   window property-number -> (result)</strong></p>
+<p>Reads the given property of the given window (see
+   <strong>S</strong> 8).
+</p>
+
+<hr>
+
+<h2 id="inc">inc</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:133  5     inc             (variable)</strong></p>
+<p>Increment variable by 1.  (This is signed, so -1 increments
+   to 0.)
+</p>
+
+<hr>
+
+<h2 id="inc_chk">inc_chk</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:5    5     inc_chk         (variable) value ?(label)</strong></p>
+<p>Increment variable, and branch if now greater than value.</p>
+
+<hr>
+
+<h2 id="input_stream">input_stream</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:244 14  3  input_stream    number</strong></p>
+<p>Selects the current input stream.</p>
+
+<hr>
+
+<h2 id="insert_obj">insert_obj</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:14   E     insert_obj      object destination</strong></p>
+<p>Moves object O to become the first child of the
+   destination object D.  (Thus, after the operation the <strong>child</strong> of D
+   is O, and the <strong>sibling</strong> of O is whatever was previously the
+   <strong>child</strong> of D.)  All children of O move with it.
+   (Initially O can be at
+   any point in the object tree; it may legally have <strong>parent</strong> zero.)
+</p>
+
+<hr>
+
+<h2 id="je">je</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:1    1     je              a b c d ?(label)</strong></p>
+<p>Jump if <strong>a</strong> is equal to any of the subsequent operands. je with just one operand 
+   is not permitted.
+</p>
+
+
+<hr>
+
+<h2 id="jg">jg</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:3    3     jg              a b ?(label)</strong></p>
+<p>Jump if <strong>a > b</strong> (using a signed 16-bit comparison).</p>
+
+<hr>
+
+<h2 id="jin">jin</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:6    6     jin             obj1 obj2 ?(label)</strong></p>
+<p>Jump if object <strong>a</strong> is a direct child of <strong>b</strong>, i.e., if
+   <strong>parent</strong> of <strong>a</strong> is <strong>b</strong>.
+</p>
+
+<hr>
+
+<h2 id="jl">jl</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:2    2     jl              a b ?(label)</strong></p>
+<p>Jump if <strong>a &lt; b</strong> (using a signed 16-bit comparison).</p>
+
+<hr>
+
+<h2 id="jump">jump</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:140  C     jump            ?(label)</strong></p>
+<p>Jump (unconditionally) to the given label.  (This is not a
+   branch instruction and the operand is a 2-byte signed offset to apply
+   to the program counter.)  It is legal for this to jump into a different
+   routine (which should not change the routine call state), although it
+   is considered bad practice to do so and the <strong>Txd</strong> disassembler is
+   confused by it.</p>
+<p>The destination of the jump opcode is:</p>
+<pre>Address after instruction + Offset - 2
+</pre>
+<p>This is analogous to the calculation for branch offsets.</p>
+
+<hr>
+
+<h2 id="jz">jz</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:128  0     jz              a ?(label)</strong></p>
+<p>Jump if <strong>a = 0</strong>.</p>
+
+<hr>
+
+<h2 id="load">load</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:142  E     load            (variable) -> (result)</strong></p>
+<p>The value of the variable referred to by the operand
+   is stored in the result.  (Inform doesn't use this; see the notes to
+   <strong>S</strong> 14.)
+</p>
+
+<hr>
+
+<h2 id="loadb">loadb</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:16  10     loadb           array byte-index -> (result)</strong></p>
+<p>Stores <strong>array->byte-index</strong> (i.e., the byte at address
+   <strong>array+byte-index</strong>, which must lie in static or dynamic memory).
+</p>
+
+<hr>
+
+<h2 id="loadw">loadw</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:15   F     loadw           array word-index -> (result)</strong></p>
+<p>Stores <strong>array-->word-index</strong> (i.e., the word at address
+   <strong>array+2*word-index</strong>, which must lie in static or dynamic memory).
+</p>
+
+<hr>
+
+<h2 id="log_shift">log_shift</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:2    2  5  log_shift       number places -> (result)</strong></p>
+<p>Does a logical shift of <strong>number</strong> by the given number of
+   <strong>places</strong>, shifting left (i.e. increasing) if <strong>places</strong> is positive, right
+   if <strong>negative</strong>.  In a right shift, the sign is zeroed instead of being
+   shifted on.  (See also <strong>art_shift</strong>.)
+</p>
+<p>The "places" operand must be in the range -15 to +15, otherwise behaviour
+   is undefined.
+</p>
+
+<hr>
+
+<h2 id="make_menu">make_menu</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:27  1B  6  make_menu       number table ?(label)</strong></p>
+<p>Controls menus with numbers greater than 2 (i.e., it
+   doesn't control the three system menus).  If the table supplied is 0,
+   the menu is removed.  Otherwise it is a table of tables.  Each table is
+   a ZSCII string: the first item being a menu name, subsequent ones the
+   entries.
+</p>
+
+<hr>
+
+<h2 id="mod">mod</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:24  18     mod             a b -> (result)</strong></p>
+<p>Remainder after signed 16-bit division.  Division by zero
+   should halt the interpreter with a suitable error message.
+</p>
+
+<hr>
+
+<h2 id="mouse_window">mouse_window</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:23  17  6  mouse_window    window</strong></p>
+<p>Constrain the mouse arrow to sit inside the given window.
+   By default it sits in window 1.  Setting to -1 takes all restriction away.
+   (The mouse clicks are not reported if the arrow is outside the window
+   and interpreters are presumably supposed to hold the arrow there by
+   hardware means if possible.)
+</p>
+
+<hr>
+
+<h2 id="move_window">move_window</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:16  10  6  move_window     window y x</strong></p>
+<p>Moves the given window to pixels (y,x): (1,1) being
+   the top left.  Nothing actually happens (since windows are entirely
+   notional transparencies): but any future plotting happens in the new place.
+</p>
+
+<hr>
+
+<h2 id="mul">mul</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:22  16     mul             a b -> (result)</strong></p>
+<p>Signed 16-bit multiplication.</p>
+
+<hr>
+
+<h2 id="new_line">new_line</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:187  B     new_line</strong></p>
+<p>Print carriage return.</p>
+
+<hr>
+
+<h2 id="nop">nop</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:180  4 1/- nop</strong></p>
+<p>Probably the official "no operation" instruction, which,
+   appropriately, was never operated (in any of the Infocom datafiles):
+   it may once have been a breakpoint.
+</p>
+
+<hr>
+
+<h2 id="not">not</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:143  F 1/4 not             value -> (result)</strong></p>
+<p><strong><a href="sect14.html#VAR">VAR</a>:248 18 5/6 not             value -> (result)</strong></p>
+<p>Bitwise NOT (i.e., all 16 bits reversed).  Note that in Versions
+   3 and 4 this is a 1OP instruction, reasonably since it has 1 operand,
+   but in later Versions it was moved into the extended set
+   to make room for <strong>call_1n</strong>.
+</p>
+
+<hr>
+
+<h2 id="or">or</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:8    8     or              a b -> (result)</strong></p>
+<p>Bitwise OR.</p>
+
+<hr>
+
+<h2 id="output_stream">output_stream</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:243 13  3  output_stream   number table</strong></p>
+<p><strong>            6  output_stream   number table width</strong></p>
+<p>If <strong>stream</strong> is 0, nothing happens.  If it is
+   positive, then that stream is selected; if negative, deselected.
+   (Recall that several different streams can be selected at once.)
+</p>
+<p>When stream 3 is selected, a <strong>table</strong> must be given into which text
+   can be printed.  The first word always holds the number of characters
+   printed, the actual text being stored at bytes <strong>table+2</strong> onward.
+   It is not the interpreter's responsibility to worry about the length
+   of this table being overrun.
+</p>
+<p>In Version 6, a <strong>width</strong> field may optionally be given: text will then be justified as if 
+   it were in the window with that number (if width is zero or positive) or a box -<strong>width</strong> 
+   pixels wide (if negative).  Then the table will contain not ordinary text but formatted text: see 
+   <strong>print_form</strong>.
+</p>
+
+<hr>
+
+<h2 id="picture_data">picture_data</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:6    6  6  picture_data    picture-number array ?(label)</strong></p>
+<p>Asks the interpreter for data on the picture with
+   the given number.  If the picture number is valid, a branch occurs and
+   information is written to the array: the height in word 0,
+   the width in word 1, in pixels.  (This is an array, not a "table"
+   with initial size information.)
+</p>
+<p>Otherwise, if the picture number is zero, the interpreter writes the
+   number of available pictures into word 0 of the array and
+   the release number of the picture file into word 1, and branches 
+   if any pictures are available.  (Infocom's
+   first Version 6 Amiga interpreter did not handle this case properly,
+   and early releases of 'Zork Zero' did not use it.  The feature may
+   have been added on the MSDOS release of 'Zork Zero'.)
+</p>
+<p>Otherwise, nothing happens.</p>
+
+<hr>
+
+<h2 id="picture_table">picture_table</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:28  1C  6  picture_table   table</strong></p>
+<p>Given a table of picture numbers, the interpreter may if it
+   wishes load or unpack these pictures from disc into a cache
+   for convenient rapid plotting later.  'Zork Zero' makes
+   frequent use of this, for instance for its peggleboard
+   display.  Moreover, it expects rapid plotting only for those
+   images listed in the last call to <strong>picture_table</strong>.  In other words,
+   any images still in the cache when <strong>picture_table</strong> is called
+   can safely be thrown away.  (The Amiga interpreter 6.14
+   uses a cache of size 5K and never caches any individual
+   image larger than 1K.)
+</p>
+
+<hr>
+
+<h2 id="piracy">piracy</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:191  F 5/- piracy          ?(label)</strong></p>
+<p>Branches if the game disc is believed to be genuine by the
+   interpreter (which is assumed to have some arcane way of finding out).
+   Interpreters are asked to be gullible and to unconditionally branch.
+</p>
+
+<hr>
+
+<h2 id="pop">pop</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:185  9  1  pop</strong></p>
+<p>Throws away the top item on the stack.  (This was useful to
+   lose unwanted routine call results in early Versions.)
+</p>
+
+<hr>
+
+<h2 id="pop_stack">pop_stack</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:21  15  6  pop_stack       items stack</strong></p>
+<p>The given number of items are thrown away from the top
+   of a stack: by default the system stack, otherwise the one given as a
+   second operand.
+</p>
+
+<hr>
+
+<h2 id="print">print</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:178  2     print           &lt;literal-string&gt;</strong></p>
+<p>Print the quoted (literal) Z-encoded string.</p>
+
+<hr>
+
+<h2 id="print_addr">print_addr</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:135  7     print_addr      byte-address-of-string</strong></p>
+<p>Print (Z-encoded) string at given byte address,
+   in dynamic or static memory.
+</p>
+
+<hr>
+
+<h2 id="print_char">print_char</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:229  5     print_char      output-character-code</strong></p>
+<p>Print a ZSCII character.  The operand must be a character code
+   defined in ZSCII for output (see <strong>S</strong> 3).  In particular, it must
+   certainly not be negative or larger than 1023.
+</p>
+
+<hr>
+
+<h2 id="print_form">print_form</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:26  1A  6  print_form      formatted-table</strong></p>
+<p>Prints a formatted table of the kind written to
+   output stream 3 when formatting is on.  This is an elaborated version
+   of <strong>print_table</strong> to cope with
+   fonts, pixels and other impedimenta.  It is a sequence of lines,
+   terminated with a zero word.  Each line is a word containing the number
+   of characters, followed by that many bytes which hold the characters
+   concerned.
+</p>
+
+<hr>
+
+<h2 id="print_num">print_num</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:230  6     print_num       value</strong></p>
+<p>Print (signed) number in decimal.</p>
+
+<hr>
+
+<h2 id="print_obj">print_obj</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:138  A     print_obj       object</strong></p>
+<p>Print short name of object (the Z-encoded string in the
+   object header, not a property).  If the object number is invalid, the
+   interpreter should halt with a suitable error message.
+</p>
+
+<hr>
+
+<h2 id="print_paddr">print_paddr</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:141  D     print_paddr     packed-address-of-string</strong></p>
+<p>Print the (Z-encoded) string at the given packed
+   address in high memory.
+</p>
+
+<hr>
+
+<h2 id="print_ret">print_ret</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:179  3     print_ret       &lt;literal-string&gt;</strong></p>
+<p>Print the quoted (literal) Z-encoded string, then print
+   a new-line and then return true (i.e., 1).
+</p>
+
+<hr>
+
+<h2 id="print_table">print_table</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:254 1E  5  print_table     zscii-text width height skip</strong></p>
+<p>Print a rectangle of text on screen spreading right and
+   down from the current cursor position, of given <strong>width</strong> and <strong>height</strong>, from
+   the table of ZSCII text given.  (Height is optional and defaults to 1.)
+   If a <strong>skip</strong> value is given, then that many characters of text are skipped
+   over in between each line and the next.  (So one could make this display,
+   for instance, a 2 by 3 window onto a giant 40 by 40 character graphics
+   map.)
+</p>
+
+<hr>
+
+<h2 id="print_unicode">print_unicode</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:11   B 5/* print_unicode   char-number</strong></p>
+<p>Print a Unicode character.  See <strong>S</strong> 3.8.5.4 and <strong>S</strong> 7.5 for details.
+   The given character code must be defined in Unicode.
+</p>
+<p><strong>***</strong> This opcode will only be present in interpreters obeying Standard
+   1.0 or later, so story files should check the standard number of the
+   interpreter before executing this opcode.
+</p>
+
+<hr>
+
+<h2 id="pull">pull</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:233  9  1  pull            (variable)</strong></p>
+<p><strong>            6  pull            stack -> (result)</strong></p>
+<p>Pulls value off a stack.  (If the stack underflows, the
+   interpreter should halt with a suitable error message.)  In Version 6,
+   the stack in question may be specified as a user one: otherwise it
+   is the game stack.
+</p>
+
+<hr>
+
+<h2 id="push">push</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:232  8     push            value</strong></p>
+<p>Pushes value onto the game stack.</p>
+
+<hr>
+
+<h2 id="push_stack">push_stack</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:24  18  6  push_stack      value stack ?(label)</strong></p>
+<p>Pushes the value onto the specified user stack, and
+   branching if this was successful.  If the stack overflows, nothing
+   happens (this is not an error condition).
+</p>
+
+<hr>
+
+<h2 id="put_prop">put_prop</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:227  3     put_prop        object property value</strong></p>
+<p>Writes the given value to the given property of the
+   given object.  If the property does not exist for that object, the
+   interpreter should halt with a suitable error message.  If the
+   property length is 1, then the interpreter should store only the
+   least significant byte of the value.  (For instance, storing -1
+   into a 1-byte property results in the property value 255.)
+   As with <strong>get_prop</strong> the property length must not be more than 2:
+   if it is, the behaviour of the opcode is undefined.
+</p>
+
+<hr>
+
+<h2 id="put_wind_prop">put_wind_prop</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:25  19  6  put_wind_prop   window property-number value</strong></p>
+<p>Writes a window property (see <strong>get_wind_prop</strong>).
+   This should only be used when there is no direct command (such as
+   <strong>move_window</strong>) to use instead, as some such operations may have
+   side-effects.
+</p>
+
+<hr>
+
+<h2 id="quit">quit</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:186  A     quit</strong></p>
+<p>Exit the game immediately.  (Any "Are you sure?" question
+   must be asked by the game, not the interpreter.)  It is not legal to
+   return from the main routine (that is, from where execution first
+   begins) and this must be used instead.
+</p>
+
+<hr>
+
+<h2 id="random">random</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:231  7     random          range -> (result)</strong></p>
+<p>If <strong>range</strong> is positive, returns a uniformly random number
+   between 1 and <strong>range</strong>.  If <strong>range</strong> is negative, the random number generator
+   is seeded to that value and the return value is 0.  Most interpreters
+   consider giving 0 as <strong>range</strong> illegal (because they attempt a division
+   with remainder by the <strong>range</strong>), but correct behaviour is to reseed the
+   generator in as random a way as the interpreter can (e.g. by using the
+   time in milliseconds).
+</p>
+<p>(Some version 3 games, such as 'Enchanter' release 29, had a debugging
+   verb <strong>#random</strong> such that typing, say, <strong>#random 14</strong> caused a call of
+   <strong>random</strong> with -14.)
+</p>
+
+<hr>
+
+<h2 id="read">read</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:228  4  1  sread           text parse</strong></p>
+<p><strong>            4  sread           text parse time routine</strong></p>
+<p><strong>            5  aread           text parse time routine -> (result)</strong></p>
+<p>(Note that Inform internally names the <strong>read</strong> opcode as <strong>aread</strong>
+   in Versions 5 and later and <strong>sread</strong> in Versions 3 and 4.)
+</p>
+<p>This opcode reads a whole command from the keyboard (no prompt is
+   automatically displayed).  It is legal for this to be called with the
+   cursor at any position on any window.
+</p>
+<p>In Versions 1 to 3, the status line is automatically redisplayed first.</p>
+<p>A sequence of characters is read in from the current input stream until
+   a carriage return (or, in Versions 5 and later, any terminating character)
+   is found.
+</p>
+<p>In Versions 1 to 4, byte 0 of the <strong>text-buffer</strong> should initially contain
+   the maximum number of letters which can be typed, minus 1 (the interpreter
+   should not accept more than this).  The text typed is reduced to lower case
+   (so that it can tidily be printed back by the program if need be)
+   and stored in bytes 1 onward, with a zero terminator (but without any other
+   terminator, such as a carriage return code).  (This means that
+   if byte 0 contains n then the buffer must contain n+1 bytes, which
+   makes it a <strong>string</strong> array of length n in Inform terminology.)
+</p>
+<p>In Versions 5 and later, byte 0 of the <strong>text-buffer</strong> should initially contain
+   the maximum number of letters which can be typed (the interpreter should
+   not accept more than this).  The interpreter stores the number of characters
+   actually typed in byte 1 (not counting the terminating character), and the
+   characters themselves (reduced to lower case) in bytes 2 onward (not storing the terminating
+   character).  (Some interpreters wrongly add a zero byte after the text anyway,
+   so it is wise for the buffer to contain at least n+3 bytes.)
+</p>
+<p>Moreover, if byte 1 contains a positive value at the start of the
+   input, then <strong>read</strong> assumes that number of characters are left over from an
+   interrupted previous input, and writes the new characters after those
+   already there.  Note that the interpreter does not redisplay the
+   characters left over: the game does this, if it wants to.  This is
+   unfortunate for any interpreter wanting to give input text a distinctive
+   appearance on-screen, but 'Beyond Zork', 'Zork Zero' and 'Shogun'
+   clearly require it.  ("Just a tremendous pain in my butt" -- Andrew
+   Plotkin; "the most unfortunate feature of the Z-machine design"
+   -- Stefan Jokisch.)
+</p>
+<p>In Version 4 and later, if the operands <strong>time</strong> and <strong>routine</strong> are
+   supplied (and non-zero) then the routine call <strong>routine()</strong> is
+   made every <strong>time/10</strong> seconds during the keyboard-reading process.  If
+   this routine returns true, all input is erased (to zero) and the
+   reading process is terminated at once.  (The terminating character code
+   is 0.)  The <strong>routine</strong> is permitted to print to the screen even if it
+   returns false to signal "carry on": the interpreter should notice and
+   redraw the input line so far, before input continues.  (<strong>Frotz</strong> notices
+   by looking to see if the cursor position is at the left-hand margin
+   after the interrupt routine has returned.)
+</p>
+<p>If input was terminated in the usual way, by the player typing a
+   carriage return, then a carriage return is printed (so the cursor moves
+   to the next line).  If it was interrupted, the cursor is left at
+   the rightmost end of the text typed in so far.
+</p>
+<p>Next, lexical analysis is performed on the text (except that in Versions 5
+   and later, if <strong>parse-buffer</strong> is zero then this is omitted).  Initially,
+   byte 0 of the <strong>parse-buffer</strong> should hold the maximum number of textual
+   words which can be parsed.  (If this is n, the buffer must be at least
+   2 + 4*n  bytes long to hold the results of the analysis.)
+</p>
+<p>The interpreter divides the text into words and looks them up in the
+   dictionary, as described in <strong>S</strong> 13.  The number of words is written in
+   byte 1 and one 4-byte block is
+   written for each word, from byte 2 onwards (except that it should stop
+   before going beyond the maximum number of words specified).  Each block
+   consists of the byte address
+   of the word in the dictionary, if it is in the dictionary, or 0 if it isn't;
+   followed by a byte giving the number of letters in the word; and finally
+   a byte giving the position in the <strong>text-buffer</strong> of the first letter of
+   the word.
+</p> 
+<p>In Version 5 and later, this is a store instruction: the return value
+   is the terminating character (note that the user pressing his "enter"
+   key may cause either 10 or 13 to be returned; the interpreter must return 13).  
+   A timed-out input returns 0.
+</p>
+<p>(Versions 1 and 2 and early Version 3 games mistakenly write the parse buffer
+   length 240 into byte 0 of the parse buffer: later games fix this bug and
+   write 59, because 2+4*59 = 238 so that 59 is the maximum number
+   of textual words which can be parsed into a buffer of length 240 bytes.  Old
+   versions of the Inform 5 library commit the same error.  Neither mistake
+   has very serious consequences.)
+</p>
+<p>(Interpreters are asked to halt with a suitable error message if
+   the text or parse buffers have length of less than 3 or 6 bytes,
+   respectively: this sometimes occurs due to a previous array being
+   overrun, causing bugs which are very difficult to find.)
+</p>
+
+<hr>
+
+<h2 id="read_char">read_char</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:246 16  4  read_char       1 time routine -> (result)</strong></p>
+<p>Reads a single character from input stream 0 (the
+   keyboard).  The first operand must be 1 (presumably it was provided
+   to support multiple input devices, but only the keyboard was ever
+   used).  <strong>time</strong> and <strong>routine</strong> are optional (in Versions 4 and
+   later only) and dealt with as in <strong>read</strong> above.
+</p>
+
+<hr>
+
+<h2 id="read_mouse">read_mouse</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:22  16  6  read_mouse      array</strong></p>
+<p>The four words in the <strong>array</strong> are written with the mouse
+   y coordinate, x coordinate, button bits, and a menu word.
+</p>
+<p>The buttons bits are arranged so that the "primary" button is the
+   lowest bit, the "secondary" (if present) is the next lowest bit, and so
+   on, up to a potential 16 buttons. The ordering of buttons should be that
+   which is most natural for the host system. Here are some suggested
+   assignments:
+</p>
+<pre>                        Button assignments
+             Platform   Bit 0 (low)   Bit 1     Bit 2
+             ----------------------------------------
+             RISC OS    Select        Adjust    Menu
+             MacOS      Primary/only  Secondary Tertiary   ...
+             Windows    Left          Right     Middle
+             X          Left          Right     Middle
+</pre>
+   
+<p>In the menu word, the upper byte is the menu number and the lower 
+   byte is the item number (from 0).  (Note that the array isn't a 
+   table and has no initial size information.  The data is written 
+   to words 0 to 3 in the array.)
+</p>
+
+<hr>
+
+<h2 id="remove_obj">remove_obj</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:137  9     remove_obj      object</strong></p>
+<p>Detach the object from its parent, so that it no longer
+   has any parent.  (Its children remain in its possession.)
+</p>
+
+<hr>
+
+<h2 id="restart">restart</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:183  7  1  restart</strong></p>
+<p>Restart the game.  (Any "Are you sure?" question
+   must be asked by the game, not the interpreter.)  The only pieces of
+   information surviving from the previous state are the "transcribing
+   to printer" bit (bit 0 of 'Flags 2' in the header, at address <strong>$10</strong>)
+   and the "use fixed pitch font" bit (bit 1 of 'Flags 2').
+</p>
+<p>In particular, changing the program start address before a restart will
+   not have the effect of restarting from this new address.
+</p>
+
+<hr>
+
+<h2 id="restore">restore</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:182  6  1  restore         ?(label)</strong></p>
+<p><strong><a href="sect14.html#0OP">0OP</a>:182  5  4  restore         -> (result)</strong></p>
+<p><strong><a href="sect14.html#EXT">EXT</a>:1    1  5  restore         table bytes name -> (result)</strong></p>
+<p>See <strong>save</strong>.  In Version 3, the branch is never actually made,
+   since either the game has successfully picked up again from where it
+   was saved, or it failed to load the save game file.
+</p>
+<p>As with <strong>restart</strong>, the transcription and fixed font bits survive.
+   The interpreter gives the game a way of knowing that a restore has
+   just happened (see <strong>save</strong>).
+</p>
+<p><strong>***</strong> From Version 5 it can have optional parameters as
+   <strong>save</strong> does, and returns the number of bytes loaded if so.  (Whether
+   Infocom intended these options as part of Version 5 is doubtful,
+   but it's too useful a feature to exclude from this Standard.)
+</p>
+<p>If the restore fails, 0 is returned, but once again this necessarily
+   happens since otherwise control is already elsewhere.
+</p>
+
+<hr>
+
+<h2 id="restore_undo">restore_undo</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:10   A  5  restore_undo    -> (result)</strong></p>
+<p>Like <strong>restore</strong>, but restores the state saved to memory
+   by <strong>save_undo</strong>.  (The optional parameters of <strong>restore</strong> may not be
+   supplied.)  The behaviour of <strong>restore_undo</strong> is unspecified if no
+   <strong>save_undo</strong> has previously occurred (and a game may not legally use it):
+   an interpreter might simply ignore this.
+</p>
+
+<hr>
+
+<h2 id="ret">ret</h2>
+<p><strong><a href="sect14.html#1OP">1OP</a>:139  B     ret             value</strong></p>
+<p>Returns from the current routine with the value given.</p>
+
+<hr>
+
+<h2 id="ret_popped">ret_popped</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:184  8     ret_popped</strong></p>
+<p>Pops top of stack and returns that.  (This is equivalent
+   to <strong>ret sp</strong>, but is one byte cheaper.)
+</p>
+
+<hr>
+
+<h2 id="rfalse">rfalse</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:177  1     rfalse</strong></p>
+<p>Return false (i.e., 0) from the current routine.</p>
+
+<hr>
+
+<h2 id="rtrue">rtrue</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:176  0     rtrue</strong></p>
+<p>Return true (i.e., 1) from the current routine.</p>
+
+<hr>
+
+<h2 id="save">save</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:181  5  1  save            ?(label)</strong></p>
+<p><strong><a href="sect14.html#0OP">0OP</a>:181  5  4  save            -> (result)</strong></p>
+<p><strong><a href="sect14.html#EXT">EXT</a>:0    0  5  save            table bytes name -> (result)</strong></p>
+<p>On Versions 3 and 4, attempts to save the game (all questions
+   about filenames are asked by interpreters) and branches if successful.
+   From Version 5 it is a store rather than a branch instruction;
+   the store value is 0 for failure, 1 for "save succeeded" and 2 for
+   "the game is being restored and is resuming execution again from here,
+   the point where it was saved".
+</p>
+<p>It is illegal to use this opcode within an interrupt routine
+   (one called asynchronously by a sound effect, or keyboard timing,
+   or newline counting).
+</p>
+<p><strong>***</strong> The extension also has (optional) parameters, which save a region of
+   the save area, whose address and length are in bytes, and provides a
+   suggested filename: name is a pointer to an array of ASCII characters
+   giving this name (as usual preceded by a byte giving the number of
+   characters).  See <strong>S</strong> 7.6.  (Whether Infocom intended these options
+   as part of Version 5 is doubtful, but it's too useful a feature to
+   exclude from this Standard.)
+</p>
+
+<hr>
+
+<h2 id="save_undo">save_undo</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:9    9  5  save_undo       -> (result)</strong></p>
+<p>Like <strong>save</strong>, except that the optional parameters may not
+   be specified: it saves the game into a cache of memory held by the
+   interpreter.  If the interpreter is unable to provide this feature, it
+   must return -1: otherwise it returns the <strong>save</strong> return value.
+</p>
+<p>It is illegal to use this opcode within an interrupt routine
+   (one called asynchronously by a sound effect, or keyboard timing,
+   or newline counting).
+</p>
+<p>(This call is typically needed once per turn, in order to implement
+   "UNDO", so it needs to be quick.)
+</p>
+
+<hr>
+
+<h2 id="scan_table">scan_table</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:247 17  4  scan_table      x table len form -> (result)</strong></p>
+<p>Is <strong>x</strong> one of the words in <strong>table</strong>, which is <strong>len</strong> words
+   long?  If so, return the address where it first occurs and branch.  If not,
+   return 0 and don't.
+</p>
+<p>The <strong>form</strong> is optional (and only used in Version 5?): bit 7 is set for
+   words, clear for bytes: the rest contains the length of each field in
+   the table.  (The first word or byte in each field being the one looked
+   at.)  Thus <strong>$82</strong> is the default.
+</p>
+
+<hr>
+
+<h2 id="scroll_window">scroll_window</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:20  14  6  scroll_window   window pixels</strong></p>
+<p>Scrolls the given window by the given number of pixels
+   (a negative value scrolls backwards, i.e., down) writing in blank
+   (background colour) pixels in the new lines.  This can be done to any
+   window and is not related to the "scrolling" attribute of a window.
+</p>
+
+<hr>
+
+<h2 id="set_attr">set_attr</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:11   B     set_attr        object attribute</strong></p>
+<p>Make <strong>object</strong> have the attribute numbered <strong>attribute</strong>.</p>
+
+<hr>
+
+<h2 id="set_colour">set_colour</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:27  1B  5  set_colour      foreground background</strong></p>
+<p><strong>                6  set_colour      foreground background window</strong></p>
+<p>If coloured text is available, set text to be
+   foreground-against-background.
+   (Flush any buffered text to screen, in the old colours, first.)  In
+   version 6, the <strong>window</strong> argument is optional and is by default
+   the current window.  (This option is supported in Infocom's Amiga
+   and DOS interpreters.)
+</p>
+<p>(One Version 5 game uses this: 'Beyond Zork' (Paul David Doherty reports
+   it as used "76 times in 870915 and 870917, 58 times in 871221") and from
+   the structure of the table it clearly logically belongs in version 5.)
+</p>
+
+<hr>
+
+<h2 id="set_cursor">set_cursor</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:239  F  4  set_cursor      line column</strong></p>
+<p><strong>            6  set_cursor      line column window</strong></p>
+<p>Move cursor in the current window to the position (x,y) (in units)
+   relative to (1,1) in the top left.  (In Version 6 the
+   window is supplied and need not be the current one. Also, if
+   the cursor would lie outside the current margin settings, it is
+   moved to the left margin of the current line.)
+</p>
+<p>In Version 6, <strong>set_cursor -1</strong> turns the cursor off, and either
+   <strong>set_cursor -2</strong> or <strong>set_cursor -2 0</strong> turn it back on.  It is not known
+   what, if anything, this second argument means: in all known cases it is 0.
+</p>
+
+<hr>
+
+<h2 id="set_flag">"set_flag"</h2>
+<p>See <strong>clear_flag</strong>.</p>
+
+<hr>
+
+<h2 id="set_font">set_font</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:4    4  5  set_font        font -> (result)</strong></p>
+<p>If the requested font is available, then it is chosen for the
+   current window, and the store value is the font ID of
+   the previous font (which is always positive).  If the font is
+   unavailable, nothing will happen and the store value is 0.
+</p>
+<p>If the font ID requested is 0, the font is not changed, and the ID of the current font is returned.</p>
+<p>(Infocom's old interpreters did not store 0 for an unavailable font,
+   but the feature is clearly useful and so was introduced in release
+   0.2 of this Standard.  The opcode had an optional extra
+   <strong>window</strong> operand in Version 6, but this has never been used and
+   is now withdrawn from the Standard.)
+</p>
+
+<hr>
+
+<h2 id="set_margins">set_margins</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:8    8  6  set_margins     left right window</strong></p>
+<p>Sets the margin widths (in pixels) on the left and right
+   for the given window (which are by default 0). If the cursor is
+   overtaken and now lies outside the margins altogether, move it
+   back to the left margin of the current line (see <strong>S</strong> 8.8.3.2.2.1).
+</p>
+
+<hr>
+
+<h2 id="set_text_style">set_text_style</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:241 11  4  set_text_style  style</strong></p>
+<p>Sets the text style to: Roman (if 0), Reverse
+   Video (if 1), Bold (if 2), Italic (4), Fixed Pitch (8).  In some
+   interpreters (though this is not required) a combination of styles is
+   possible (such as reverse video and bold).  In these, changing to
+   Roman should turn off all the other styles currently set.
+</p>
+
+<hr>
+
+<h2 id="set_window">set_window</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:235  B  3  set_window      window</strong></p>
+<p>Selects the given window for text output.</p>
+
+<hr>
+
+<h2 id="show_status">show_status</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:188  C  3  show_status</strong></p>
+<p>(In Version 3 only.)  Display and update the
+   status line now (don't wait until the next keyboard input).  (In theory
+   this opcode is illegal in later Versions but an interpreter should treat
+   it as <strong>nop</strong>, because Version 5 Release 23 of 'Wishbringer' contains
+   this opcode by accident.)
+</p>
+
+<hr>
+
+<h2 id="sound_effect">sound_effect</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:245 15 5/3 sound_effect    number effect volume routine</strong></p>
+<p>The given effect happens to the given sound number.  The low byte of
+   <strong>volume</strong> holds the volume level, the high byte the number of repeats.
+   (The value 255 means "loudest possible" and "forever" respectively.)
+   (The "repeats" parameter indicates the total number of times to
+   play the sound, not the number of times to repeat it after the first play.)
+   (In Version 3, repeats are unsupported and the high byte must be 0.)
+</p>
+<p>Note that sound effect numbers 1 and 2 are bleeps (see <strong>S</strong> 9) and in
+   these cases the other operands must be omitted.  Conversely, if any
+   of the other operands are present, the sound effect number must be
+   3 or higher.
+</p>
+<p>The <strong>effect</strong> can be: 1 (prepare), 2 (start), 3 (stop), 4 (finish with).</p>
+<p>In Versions 5 and later, the <strong>routine</strong> is called (with no parameters)
+   after the sound has been finished (it has been playing in the background
+   while the Z-machine has been working on other things).  (This is used by
+   'Sherlock' to implement fading in and out, which explains why mysterious
+   numbers like <strong>$34FB</strong> were previously thought to be to do with fading.)
+   The routine is not called if the sound is stopped by another sound or by
+   an effect 3 call.
+</p>
+<p>See the remarks to <strong>S</strong> 9 for which forms of this opcode were actually
+   used by Infocom.
+</p>
+<p>In theory, <strong>@sound_effect;</strong> (with no operands at all) is illegal.
+   However interpreters are asked to beep (as if the operand were 1) if
+   possible, and in any case not to halt.
+</p>
+<p>Setting repeats to zero in V5 is illegal - it is suggested that interpreters
+   treat this as a request to play the sound once, and maybe issue a warning.
+</p>
+<p>To clarify:</p>
+
+<pre>    @sound_effect number 3/4</pre>
+
+<p>will stop (and optionally unload) sound "number" if it is currently playing
+   (or loaded). Otherwise it is ignored.
+</p>
+
+<pre>    @sound_effect 0 3/4</pre>
+
+<p>will stop (and unload) all sounds - music and effects.</p>
+
+<hr>
+
+<h2 id="split_window">split_window</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:234  A  3  split_window    lines</strong></p>
+<p>Splits the screen so that the upper window has the
+   given number of lines: or, if this is zero, unsplits the screen again.
+   In Version 3 (only) the upper window should be cleared after the
+   split.
+</p>
+<p>In Version 6, this is supposed to roughly emulate the earlier Version 5
+   behaviour (see <strong>S</strong> 8), though the line count is in units rather than
+   lines.  (Existing Version 6 games seem to use this opcode
+   only for bounding cursor movement.  'Journey' creates a status region
+   which is the whole screen and then overlays it with two other windows.)
+</p>
+<p>Windows 0 and 1 are tiled together to fill the screen, so that window 1 
+   has the given height and is placed at the top left, while window 0 is placed just 
+   below it (with its height suitably shortened, possibly making it disappear 
+   altogether if window 1 occupies the whole screen).
+</p>
+<p>A cursor remains in the same absolute screen position (which means
+   that its y-coordinate will be different relative to the window origin,
+   since this origin will have moved) unless this position is no longer
+   in the window at all, in which case it is moved to the window origin
+   (at the top left of the window).
+</p>
+
+<hr>
+
+<h2 id="sread">sread</h2>
+<p>This is the Inform name for the keyboard-reading opcode
+   under Versions 3 and 4.  (Inform calls the same opcode <strong>aread</strong> in later
+   Versions.)  See <strong>read</strong> for the specification.
+</p>
+
+<hr>
+
+<h2 id="store">store</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:13   D     store           (variable) value</strong></p>
+<p>Set the <strong><a href="sect14.html#VAR">VAR</a>iable</strong> referenced by the operand to <strong>value</strong>.</p>
+
+<hr>
+
+<h2 id="storeb">storeb</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:226  2     storeb          array byte-index value</strong></p>
+<p><strong>array->byte-index = value</strong>, i.e. stores the given value
+   in the byte at address <strong>array+byte-index</strong> (which must lie in dynamic
+   memory).  (See <strong>loadb</strong>.)
+</p>
+
+<hr>
+
+<h2 id="storew">storew</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:225  1     storew          array word-index value</strong></p>
+<p><strong>array-->word-index = value</strong>, i.e. stores the given value
+   in the word at address <strong>array+2*word-index</strong> (which must lie in dynamic
+   memory).  (See <strong>loadw</strong>.)
+</p>
+
+<hr>
+
+<h2 id="sub">sub</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:21  15     sub             a b -> (result)</strong></p>
+<p>Signed 16-bit subtraction.</p>
+
+<hr>
+
+<h2 id="test">test</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:7    7     test            bitmap flags ?(label)</strong></p>
+<p>Jump if all of the flags in bitmap are set
+   (i.e. if <strong>bitmap & flags == flags</strong>).
+</p>
+
+<hr>
+
+<h2 id="test_array">"test_array"</h2>
+<p>See <strong>clear_flag</strong>.  (<strong>ITF</strong> implements this as
+   unconditionally false.)
+</p>
+
+<hr>
+
+<h2 id="test_attr">test_attr</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:10   A     test_attr       object attribute ?(label)</strong></p>
+<p>Jump if <strong>object</strong> has <strong>attribute</strong>.</p>
+
+<hr>
+
+<h2 id="throw">throw</h2>
+<p><strong><a href="sect14.html#2OP">2OP</a>:28  1C 5/6 throw           value stack-frame</strong></p>
+<p>Opposite of <strong>catch</strong>: resets the routine call state to
+   the state it had when the given stack frame value was 'caught', and
+   then returns.  In other words, it returns as if from the routine
+   which executed the <strong>catch</strong> which found this stack frame value.
+</p>
+
+<hr>
+
+<h2 id="tokenise">tokenise</h2>
+<p><strong><a href="sect14.html#VAR">VAR</a>:251 1B  5  tokenise        text parse dictionary flag</strong></p>
+<p>This performs lexical analysis (see <strong>read</strong> above).</p>
+<p>The dictionary and flag operands are optional.</p>
+<p>If a non-zero <strong>dictionary</strong> is supplied, it is used (if not, the ordinary
+   game dictionary is).  If the <strong>flag</strong> is set, unrecognised words are not
+   written into the parse buffer and their slots are left unchanged: this
+   is presumably so that if several <strong>tokenise</strong> instructions are performed
+   in a row, each fills in more slots without wiping those
+   filled by the others.
+</p>
+<p>Parsing a user dictionary is slightly different.  A user dictionary
+   should look just like the main one but need not be alphabetically sorted.
+   If the number of entries is given as -n, then the interpreter reads
+   this as "n entries unsorted".  This is very convenient if the table
+   is being altered in play: if, for instance, the player is naming things.
+</p>
+
+<hr>
+
+<h2 id="verify">verify</h2>
+<p><strong><a href="sect14.html#0OP">0OP</a>:189  D  3  verify          ?(label)</strong></p>
+<p>Verification counts a (two byte, unsigned) checksum of the
+   file from <strong>$0040</strong> onwards (by taking the sum of the values of each byte
+   in the file, modulo <strong>$10000</strong>) and compares this against the value in the
+   game header, branching if the two values agree.  (Early Version 3 games
+   do not have the necessary checksums to make this possible.)
+</p>
+<p>The interpreter must stop calculating when the file length (as given in
+   the header) is reached.  It is legal for the file to contain more bytes
+   than this, but if so the extra bytes should all be 0. (Some story files are padded
+   out to an exact number of virtual-memory pages.) However, many Infocom story files in
+   fact contain non-zero data in the padding, so interpreters must be sure to
+   exclude the padding from checksum calculations.
+</p>
+
+<hr>
+
+<h2 id="window_size">window_size</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:17  11  6  window_size     window y x</strong></p>
+<p>Change size of window in pixels.  (Does not change the
+   current display.)
+</p>
+
+<hr>
+
+<h2 id="window_style">window_style</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:18  12  6  window_style    window flags operation</strong></p>
+<p>Changes attributes for a given window.  A bitmap of
+   attributes is given, in which the bits are: 0 -- keep text within margins,
+   1 -- scroll when at bottom, 2 -- copy text to output stream 2 (the printer),
+   3 -- buffer text to word-wrap it between the margins of the window.
+</p>
+<p>The operation, by default, is 0, meaning "set to these settings".  1 means
+   "set the bits supplied".  2 means "clear the ones supplied", and 3 means
+   "reverse the bits supplied" (i.e. eXclusive OR).
+</p>
+
+<hr>
+
+<p>
+  <a href="index.html">Contents</a> / 
+  <a href="preface.html">Preface</a> /
+  <a href="overview.html">Overview</a>
+</p>
+
+<p>Section
+  <a href="sect01.html">1</a> / <a href="sect02.html">2</a> /
+  <a href="sect03.html">3</a> / <a href="sect04.html">4</a> /
+  <a href="sect05.html">5</a> / <a href="sect06.html">6</a> /
+  <a href="sect07.html">7</a> / <a href="sect08.html">8</a> /
+  <a href="sect09.html">9</a> / <a href="sect10.html">10</a> /
+  <a href="sect11.html">11</a> / <a href="sect12.html">12</a> /
+  <a href="sect13.html">13</a> / <a href="sect14.html">14</a> /
+  <a href="sect15.html">15</a> / <a href="sect16.html">16</a>
+</p>
+
+<p>Appendix
+  <a href="appa.html">A</a> / <a href="appb.html">B</a> /
+  <a href="appc.html">C</a> / <a href="appd.html">D</a> /
+  <a href="appe.html">E</a> / <a href="appf.html">F</a>
+</p>
+
+<hr>
+
+</body>
+</html>

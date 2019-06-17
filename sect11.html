@@ -1,201 +1,299 @@
-<HTML>
-<HEAD><TITLE>The Z-Machine Standards Document</TITLE>
-</HEAD>
+<!DOCTYPE html>
 
-<BODY BGCOLOR="#EEEEEE"><H1 align=center><IMG height=86 width=82
-SRC="icon11.gif" ALT="Z"></H1>
-<BR><H3 align=center><I>11. The format of the header</I></H3>
-<P>
-<BR><B>11.1</B><P>
-The header table summarises those locations in the Z-machine's
-header which an interpreter must deal with.  (For further notes on
-traditional usage, see <A HREF="appb.html">Appendix B</A>.)
-"Hex" means the address, in hexadecimal;
-"V" the earliest Version to which the rule is applicable;
-"Dyn" means that the byte or bit may legally be changed by the game
-during play; "Int" means that the interpreter may change it; "Rst"
-means that the interpreter must set it correctly after loading the game,
-after a restore or after a restart.
-<TABLE Border>
-<CAPTION><B>Header format</B></CAPTION>
-<TR><TD><B> Hex  </B><TD><B>V  </B><TD><B>Dyn </B><TD><B>Int </B><TD><B>Rst  </B><TD><B>Contents</B>
-<TR><TD>  0   <TD>1  <TD>    <TD>    <TD>     <TD>Version number (1 to 6)
-<TR><TD>  1   <TD>3  <TD>    <TD>    <TD>     <TD><I>Flags 1 (in Versions 1 to 3):</I>
-<TR><TD>      <TD>   <TD>    <TD>    <TD>     <TD>  Bit 1:    Status line type: 0=score/turns, 1=hours:mins
-<TR><TD>      <TD>   <TD>    <TD>    <TD>     <TD>      2:    Story file split across two discs?
-<TR><TD>      <TD>   <TD>    <TD> *  <TD> *   <TD>      4:    Status line not available?
-<TR><TD>      <TD>   <TD>    <TD> *  <TD> *   <TD>      5:    Screen-splitting available?
-<TR><TD>      <TD>   <TD>    <TD> *  <TD> *   <TD>      6:    Is a variable-pitch font the default?
-<TR><TD>      <TD>4  <TD>    <TD>    <TD>     <TD><I>Flags 1 (from Version 4):</I>
-<TR><TD>      <TD><I>5</I> <TD>    <TD> *  <TD> *   <TD>  Bit 0:    Colours available?
-<TR><TD>      <TD><I>6</I> <TD>    <TD> *  <TD> *   <TD>      1:    Picture displaying available?
-<TR><TD>      <TD><I>4</I> <TD>    <TD> *  <TD> *   <TD>      2:    Boldface available?
-<TR><TD>      <TD><I>4</I> <TD>    <TD> *  <TD> *   <TD>      3:    Italic available?
-<TR><TD>      <TD><I>4</I> <TD>    <TD> *  <TD> *   <TD>      4:    Fixed-space font available?
-<TR><TD>      <TD><I>6</I> <TD>    <TD> *  <TD> *   <TD>      5:    Sound effects available?
-<TR><TD>      <TD><I>4</I> <TD>    <TD> *  <TD> *   <TD>      7:    Timed keyboard input available?
-<TR><TD>  4   <TD>1  <TD>    <TD>    <TD>     <TD>Base of high memory (byte address)
-<TR><TD>  6   <TD>1  <TD>    <TD>    <TD>     <TD>Initial value of program counter (byte address)
-<TR><TD>      <TD>6  <TD>    <TD>    <TD>     <TD>Packed address of initial "main" routine
-<TR><TD>  8   <TD>1  <TD>    <TD>    <TD>     <TD>Location of dictionary (byte address)
-<TR><TD>  A   <TD>1  <TD>    <TD>    <TD>     <TD>Location of object table (byte address)
-<TR><TD>  C   <TD>1  <TD>    <TD>    <TD>     <TD>Location of global variables table (byte address)
-<TR><TD>  E   <TD>1  <TD>    <TD>    <TD>     <TD>Base of static memory (byte address)
-<TR><TD> 10   <TD>1  <TD>    <TD>    <TD>     <TD><I>Flags 2:</I>
-<TR><TD>      <TD><I>1</I> <TD> *  <TD> *  <TD> *   <TD>  Bit 0:    Set when transcripting is on
-<TR><TD>      <TD><I>3</I> <TD> *  <TD>    <TD> *   <TD>      1:    Game sets to force printing in fixed-pitch font
-<TR><TD>      <TD><I>6</I> <TD> *  <TD> *  <TD>     <TD>      2:    Int sets to request status line redraw: game clears when it complies with this.
-<TR><TD>      <TD><I>5</I> <TD>    <TD> *  <TD> *   <TD>      3:    If set, game wants to use pictures
-<TR><TD>      <TD><I>5</I> <TD>    <TD> *  <TD> *   <TD>      4:    If set, game wants to use the UNDO opcodes
-<TR><TD>      <TD><I>5</I> <TD>    <TD> *  <TD> *   <TD>      5:    If set, game wants to use a mouse
-<TR><TD>      <TD><I>5</I> <TD>    <TD>    <TD>     <TD>      6:    If set, game wants to use colours
-<TR><TD>      <TD><I>5</I> <TD>    <TD> *  <TD> *   <TD>      7:    If set, game wants to use sound effects
-<TR><TD>      <TD><I>6</I> <TD>    <TD> *  <TD> *   <TD>      8:    If set, game wants to use menus
-<TR><TD>      <TD>   <TD>    <TD>    <TD>     <TD>             (For bits 3,4,5,7 and 8, Int clears again if it cannot provide the requested effect.)
-<TR><TD> 18   <TD>2  <TD>    <TD>    <TD>     <TD>Location of abbreviations table (byte address)
-<TR><TD> 1A   <TD>3+ <TD>    <TD>    <TD>     <TD>Length of file (see note)
-<TR><TD> 1C   <TD>3+ <TD>    <TD>    <TD>     <TD>Checksum of file
-<TR><TD> 1E   <TD>4  <TD>    <TD> *  <TD> *   <TD>Interpreter number
-<TR><TD> 1F   <TD>4  <TD>    <TD> *  <TD> *   <TD>Interpreter version
-<TR><TD><B> Hex  </B><TD><B>V  </B><TD><B>Dyn </B><TD><B>Int </B><TD><B>Rst  </B><TD><B>Contents</B>
-<TR><TD> 20   <TD>4  <TD>    <TD> *  <TD> *   <TD>Screen height (lines): 255 means "infinite"
-<TR><TD> 21   <TD>4  <TD>    <TD> *  <TD> *   <TD>Screen width (characters)
-<TR><TD> 22   <TD>5  <TD>    <TD> *  <TD> *   <TD>Screen width in units
-<TR><TD> 24   <TD>5  <TD>    <TD> *  <TD> *   <TD>Screen height in units
-<TR><TD> 26   <TD>5  <TD>    <TD> *  <TD> *   <TD>Font width in units (defined as width of a '0')
-<TR><TD>      <TD>6  <TD>    <TD> *  <TD> *   <TD>Font height in units
-<TR><TD> 27   <TD>5  <TD>    <TD> *  <TD> *   <TD>Font height in units
-<TR><TD>      <TD>6  <TD>    <TD> *  <TD> *   <TD>Font width in units (defined as width of a '0')
-<TR><TD> 28   <TD>6  <TD>    <TD>    <TD>     <TD>Routines offset (divided by 8)
-<TR><TD> 2A   <TD>6  <TD>    <TD>    <TD>     <TD>Static strings offset (divided by 8)
-<TR><TD> 2C   <TD>5  <TD>    <TD> *  <TD> *   <TD>Default background colour
-<TR><TD> 2D   <TD>5  <TD>    <TD> *  <TD> *   <TD>Default foreground colour
-<TR><TD> 2E   <TD>5  <TD>    <TD>    <TD>     <TD>Address of terminating characters table (bytes)
-<TR><TD> 30   <TD>6  <TD>    <TD> *  <TD>     <TD>Total width in pixels of text sent to output stream 3
-<TR><TD> 32   <TD>1  <TD>    <TD> *  <TD> *   <TD>Standard revision number
-<TR><TD> 34   <TD>5  <TD>    <TD>    <TD>     <TD>Alphabet table address (bytes), or 0 for default
-<TR><TD> 36   <TD>5  <TD>    <TD>    <TD>     <TD>Header extension table address (bytes)
-</TABLE>
-Some early Version 3 files do not contain length and checksum
-data, hence the notation <B>3+</B>.
-<P>
-<BR><B>11.1.1</B><P> It is illegal for a game to alter those
-fields not marked as "Dyn".  An interpreter is therefore free to
-store values of such fields in its own variables.
-<P>
-<BR><B>11.1.2</B><P> The state of the transcription bit
-(bit 0 of Flags 2) can
-be changed directly by the game to turn transcribing on or off
-(see <B>S</B> 7.3, <B>S</B> 7.4).  The interpreter must also alter it if
-stream 2 is turned on or off, to ensure that the bit always
-reflects the true state of transcribing.  Note that the
-interpreter ensures that its value survives a restart or restore.
-<P>
-<BR><B>11.1.3</B><P> Infocom used the interpreter numbers:
-<PRE>
+<html>
+<head>
+<title>The Z-Machine Standards Document</title>
+<link rel="stylesheet" type="text/css" href="zspec.css">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
+
+<body>
+
+<img class="icon" src="icon11.gif" alt="">
+
+<h1>11. The format of the header</h1>
+
+<h2>11.1</h2>
+<p>The header table summarises those locations in the Z-machine's
+   header which an interpreter must deal with.  (For further notes on
+   traditional usage, see <a href="appb.html">Appendix B</a>.)
+   "Hex" means the address, in hexadecimal;
+   "V" the earliest Version to which the rule is applicable;
+   "Dyn" means that the byte or bit may legally be changed by the game
+   during play; "Int" means that the interpreter may change it; "Rst"
+   means that the interpreter must set it correctly after loading the game,
+   after a restore or after a restart.
+</p>
+
+<table>
+  <caption><strong>Header format</strong></caption>
+  <tr><td><strong> Hex  </strong></td><td><strong>V  </strong></td><td><strong>Dyn </strong></td>
+      <td><strong>Int </strong></td><td><strong>Rst  </strong></td><td><strong>Contents</strong></td>
+  </tr>
+  <tr><td>  0   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Version number (1 to 6)</td>
+  <tr><td>  1   </td><td>3  </td><td>    </td><td>    </td><td>     </td><td><em>Flags 1 (in Versions 1 to 3):</em></td></tr>
+  <tr><td>      </td><td>   </td><td>    </td><td>    </td><td>     </td><td>  Bit 1:    Status line type: 0=score/turns, 1=hours:mins</td></tr>
+  <tr><td>      </td><td>   </td><td>    </td><td>    </td><td>     </td><td>      2:    Story file split across two discs?</td></tr>
+  <tr><td>      </td><td>   </td><td>    </td><td> *  </td><td> *   </td><td>      4:    Status line not available?</td></tr>
+  <tr><td>      </td><td>   </td><td>    </td><td> *  </td><td> *   </td><td>      5:    Screen-splitting available?</td></tr>
+  <tr><td>      </td><td>   </td><td>    </td><td> *  </td><td> *   </td><td>      6:    Is a variable-pitch font the default?</td></tr>
+  <tr><td>      </td><td>4  </td><td>    </td><td>    </td><td>     </td><td><em>Flags 1 (from Version 4):</em></td></tr>
+  <tr><td>      </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>  Bit 0:    Colours available?</td></tr>
+  <tr><td>      </td><td><em>6</em> </td><td>    </td><td> *  </td><td> *   </td><td>      1:    Picture displaying available?</td></tr>
+  <tr><td>      </td><td><em>4</em> </td><td>    </td><td> *  </td><td> *   </td><td>      2:    Boldface available?</td></tr>
+  <tr><td>      </td><td><em>4</em> </td><td>    </td><td> *  </td><td> *   </td><td>      3:    Italic available?</td></tr>
+
+  <tr><td>      </td><td><em>4</em> </td><td>    </td><td> *  </td><td> *   </td>
+      <td>      4:    Fixed-space style available?</td>
+  </tr>
+
+  <tr><td>      </td><td><em>6</em> </td><td>    </td><td> *  </td><td> *   </td><td>      5:    Sound effects available?</td></tr>
+  <tr><td>      </td><td><em>4</em> </td><td>    </td><td> *  </td><td> *   </td><td>      7:    Timed keyboard input available?</td></tr>
+  <tr><td>  4   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Base of high memory (byte address)</td></tr>
+  <tr><td>  6   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Initial value of program counter (byte address)</td></tr>
+  <tr><td>      </td><td>6  </td><td>    </td><td>    </td><td>     </td><td>Packed address of initial "main" routine</td></tr>
+  <tr><td>  8   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Location of dictionary (byte address)</td></tr>
+  <tr><td>  A   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Location of object table (byte address)</td></tr>
+  <tr><td>  C   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Location of global variables table (byte address)</td></tr>
+  <tr><td>  E   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Base of static memory (byte address)</td></tr>
+  <tr><td> 10   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td><em>Flags 2:</em></td></tr>
+  <tr><td>      </td><td><em>1</em> </td><td> *  </td><td> *  </td><td> *   </td><td>  Bit 0:    Set when transcripting is on</td></tr>
+
+  <tr><td>      </td><td><em>3</em> </td><td> *  </td><td>    </td><td> *   </td>
+      <td>      1:    Game sets to force printing in fixed-pitch font</td>
+  </tr>
+
+  <tr><td>      </td><td><em>6</em> </td><td> *  </td><td> *  </td><td>     </td>
+      <td>      2:    Int sets to request screen redraw: game clears when it complies with this.</td>
+  </tr>
+
+  <tr><td>      </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>      3:    If set, game wants to use pictures</td></tr>
+  <tr><td>      </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>      4:    If set, game wants to use the UNDO opcodes</td></tr>
+  <tr><td>      </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>      5:    If set, game wants to use a mouse</td></tr>
+  <tr><td>      </td><td><em>5</em> </td><td>    </td><td>    </td><td>     </td><td>      6:    If set, game wants to use colours</td></tr>
+  <tr><td>      </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>      7:    If set, game wants to use sound effects</td></tr>
+  <tr><td>      </td><td><em>6</em> </td><td>    </td><td> *  </td><td> *   </td><td>      8:    If set, game wants to use menus</td></tr>
+
+  <tr><td>      </td><td>   </td><td>    </td><td>    </td><td>     </td>
+      <td>             (For bits 3,4,5,7 and 8, Int clears again if it cannot provide the requested effect.)</td>
+  </tr>
+
+  <tr><td> 18   </td><td>2  </td><td>    </td><td>    </td><td>     </td><td>Location of abbreviations table (byte address)</td></tr>
+  <tr><td> 1A   </td><td>3+ </td><td>    </td><td>    </td><td>     </td><td>Length of file (see note)</td></tr>
+  <tr><td> 1C   </td><td>3+ </td><td>    </td><td>    </td><td>     </td><td>Checksum of file</td></tr>
+  <tr><td> 1E   </td><td>4  </td><td>    </td><td> *  </td><td> *   </td><td>Interpreter number</td></tr>
+  <tr><td> 1F   </td><td>4  </td><td>    </td><td> *  </td><td> *   </td><td>Interpreter version</td></tr>
+
+  <tr><td><strong> Hex  </strong></td><td><strong>V  </strong></td><td><strong>Dyn </strong></td><td><strong>Int </strong></td>
+      <td><strong>Rst  </strong></td><td><strong>Contents</strong></td>
+  </tr>
+
+  <tr><td> 20   </td><td>4  </td><td>    </td><td> *  </td><td> *   </td><td>Screen height (lines): 255 means "infinite"</td></tr>
+  <tr><td> 21   </td><td>4  </td><td>    </td><td> *  </td><td> *   </td><td>Screen width (characters)</td></tr>
+  <tr><td> 22   </td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Screen width in units</td></tr>
+  <tr><td> 24   </td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Screen height in units</td></tr>
+  <tr><td> 26   </td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Font width in units (defined as width of a '0')</td></tr>
+  <tr><td>      </td><td>6  </td><td>    </td><td> *  </td><td> *   </td><td>Font height in units</td></tr>
+  <tr><td> 27   </td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Font height in units</td></tr>
+  <tr><td>      </td><td>6  </td><td>    </td><td> *  </td><td> *   </td><td>Font width in units (defined as width of a '0')</td></tr>
+  <tr><td> 28   </td><td>6  </td><td>    </td><td>    </td><td>     </td><td>Routines offset (divided by 8)</td></tr>
+  <tr><td> 2A   </td><td>6  </td><td>    </td><td>    </td><td>     </td><td>Static strings offset (divided by 8)</td></tr>
+  <tr><td> 2C   </td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Default background colour</td></tr>
+  <tr><td> 2D   </td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Default foreground colour</td></tr>
+  <tr><td> 2E   </td><td>5  </td><td>    </td><td>    </td><td>     </td><td>Address of terminating characters table (bytes)</td></tr>
+  <tr><td> 30   </td><td>6  </td><td>    </td><td> *  </td><td>     </td><td>Total width in pixels of text sent to output stream 3</td></tr>
+  <tr><td> 32   </td><td>1  </td><td>    </td><td> *  </td><td> *   </td><td>Standard revision number</td></tr>
+  <tr><td> 34   </td><td>5  </td><td>    </td><td>    </td><td>     </td><td>Alphabet table address (bytes), or 0 for default</td></tr>
+  <tr><td> 36   </td><td>5  </td><td>    </td><td>    </td><td>     </td><td>Header extension table address (bytes)</td></tr>
+</table>
+
+<p>Some early Version 3 files do not contain length and checksum
+   data, hence the notation <strong>3+</strong>.
+</p>
+
+<h2>11.1.1</h2>
+<p>It is illegal for a game to alter those
+   fields not marked as "Dyn".  An interpreter is therefore free to
+   store values of such fields in its own variables.
+</p>
+
+<h2>11.1.2</h2>
+<p>The state of the transcription bit
+   (bit 0 of Flags 2) can
+   be changed directly by the game to turn transcribing on or off
+   (see <strong>S</strong> 7.3, <strong>S</strong> 7.4).  The interpreter must also alter it if
+   stream 2 is turned on or off, to ensure that the bit always
+   reflects the true state of transcribing.  Note that the
+   interpreter ensures that its value survives a restart or restore.
+</p>
+
+<h2>11.1.3</h2>
+<p>Infocom used the interpreter numbers:</p>
+
+<pre>
    1   DECSystem-20     5   Atari ST           9   Apple IIc
    2   Apple IIe        6   IBM PC            10   Apple IIgs
    3   Macintosh        7   Commodore 128     11   Tandy Color
    4   Amiga            8   Commodore 64
-</PRE>
-(The DECSystem-20 was Infocom's own in-house mainframe.)  An interpreter
-should choose the interpreter number most suitable for the machine it
-will run on.  In Versions up to 5, the main consideration is that the
-behaviour of 'Beyond Zork' depends on the interpreter number (in terms
-of its usage of the character graphics font).  In Version 6, the
-decision is more serious, as existing Infocom story files depend
-on interpreter number in many ways: moreover, some story files
-expect to be run only on the interpreters for a particular machine.
-(There are, for instance, specifically Amiga versions.)
-<P>
-<BR><B>11.1.3.1</B><P>
-Interpreter versions are conventionally ASCII codes for
-upper-case letters in Versions 4 and 5 (note that Infocom's Version 6
-interpreters just store numbers here).
-<P>
-<BR><B>11.1.4</B><P>
-<B>***</B> The use of bit 7 in 'Flags 1' to signal whether timed
-input is available is new in this document: see the preface.
-<P>
-<BR><B>11.1.5</B><P>
-<B>***</B> If an interpreter obeys Revision <B>n.m</B> of this document
-<I>perfectly</I>, as far as anyone knows,
-then byte <B>$32</B> should be written with
-<B>n</B> and byte <B>$33</B> with <B>m</B>.
-If it is an earlier (non-standard)
-interpreter, it should leave these bytes as 0.
-<P>
-<BR><B>11.1.6</B><P>
-The file length stored at <B>$1a</B> is actually divided by a constant,
-depending on the Version, to make it fit into a header word.  This constant
-is 2 for Versions 1 to 3, 4 for Versions 4 to 5 or 8 for Versions 6 and
-later.
-<P>
-<BR><B>11.1.7</B><P>
-The header extension table provides potentially unlimited
-room for further header information.  It is a table of word entries,
-in which the initial word contains the number of words of data to follow.
-<P>
-<BR><B>11.1.7.1</B><P>
-If the interpreter needs to read a word which is beyond the
-length of the extension table, or the extension table doesn't exist at
-all, then the result is 0.
-<P>
-<BR><B>11.1.7.2</B><P>
-If the interpreter needs to write a word which is beyond the
-length of the extension table, or the extension table doesn't exist at
-all, then the result is that nothing happens.
-<P>
-<BR><B>11.1.7.3</B><P>
-<B>***</B> Words in the header extension table have been allocated
-as follows:
-<TABLE Border>
-<CAPTION><B>Header extension format</B></CAPTION>
-<TR><TD><B>Word  </B><TD><B>V  </B><TD><B>Dyn </B><TD><B>Int </B><TD><B>Rst  </B><TD><B>Contents</B>
-<TR><TD>  0   <TD>5  <TD>    <TD>    <TD>     <TD>Number of further words in table
-<TR><TD>  1   <TD>5  <TD>    <TD> *  <TD>     <TD>X-coordinate of mouse after a click
-<TR><TD>  2   <TD>5  <TD>    <TD> *  <TD>     <TD>Y-coordinate of mouse after a click
-<TR><TD>  3   <TD>5  <TD>    <TD>    <TD>     <TD>Unicode translation table address (optional)
-</TABLE>
-<HR><H4><I>Remarks</I></H4><BR>
-In the Infocom period, the larger Version 3 story files would
-not entirely fit on a single Atari 800 disc (though they would fit
-on a single Apple II, or a single PC disc).  Atari versions were
-therefore made which were identical to the normal ones except for
-having Flags 1 bit 2 set, and were divided into the resident part
-on one disc and the rest on another.  (This discovery was announced
-by Stefan Jokisch on 26 August 1997 and sees the end of one of the
-very few Z-machine mysteries left when Standard 1.0 was first published.)
-<p>
-See the "Infocom fact sheet" for numbers and letters of the known
-interpreters shipped by Infocom.  Interpreter versions are conventionally
-the upper case letters in sequence (A, B, C, ...).  At present most ports
-of <B>Zip</B> use interpreter number 6, and most of <B>ITF</B> use number 2.
-<P>
-The unusual behaviour of 'Beyond Zork' concerns its character graphics:
-see the remarks to <B>S</B> 16.
-<P>
-The Macintosh story file for 'Zork Zero' erroneously does not set
-the pictures bit (Flags 2, bit 3).
-<P>
-<HR>
-<P>
-<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
-<A HREF="overview.html">Overview</A>
-<P>Section
-<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
-<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
-<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
-<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
-<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
-<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
-<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
-<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
-<P>Appendix
-<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
-<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
-<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
-</P>
-<HR>
+</pre>
 
-</BODY></HTML>
+<p>(The DECSystem-20 was Infocom's own in-house mainframe.)  An interpreter
+   should choose the interpreter number most suitable for the machine it
+   will run on.  In Versions up to 5, the main consideration is that the
+   behaviour of 'Beyond Zork' depends on the interpreter number (in terms
+   of its usage of the character graphics font).  In Version 6, the
+   decision is more serious, as existing Infocom story files depend
+   on interpreter number in many ways: moreover, some story files
+   expect to be run only on the interpreters for a particular machine.
+   (There are, for instance, specifically Amiga versions.)
+</p>
+
+<h2>11.1.3.1</h2>
+<p>Interpreter versions are conventionally ASCII codes for
+   upper-case letters in Versions 4 and 5 (note that Infocom's Version 6
+   interpreters just store numbers here).
+</p>
+
+<p>Modern games are strongly discouraged from testing the interpreter number or interpreter version
+   header information for any game-changing behaviour. It is rarely meaningful, and a Standard interpreter
+   provides many better ways to query the interpreter for information.
+</p>
+
+<h2>11.1.4</h2>
+<p><strong>***</strong> The use of bit 7 in 'Flags 1' to signal whether timed
+   input is available is new in this document: see the preface.
+</p>
+
+<h2>11.1.5</h2>
+<p><strong>***</strong> If an interpreter obeys Revision <strong>n.m</strong> of this document
+   <em>perfectly</em>, as far as anyone knows,
+   then byte <strong>$32</strong> should be written with
+   <strong>n</strong> and byte <strong>$33</strong> with <strong>m</strong>.
+   If it is an earlier (non-standard)
+   interpreter, it should leave these bytes as 0.
+</p>
+
+<h2>11.1.6</h2>
+<p>The file length stored at <strong>$1a</strong> is actually divided by a constant,
+   depending on the Version, to make it fit into a header word.  This constant
+   is 2 for Versions 1 to 3, 4 for Versions 4 to 5 or 8 for Versions 6 and
+   later.
+</p>
+
+<h2>11.1.7</h2>
+<p>The header extension table provides potentially unlimited
+   room for further header information.  It is a table of word entries,
+   in which the initial word contains the number of words of data to follow.
+</p>
+
+<h2>11.1.7.1</h2>
+<p>If the interpreter needs to read a word which is beyond the
+   length of the extension table, or the extension table doesn't exist at
+   all, then the result is 0.
+</p>
+
+<h2>11.1.7.2</h2>
+<p>If the interpreter needs to write a word which is beyond the
+   length of the extension table, or the extension table doesn't exist at
+   all, then the result is that nothing happens.
+</p>
+
+<h2>11.1.7.3</h2>
+<p><strong>***</strong> Words in the header extension table have been allocated
+   as follows:
+</p>
+
+<table>
+  <caption><strong>Header extension format</strong></caption>
+
+  <tr><td><strong>Word  </strong></td><td><strong>V  </strong></td><td><strong>Dyn </strong></td><td><strong>Int </strong></td>
+      <td><strong>Rst  </strong></td><td><strong>Contents</strong></td>
+  </tr>
+
+  <tr><td>  0   </td><td>5  </td><td>    </td><td>    </td><td>     </td><td>Number of further words in table</td></tr>
+  <tr><td>  1   </td><td>5  </td><td>    </td><td> *  </td><td>     </td><td>X-coordinate of mouse after a click</td></tr>
+  <tr><td>  2   </td><td>5  </td><td>    </td><td> *  </td><td>     </td><td>Y-coordinate of mouse after a click</td></tr>
+  <tr><td>  3   </td><td>5  </td><td>    </td><td>    </td><td>     </td><td>Unicode translation table address (optional)</td></tr>
+</table>
+
+<hr>
+
+<h2>Remarks</h2>
+<p>In the Infocom period, the larger Version 3 story files would
+   not entirely fit on a single Atari 800 disc (though they would fit
+   on a single Apple II, or a single PC disc).  Atari versions were
+   therefore made which were identical to the normal ones except for
+   having Flags 1 bit 2 set, and were divided into the resident part
+   on one disc and the rest on another.  (This discovery was announced
+   by Stefan Jokisch on 26 August 1997 and sees the end of one of the
+   very few Z-machine mysteries left when Standard 1.0 was first published.)
+</p>
+
+<p>See the "Infocom fact sheet" for numbers and letters of the known
+   interpreters shipped by Infocom.  Interpreter versions are conventionally
+   the upper case letters in sequence (A, B, C, ...).  At present most ports
+   of <strong>Zip</strong> use interpreter number 6, and most of <strong>ITF</strong> use number 2.
+</p>
+
+<p>The unusual behaviour of 'Beyond Zork' concerns its character graphics:
+   see the remarks to <strong>S</strong> 16.
+</p>
+
+<p>The Macintosh story file for 'Zork Zero' erroneously does not set
+   the pictures bit (Flags 2, bit 3).
+</p>
+
+<p>The bit in the header described as "requesting screen redraw" may be set by
+   modern interpreters after, for example, resizing the "screen"; games should
+   ideally redraw the screen if they see this bit set. This will usually mean
+   the game clears the screen contents and rearranges borders, etc, so the bit
+   should not be set except when necessary.
+</p>
+
+<p>The (Version 6) sound and picture bits in Flags 1 indicate general
+   availability of sound and graphics - ie whether the associated opcodes are
+   available and functional.
+</p>
+
+<p>The bits in Flags 2 should ideally be set reflecting current
+   availability, rather than general support. In other words, if no Blorb (or
+   other) resources for this story file have been found, or if the Blorb file
+   contains no graphics or no sound, the corresponding bits should be cleared.
+</p>
+
+<p>Also, it is recommended that interpreters that would prompt for an auxiliary
+   Blorb file should do so immediately on start up if any of the "game wants to
+   use sound/music/graphics" bits are set; this allows the bits to be cleared if
+   no file is forthcoming, before the game starts execution. The game can then
+   take appropriate action.
+</p>
+
+<hr>
+
+<p>
+  <a href="index.html">Contents</a> / 
+  <a href="preface.html">Preface</a> /
+  <a href="overview.html">Overview</a>
+</p>
+
+<p>Section
+  <a href="sect01.html">1</a> / <a href="sect02.html">2</a> /
+  <a href="sect03.html">3</a> / <a href="sect04.html">4</a> /
+  <a href="sect05.html">5</a> / <a href="sect06.html">6</a> /
+  <a href="sect07.html">7</a> / <a href="sect08.html">8</a> /
+  <a href="sect09.html">9</a> / <a href="sect10.html">10</a> /
+  <a href="sect11.html">11</a> / <a href="sect12.html">12</a> /
+  <a href="sect13.html">13</a> / <a href="sect14.html">14</a> /
+  <a href="sect15.html">15</a> / <a href="sect16.html">16</a>
+</p>
+
+<p>Appendix
+  <a href="appa.html">A</a> / <a href="appb.html">B</a> /
+  <a href="appc.html">C</a> / <a href="appd.html">D</a> /
+  <a href="appe.html">E</a> / <a href="appf.html">F</a>
+</p>
+
+<hr>
+
+</body>
+</html>

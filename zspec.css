@@ -1,0 +1,36 @@
+img.icon { height: 86px; width: 82px; display: block; margin-left: auto; margin-right: auto; }
+
+body { background-color: #EEEEEE; }
+body.pre { background-color: #DDDDDD; }
+body.appendix { background-color: #DDDDDD; }
+body.index { background-color: #0080C0; }
+
+
+h1 { text-align: center; font-size: 1.2em; font-style: italic; margin-top: 3em; }
+h2 { font-size: 1em;  }
+h2.index { text-align: center; }
+h3 { font-size: 1em;  }
+
+.index li a:link { color: #FFFFFF; font-weight: bold; }
+li ins a { color: #009F00; }
+.index li ins a { color: #00CF00; }
+
+p.date { text-align: center; }
+p.update { text-align: center; font-size: .8em;}
+p.dictindex { text-align: center; }
+
+ul.clean { list-style: none; }
+
+table { border-right: black 1px solid; border-bottom: black 1px solid; border-left: none; border-top: none; }
+td { border-left: black 1px solid; border-top: black 1px solid; border-bottom: none; border-right: none; }
+td.note { font-style: italic; text-align: center; }
+table.opcodes { margin-left: auto; margin-right: auto; margin-bottom: 1em; }
+table caption { font-weight: bold; text-align: center; }
+
+ins { color: #009F00; }
+.index ins { color: #00CF00; }
+del { color: red; }
+.alter { color: blue; }
+
+ol ol { list-style-type: lower-alpha; } 
+

@@ -1,123 +1,139 @@
-<HTML>
-<HEAD><TITLE>The Z-Machine Standards Document</TITLE>
-<link rev="owns, made" href="mailto:graham@gnelson.demon.co.uk" title="Graham Nelson"></HEAD>
+<!DOCTYPE html>
 
-<BODY BGCOLOR="#DDDDDD"><H1 align=center><IMG height=86 width=82
-SRC="iconov.gif" ALT="Z"></H1>
-<BR>
-<H3 align="center"><I>Overview of Z-machine architecture</I></H3>
-<HR>
-<IMG SRC="diagram.gif" align="center" ALT="Diagram">
-<BR>
-<P>
-The Z-machine is a design for an imaginary computer: Z is for 'Zork',
-the adventure game it was originally designed to play.  Like any
-computer, it stores its information (mostly) in an array of variables
-numbered from 0 up to some large number: this is called its <B>memory</B>.
-A stock of some 240 memory locations are set aside for easy and
-quick access, and these are called <B>global variables</B> (since they
-are available to any part of the program which is running, at any
-time).
-<P>
-The two important pieces of information not stored in memory
-are the <B>program counter</B> (PC) and the <B>stack</B>.
-The Z-machine continuously runs a program by getting the
-instruction stored at position PC in memory, acting on the
-instruction and then moving the PC forward to the next.  The
-<B>instruction set</B> of the Z-machine (the range of possible
-actions and how they are encoded as numbers in memory)
-occupies much of this document.
-<P>
-Programs are divided into <B>routines</B>: the Z-machine is always
-executing a particular routine, the one which the PC currently
-points inside.  However, some instructions cause the Z-machine
-to <B>call</B> a new routine and then to return where the first
-routine left off.  The Z-machine therefore needs to remember
-details of where to go back, and it stores these on the stack.
-<P>
-The stack is a second bank of memory, quite separate from the
-main one, which has variable size: initially it is empty.
-From time to time values are added to, or taken from, the top
-of the stack.  As well as being used to keep
-return details, the stack is also used to store <B>local
-variables</B> (values needed only by a particular routine) and,
-for short periods only, the partial results of calculations.
-<P>
-Thus, whereas most physical processors (e.g. Z80 or 6502) have
-a number of quick-access variables outside of memory (called
-"registers") and a stack inside memory, the Z-machine has the
-reverse: it has global variables inside memory and a stack
-kept outside.
-<P>
-There is no access to hardware except by executing particular
-Z-machine instructions.  For instance, <B>read</B> and
-<B>read_char</B> allow use of the keyboard; <B>print</B> and
-<B>draw_picture</B> allow use of the screen.  The screen's
-image is not stored anywhere in memory.  Conversely, hardware
-can cause the Z-machine to <B>interrupt</B>, that is, to
-make a spontaneous call to a particular routine, interrupting
-what it was previously working on.  This happens only if
-the program has previously requested it: for example, by
-setting a sound effect playing and asking for a routine to
-be called when it finishes; or by asking for an interrupt if
-thirty seconds pass while the player is thinking what to type.
-<HR>
-This simple architecture is overlaid by a number of
-special structures which the Z-machine maintains inside
-memory.  There are around a dozen of these but the most
-important are:
-<P>the <B>header</B>, at the bottom of memory, giving details
-about the program and a map of the rest of memory;
-<P>the <B>dictionary</B>, a list of English words which the
-program expects that it might want to read from the keyboard;
-<P>the <B>object tree</B>, an arrangement of chunks of
-memory called <B>objects</B>.
-<P>
-The Z-machine is primarily used for adventure games, where the
-dictionary holds names of items and verbs that the player might
-type, and the objects tend to be the places and artifacts which
-make up the game.  Each object in the tree may have a <B>parent</B>,
-a <B>sibling</B> and a <B>child</B>.  For instance, in the start
-position of 'Zork I':
-<BLOCKQUOTE>
-<B>West of House</B>
-<P>
-You are standing in an open field west of a white house,
-with a boarded front door.  There is a small mailbox here.
-<P>
->open mailbox
-<P>
-Opening the small mailbox reveals a leaflet.
-</BLOCKQUOTE>
-At this point (part of) the game's object tree looks like this:
-<PRE>
+<html>
+<head>
+<title>The Z-Machine Standards Document</title>
+<link rel="stylesheet" type="text/css" href="zspec.css">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
+
+<body class="pre">
+
+<img class="icon" src="iconov.gif" alt="">
+
+<h1>Overview of Z-machine architecture</h1>
+
+<hr>
+
+<img src="diagram.gif" alt="">
+
+<p>The Z-machine is a design for an imaginary computer: Z is for 'Zork',
+   the adventure game it was originally designed to play.  Like any
+   computer, it stores its information (mostly) in an array of variables
+   numbered from 0 up to some large number: this is called its <strong>memory</strong>.
+   A stock of some 240 memory locations are set aside for easy and
+   quick access, and these are called <strong>global variables</strong> (since they
+   are available to any part of the program which is running, at any
+   time).</p>
+
+<p>The two important pieces of information not stored in memory
+   are the <strong>program counter</strong> (PC) and the <strong>stack</strong>.
+   The Z-machine continuously runs a program by getting the
+   instruction stored at position PC in memory, acting on the
+   instruction and then moving the PC forward to the next.  The
+   <strong>instruction set</strong> of the Z-machine (the range of possible
+   actions and how they are encoded as numbers in memory)
+   occupies much of this document.</p>
+
+<p>Programs are divided into <strong>routines</strong>: the Z-machine is always
+   executing a particular routine, the one which the PC currently
+   points inside.  However, some instructions cause the Z-machine
+   to <strong>call</strong> a new routine and then to return where the first
+   routine left off.  The Z-machine therefore needs to remember
+   details of where to go back, and it stores these on the stack.</p>
+
+<p>The stack is a second bank of memory, quite separate from the
+   main one, which has variable size: initially it is empty.
+   From time to time values are added to, or taken from, the top
+   of the stack.  As well as being used to keep
+   return details, the stack is also used to store <strong>local
+   variables</strong> (values needed only by a particular routine) and,
+   for short periods only, the partial results of calculations.</p>
+
+<p>Thus, whereas most physical processors (e.g. Z80 or 6502) have
+   a number of quick-access variables outside of memory (called
+   "registers") and a stack inside memory, the Z-machine has the
+   reverse: it has global variables inside memory and a stack
+   kept outside.</p>
+
+<p>There is no access to hardware except by executing particular
+   Z-machine instructions.  For instance, <strong>read</strong> and
+   <strong>read_char</strong> allow use of the keyboard; <strong>print</strong> and
+   <strong>draw_picture</strong> allow use of the screen.  The screen's
+   image is not stored anywhere in memory.  Conversely, hardware
+   can cause the Z-machine to <strong>interrupt</strong>, that is, to
+   make a spontaneous call to a particular routine, interrupting
+   what it was previously working on.  This happens only if
+   the program has previously requested it: for example, by
+   setting a sound effect playing and asking for a routine to
+   be called when it finishes; or by asking for an interrupt if
+   thirty seconds pass while the player is thinking what to type.</p>
+
+<hr>
+
+<p>This simple architecture is overlaid by a number of
+   special structures which the Z-machine maintains inside
+   memory.  There are around a dozen of these but the most
+   important are:</p>
+
+<ul class="clean">
+  <li>the <strong>header</strong>, at the bottom of memory, giving details
+      about the program and a map of the rest of memory;</li>
+  <li>the <strong>dictionary</strong>, a list of English words which the
+      program expects that it might want to read from the keyboard;</li>
+  <li>the <strong>object tree</strong>, an arrangement of chunks of
+      memory called <strong>objects</strong>.</li>
+</ul>
+
+<p>The Z-machine is primarily used for adventure games, where the
+   dictionary holds names of items and verbs that the player might
+   type, and the objects tend to be the places and artifacts which
+   make up the game.  Each object in the tree may have a <strong>parent</strong>,
+   a <strong>sibling</strong> and a <strong>child</strong>.  For instance, in the start
+   position of 'Zork I':</p>
+
+<blockquote>
+  <strong>West of House</strong>
+  <p>You are standing in an open field west of a white house,
+     with a boarded front door.  There is a small mailbox here.</p>
+
+  <p>&gt;open mailbox</p>
+
+  <p>Opening the small mailbox reveals a leaflet.</p>
+</blockquote>
+
+<p>At this point (part of) the game's object tree looks like this:</p>
+
+<pre>
 [ 41] ""
  . [ 68] "West of House"
  .  . [ 21] "you"
  .  . [239] "small mailbox"
  .  .  . [ 80] "leaflet"
  .  . [127] "door"
-</PRE>
-Note that objects are numbered from 1 upward.  (Object 41 is a
-dummy object being used by the game to contain all the "rooms"
-or locations, and it has many more children besides object 68.)
-The parent of the player is "West of House", whose parent is 41,
-which has no parent.  The sibling of the player is the mailbox;
-the child of the mailbox is the leaflet; the sibling of the
-mailbox is the door and so on.
-<P>
-Objects are bundled-up collections of variables, which come in
-two kinds: <B>attributes</B> and <B>properties</B>.  Attributes
-are simply flags, that is, they can be set or unset, but have no
-numerical value.  Properties hold numbers, which may in turn
-represent pieces of text or other information.  For instance,
-one of the properties of the mailbox object above contains the
-information that the English word "mailbox" refers to it.
-One of the attributes of the mailbox object is set to indicate
-that it's a container, whereas the same attribute for the
-leaflet object is unset.  Here is a breakdown of the state of
-the mailbox:
-<PRE>
+</pre>
+
+<p>Note that objects are numbered from 1 upward.  (Object 41 is a
+  dummy object being used by the game to contain all the "rooms"
+  or locations, and it has many more children besides object 68.)
+  The parent of the player is "West of House", whose parent is 41,
+  which has no parent.  The sibling of the player is the mailbox;
+  the child of the mailbox is the leaflet; the sibling of the
+  mailbox is the door and so on.</p>
+
+<p>Objects are bundled-up collections of variables, which come in
+   two kinds: <strong>attributes</strong> and <strong>properties</strong>.  Attributes
+   are simply flags, that is, they can be set or unset, but have no
+   numerical value.  Properties hold numbers, which may in turn
+   represent pieces of text or other information.  For instance,
+   one of the properties of the mailbox object above contains the
+   information that the English word "mailbox" refers to it.
+   One of the attributes of the mailbox object is set to indicate
+   that it's a container, whereas the same attribute for the
+   leaflet object is unset.  Here is a breakdown of the state of
+   the mailbox:</p>
+
+<pre>
 239. Attributes: 30, 34
      Parent object:  68  Sibling object: 127  Child object:  80
      Property address: 2b53
@@ -127,15 +143,16 @@ the mailbox:
               [46] 54 bf 4a c3 
               [45] 3e c1 
               [44] 5b 1c 
-</PRE>
-So the only set attributes are 30 and 34: all others are unset.
-Values are given for properties 44, 45, 46 and 49.  The Z-machine
-itself does not know or care what this information means: that
-is for the program to sort out.
-<P>
-As a final example, here is part of one of the routines in
-'Zork I':
-<PRE>
+</pre>
+
+<p>So the only set attributes are 30 and 34: all others are unset.
+   Values are given for properties 44, 45, 46 and 49.  The Z-machine
+   itself does not know or care what this information means: that
+   is for the program to sort out.</p>
+
+<p>As a final example, here is part of one of the routines in
+   'Zork I':</p>
+<pre>
 l0006: print_ret       "Suicide is not the answer."
 l0007: je              g57 #84 ~l0008
        je              g48 #15 ~rfalse
@@ -148,47 +165,57 @@ l0009: je              g57 #3b ~rfalse
        je              g6b local0 sp ~l0010
        print_ret       "Your image in the mirror looks tired."
 l0010: print_ret       "That's difficult unless your eyes are prehensile."
-</PRE>
-<HR>
-Z-machine programs are stored on disc, or archived
-on the Internet, in what are called <B>story files</B>.
-(Since they were introduced to hold interactive stories.)
-A story file consists of a snapshot of main memory only.
-The processor begins to run a story file by starting with an
-empty stack and a PC value set according to some information
-in the story file's header.  Note that the story file has to be
-set up with many of the structures in memory, such as the
-dictionary and the object tree, already created and with
-sensible contents.
-<P>
-The first byte of any story file, and so the byte at
-memory address 0, always contains the <B>version number</B>
-of the Z-machine to be used.  The design was evolutionary
-over a period of a decade: as version number increases, the
-instruction set grows and tables are reformatted to allow
-more room for larger games.  All of Infocom's games can be
-played using versions between 3 (the majority) and 6.
-Games compiled by Inform in the 1990s mainly use versions 5
-or 8.
-<HR>
-<P>
-<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
-<A HREF="overview.html">Overview</A>
-<P>Section
-<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
-<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
-<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
-<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
-<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
-<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
-<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
-<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
-<P>Appendix
-<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
-<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
-<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
-</P>
-<HR>
+</pre>
 
-</BODY>
-</HTML>
+<hr>
+
+<p>Z-machine programs are stored on disc, or archived
+   on the Internet, in what are called <strong>story files</strong>.
+   (Since they were introduced to hold interactive stories.)
+   A story file consists of a snapshot of main memory only.
+   The processor begins to run a story file by starting with an
+   empty stack and a PC value set according to some information
+   in the story file's header.  Note that the story file has to be
+   set up with many of the structures in memory, such as the
+   dictionary and the object tree, already created and with
+   sensible contents.</p>
+
+<p>The first byte of any story file, and so the byte at
+   memory address 0, always contains the <strong>version number</strong>
+   of the Z-machine to be used.  The design was evolutionary
+   over a period of a decade: as version number increases, the
+   instruction set grows and tables are reformatted to allow
+   more room for larger games.  All of Infocom's games can be
+   played using versions between 3 (the majority) and 6.
+   Games compiled by Inform in the 1990s mainly use versions 5
+   or 8.</p>
+
+<hr>
+
+<p>
+  <a href="index.html">Contents</a> / 
+  <a href="preface.html">Preface</a> /
+  <a href="overview.html">Overview</a>
+</p>
+
+<p>Section
+  <a href="sect01.html">1</a> / <a href="sect02.html">2</a> /
+  <a href="sect03.html">3</a> / <a href="sect04.html">4</a> /
+  <a href="sect05.html">5</a> / <a href="sect06.html">6</a> /
+  <a href="sect07.html">7</a> / <a href="sect08.html">8</a> /
+  <a href="sect09.html">9</a> / <a href="sect10.html">10</a> /
+  <a href="sect11.html">11</a> / <a href="sect12.html">12</a> /
+  <a href="sect13.html">13</a> / <a href="sect14.html">14</a> /
+  <a href="sect15.html">15</a> / <a href="sect16.html">16</a>
+</p>
+
+<p>Appendix
+  <a href="appa.html">A</a> / <a href="appb.html">B</a> /
+  <a href="appc.html">C</a> / <a href="appd.html">D</a> /
+  <a href="appe.html">E</a> / <a href="appf.html">F</a>
+</p>
+
+<hr>
+
+</body>
+</html>

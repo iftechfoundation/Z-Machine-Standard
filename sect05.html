@@ -1,72 +1,104 @@
-<HTML>
-<HEAD><TITLE>The Z-Machine Standards Document</TITLE>
-</HEAD>
+<!DOCTYPE html>
 
-<BODY BGCOLOR="#EEEEEE"><H1 align=center><IMG height=86 width=82
-SRC="icon05.gif" ALT="Z"></H1>
-<BR><H3 align=center><I>5. How routines are encoded</I></H3>
-<HR>
-5.1 <A HREF="#one">Start position</A> /
-5.2 <A HREF="#two">Header</A> /
-5.3 <A HREF="#three">First instruction</A> /
-5.4 <A HREF="#four">Main routine (V6)</A> /
-5.5 <A HREF="#five">Initial execution point (other versions)</A>
-<HR><A NAME="one">
-<BR><B>5.1</B><P> A routine is required to begin at an address in memory which
-can be represented by a packed address (for instance, in Version 5
-it must occur at a byte address which is divisible by 4).
-<P><A NAME="two">
-<BR><B>5.2</B><P> A routine begins with one byte indicating the number of local
-variables it has (between 0 and 15 inclusive).
-<P>
-<BR><B>5.2.1</B><P> In Versions 1 to 4, that number of 2-byte words follows,
-giving initial values for these local variables.  In Versions 5 and
-later, the initial values are all zero.
-<P><A NAME="three">
-<BR><B>5.3</B><P> Execution of instructions begins from the byte after this
-header information.  There is no formal 'end-marker' for a routine
-(it is simply assumed that execution eventually results in a return
-taking place).
-<P><A NAME="four">
-<BR><B>5.4</B><P> In Version 6, there is a "main" routine (whose packed address
-is stored in the word at <B>$06</B> in the header) called when the game
-starts up.  It is illegal to return from this routine.
-<P><A NAME="five">
-<BR><B>5.5</B><P> In all other Versions, the word at <B>$06</B> contains the
-byte address of the first instruction to execute.  The Z-machine
-starts in an environment with no local variables from which, again,
-a return is illegal.
-<P>
-<HR><H4><I>Remarks</I></H4><BR>
-Note that it is permissible for a routine to be in dynamic memory.
-Marnix Klooster suggests this might be used for compiling code at
-run time!
-<P>
-In Versions 3 and 4, Inform always stores 0 as the initial values
-for local variables.
-<P>
-Inform's "main" routine is required not to have local variables
-and has to be the first defined routine.  This ensures it is in the
-bottom 64K of memory, as it must be (in Versions other than 6).
-<P>
-<HR>
-<P>
-<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
-<A HREF="overview.html">Overview</A>
-<P>Section
-<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
-<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
-<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
-<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
-<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
-<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
-<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
-<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
-<P>Appendix
-<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
-<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
-<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
-</P>
-<HR>
+<html>
+<head>
+<title>The Z-Machine Standards Document</title>
+<link rel="stylesheet" type="text/css" href="zspec.css">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
 
-</BODY></HTML>
+<body>
+
+<img class="icon" src="icon05.gif" alt="">
+
+<h1>5. How routines are encoded</h1>
+
+<hr>
+
+<p>5.1 <a href="#one">Start position</a> /
+   5.2 <a href="#two">Header</a> /
+   5.3 <a href="#three">First instruction</a> /
+   5.4 <a href="#four">Main routine (V6)</a> /
+   5.5 <a href="#five">Initial execution point (other versions)</a>
+</p>
+<hr>
+
+
+<h2 id="one">5.1</h2>
+<p>A routine is required to begin at an address in memory which
+   can be represented by a packed address (for instance, in Version 5
+   it must occur at a byte address which is divisible by 4).
+</p>
+
+<h2 id="two">5.2</h2>
+<p>A routine begins with one byte indicating the number of local
+   variables it has (between 0 and 15 inclusive).
+</p>
+
+<h2>5.2.1</h2>
+<p>In Versions 1 to 4, that number of 2-byte words follows,
+   giving initial values for these local variables.  In Versions 5 and
+   later, the initial values are all zero.
+</p>
+
+<h2 id="three">5.3</h2>
+<p>Execution of instructions begins from the byte after this
+   header information.  There is no formal 'end-marker' for a routine
+   (it is simply assumed that execution eventually results in a return
+   taking place).
+</p>
+
+<h2 id="four">5.4</h2>
+<p>In Version 6, there is a "main" routine (whose packed address
+   is stored in the word at <strong>$06</strong> in the header) called when the game
+   starts up.  It is illegal to return from this routine.
+</p>
+
+<h2 id="five">5.5</h2>
+<p>In all other Versions, the word at <strong>$06</strong> contains the
+   byte address of the first instruction to execute.  The Z-machine
+   starts in an environment with no local variables from which, again,
+   a return is illegal.
+</p>
+
+<hr>
+
+<h2>Remarks</h2>
+<p>Note that it is permissible for a routine to be in dynamic memory.
+   Marnix Klooster suggests this might be used for compiling code at
+   run time!
+</p>
+
+<p>In Versions 3 and 4, Inform always stores 0 as the initial values
+   for local variables.
+</p>
+
+<hr>
+
+<p>
+  <a href="index.html">Contents</a> / 
+  <a href="preface.html">Preface</a> /
+  <a href="overview.html">Overview</a>
+</p>
+
+<p>Section
+  <a href="sect01.html">1</a> / <a href="sect02.html">2</a> /
+  <a href="sect03.html">3</a> / <a href="sect04.html">4</a> /
+  <a href="sect05.html">5</a> / <a href="sect06.html">6</a> /
+  <a href="sect07.html">7</a> / <a href="sect08.html">8</a> /
+  <a href="sect09.html">9</a> / <a href="sect10.html">10</a> /
+  <a href="sect11.html">11</a> / <a href="sect12.html">12</a> /
+  <a href="sect13.html">13</a> / <a href="sect14.html">14</a> /
+  <a href="sect15.html">15</a> / <a href="sect16.html">16</a>
+</p>
+
+<p>Appendix
+  <a href="appa.html">A</a> / <a href="appb.html">B</a> /
+  <a href="appc.html">C</a> / <a href="appd.html">D</a> /
+  <a href="appe.html">E</a> / <a href="appf.html">F</a>
+</p>
+
+<hr>
+
+</body>
+</html>

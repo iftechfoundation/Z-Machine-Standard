@@ -1,141 +1,193 @@
-<HTML>
-<HEAD><TITLE>The Z-Machine Standards Document</TITLE>
-</HEAD>
+<!DOCTYPE html>
 
-<BODY BGCOLOR="#EEEEEE"><H1 align=center><IMG height=86 width=82
-SRC="icon01.gif" ALT="Z"></H1>
-<BR><H3 align=center><I>1. The memory map</I></H3>
+<html>
+<head>
+<title>The Z-Machine Standards Document</title>
+<link rel="stylesheet" type="text/css" href="zspec.css">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
 
-<HR>
-1.1 <A HREF="#one">Regions of memory</A> / 
-1.2 <A HREF="#two">Addresses</A>
-<HR><A NAME="one">
-<BR><B>1.1</B><P> The memory map of the Z-machine is an array of bytes with
-"byte addresses" running from 0 upwards.  This is divided into
-three regions: "dynamic", "static" and "high".  Dynamic
-memory begins from byte address <B>$00000</B> and runs up to the byte
-before the byte address stored in the word at <B>$0e</B> in the header.
-(Dynamic memory must contain at least 64 bytes.)  Static memory
-follows immediately on.  Its extent is not defined in the header
-(or anywhere else), though it must end by the last byte of the
-story file or by byte address <B>$0ffff</B> (whichever is lower).
-High memory begins at the "high memory mark" (the byte address
-stored in the word at <B>$04</B> in the header) and continues to the
-end of the story file.  The bottom of high memory may overlap with
-the top of static memory (but not with dynamic memory).
-<P>
-<BR><B>1.1.1</B><P> Dynamic memory can be read or written to (either directly,
-using <B>loadb</B>, <B>loadw</B>, <B>storeb</B> and <B>storew</B>, or indirectly with
-opcodes such as <B>insert_obj</B> and <B>remove_obj</B>).
-<P>
-<BR><B>1.1.1.1</B><P> By tradition, the first 64 bytes are known as the
-"header".  The contents of this are given later but note that games
-are not permitted to alter many bits inside it.
-<P>
-<BR><B>1.1.1.2</B><P> It is legal for games to alter any of the tables stored
-in dynamic memory above the header, provided they leave the tables
-in legal states.
-<P>
-<BR><B>1.1.2</B><P> Static memory can be read using the opcodes <B>loadb</B> and
-<B>loadw</B>.  It is illegal for a game to attempt to write to static
-memory.
-<P>
-<BR><B>1.1.3</B><P> Except for its (possible) overlap with static memory,
-high memory cannot be directly accessed at all by a
-game program.  It contains routines, which can be called,
-and strings, which can be printed using <B>print_paddr</B>.
-<P>
-<BR><B>1.1.4</B><P> The maximum permitted length of a story file depends
-on the Version, as follows:
-<PRE>
-    V1-3    V4-5    V6      V7      V8
-    128     256     512     320     512
-</PRE>
-<P><A NAME="two">
-<BR><B>1.2</B><P> There are three kinds of address in the Z-machine, all of
-which can be stored in a 2-byte number: byte addresses, word
-addresses and packed addresses.
-<P>
-<BR><B>1.2.1</B><P> A byte address specifies a byte in memory in the range 0
-up to the last byte of static memory.
-<P>
-<BR><B>1.2.2</B><P> A word address specifies an even address in the bottom
-128K of memory (by giving the address divided by 2).  (Word addresses
-are used only in the abbreviations table.)
-<P>
-<BR><B>1.2.3</B><P> <B>***</B> A packed address specifies where a routine or string begins
-in high memory.  Given a packed address <I>P</I>, the formula to obtain the
-corresponding byte address <I>B</I> is:
-<PRE>
+<body>
+
+<img class="icon" src="icon01.gif" alt="">
+
+<h1>1. The memory map</h1>
+
+<hr>
+
+<p>1.1 <a href="#one">Regions of memory</a> / 
+   1.2 <a href="#two">Addresses</a></p>
+
+<hr>
+
+<h2 id="one">1.1</h2>
+<p>The memory map of the Z-machine is an array of bytes with
+   "byte addresses" running from 0 upwards.  This is divided into
+   three regions: "dynamic", "static" and "high".  Dynamic
+   memory begins from byte address <strong>$00000</strong> and runs up to the byte
+   before the byte address stored in the word at <strong>$0e</strong> in the header.
+   (Dynamic memory must contain at least 64 bytes.)  Static memory
+   follows immediately on.  Its extent is not defined in the header
+   (or anywhere else), though it must end by the last byte of the
+   story file or by byte address <strong>$0ffff</strong> (whichever is lower).
+   High memory begins at the "high memory mark" (the byte address
+   stored in the word at <strong>$04</strong> in the header) and continues to the
+   end of the story file.  The bottom of high memory may overlap with
+   the top of static memory (but not with dynamic memory).
+</p>
+
+<h2>1.1.1</h2>
+<p>Dynamic memory can be read or written to (either directly,
+   using <strong>loadb</strong>, <strong>loadw</strong>, <strong>storeb</strong> and <strong>storew</strong>, or indirectly with
+   opcodes such as <strong>insert_obj</strong> and <strong>remove_obj</strong>).
+</p>
+
+<h2>1.1.1.1</h2>
+<p>By tradition, the first 64 bytes are known as the
+   "header".  The contents of this are given later but note that games
+   are not permitted to alter many bits inside it.
+</p>
+
+<h2>1.1.1.2</h2>
+<p>It is legal for games to alter any of the tables stored
+   in dynamic memory above the header, provided they leave the tables
+   in legal states.
+</p>
+
+<h2>1.1.2</h2>
+<p>Static memory can be read using the opcodes <strong>loadb</strong> and
+   <strong>loadw</strong>.  It is illegal for a game to attempt to write to static
+   memory.
+</p>
+
+<h2>1.1.3</h2>
+<p>Except for its (possible) overlap with static memory,
+   high memory cannot be directly accessed at all by a
+   game program.  It contains routines, which can be called,
+   and strings, which can be printed using <strong>print_paddr</strong>.
+</p>
+
+<h2>1.1.4</h2>
+<p>The maximum permitted length of a story file depends
+   on the Version, as follows:
+</p>
+
+<pre>
+    V1-3    V4-5    V6-8
+    128     256     512
+</pre>
+
+
+<h2 id="two">1.2</h2>
+<p>There are three kinds of address in the Z-machine, all of
+   which can be stored in a 2-byte number: byte addresses, word
+   addresses and packed addresses.
+</p>
+
+<h2>1.2.1</h2>
+<p>A byte address specifies a byte in memory in the range 0
+   up to the last byte of static memory.
+</p>
+
+<h2>1.2.2</h2>
+<p>A word address specifies an even address in the bottom
+   128K of memory (by giving the address divided by 2).  (Word addresses
+   are used only in the abbreviations table.)
+</p>
+
+<h2>1.2.3</h2>
+<p><strong>***</strong> A packed address specifies where a routine or string begins
+   in high memory.  Given a packed address <em>P</em>, the formula to obtain the
+   corresponding byte address <em>B</em> is:
+</p>
+
+<pre>
   2P           Versions 1, 2 and 3
   4P           Versions 4 and 5
   4P + 8R_O    Versions 6 and 7, for routine calls
   4P + 8S_O    Versions 6 and 7, for print_paddr
   8P           Version 8
-</PRE>
-<I>R_O</I> and <I>S_O</I> are the routine and strings offsets
-(specified in the header as words at <B>$28</B> and <B>$2a</B>,
-respectively).
-<HR>
-<p ALIGN=center>
-<TABLE Border>
-<CAPTION><B>An example memory map of a small game</B></CAPTION>
-<TR><TD>Dynamic <TD> <B>00000</B> <TD> header
-<TR><TD>        <TD> <B>00040</B> <TD> abbreviation strings
-<TR><TD>        <TD> <B>00042</B> <TD> abbreviation table
-<TR><TD>        <TD> <B>00102</B> <TD> property defaults
-<TR><TD>        <TD> <B>00140</B> <TD> objects
-<TR><TD>        <TD> <B>002f0</B> <TD> object descriptions and properties
-<TR><TD>        <TD> <B>006e3</B> <TD> global variables
-<TR><TD>        <TD> <B>008c3</B> <TD> arrays
-<TR><TD> Static <TD> <B>00b48</B> <TD> grammar table
-<TR><TD>        <TD> <B>010a7</B> <TD> actions table
-<TR><TD>        <TD> <B>01153</B> <TD> preactions table
-<TR><TD>        <TD> <B>01201</B> <TD> adjectives table
-<TR><TD>        <TD> <B>0124d</B> <TD> dictionary
-<TR><TD> High   <TD> <B>01a0a</B> <TD> Z-code
-<TR><TD>        <TD> <B>05d56</B> <TD> static strings
-<TR><TD>        <TD> <B>06ae6</B> <TD> end of file
-</TABLE>
-<P>
-<HR><H4><I>Remarks</I></H4><BR>
-Inform never compiles any overlap between static and high memory
-(it places all data tables in dynamic memory).  However, many
-Infocom games group tables of static data just above the high
-memory mark, before routines begin; some, such as 'Nord 'n'
-Bert...', interleave static data between routines, so that static
-memory actually overlaps code; and a few, such as 'Seastalker'
-release 15, even contain routines placed below the high memory
-mark.  (The original idea behind the high memory mark was that
-everything below it should be stored in the interpreter's RAM, while
-what was above could reasonably be kept in "virtual memory", i.e.,
-loaded off disc as needed.)
-<P>
-Note that the total of dynamic plus static memory must not exceed 64K.
-(In fact, 64K minus 2 bytes.)  This is the most serious limitation
-on the Z-machine (though it has not yet been reached by anyone).
-<P>
-Throughout the specification, Versions 7 and 8 are identical
-to Version 5 except as stated at 1.1.4 and 1.2.3 above.
-<P>
-<HR>
-<P>
-<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
-<A HREF="overview.html">Overview</A>
-<P>Section
-<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
-<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
-<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
-<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
-<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
-<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
-<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
-<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
-<P>Appendix
-<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
-<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
-<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
-</P>
-<HR>
+</pre>
+   
+<p><em>R_O</em> and <em>S_O</em> are the routine and strings offsets
+   (specified in the header as words at <strong>$28</strong> and <strong>$2a</strong>,
+   respectively).
+</p>
 
-</BODY></HTML>
+<hr>
+
+<table>
+  <caption><strong>An example memory map of a small game</strong></caption>
+  <tr><td>Dynamic </td><td> <strong>00000</strong> </td><td> header </td></tr>
+  <tr><td>        </td><td> <strong>00040</strong> </td><td> abbreviation strings </td></tr>
+  <tr><td>        </td><td> <strong>00042</strong> </td><td> abbreviation table </td></tr>
+  <tr><td>        </td><td> <strong>00102</strong> </td><td> property defaults </td></tr>
+  <tr><td>        </td><td> <strong>00140</strong> </td><td> objects </td></tr>
+  <tr><td>        </td><td> <strong>002f0</strong> </td><td> object descriptions and properties </td></tr>
+  <tr><td>        </td><td> <strong>006e3</strong> </td><td> global variables </td></tr>
+  <tr><td>        </td><td> <strong>008c3</strong> </td><td> arrays </td></tr>
+  <tr><td> Static </td><td> <strong>00b48</strong> </td><td> grammar table </td></tr>
+  <tr><td>        </td><td> <strong>010a7</strong> </td><td> actions table </td></tr>
+  <tr><td>        </td><td> <strong>01153</strong> </td><td> preactions table </td></tr>
+  <tr><td>        </td><td> <strong>01201</strong> </td><td> adjectives table </td></tr>
+  <tr><td>        </td><td> <strong>0124d</strong> </td><td> dictionary </td></tr>
+  <tr><td> High   </td><td> <strong>01a0a</strong> </td><td> Z-code </td></tr>
+  <tr><td>        </td><td> <strong>05d56</strong> </td><td> static strings </td></tr>
+  <tr><td>        </td><td> <strong>06ae6</strong> </td><td> end of file </td></tr>
+</table>
+
+<hr>
+
+<h2>Remarks</h2>
+
+<p>Inform never compiles any overlap between static and high memory
+   (it places all data tables in dynamic memory).  However, many
+   Infocom games group tables of static data just above the high
+   memory mark, before routines begin; some, such as 'Nord 'n'
+   Bert...', interleave static data between routines, so that static
+   memory actually overlaps code; and a few, such as 'Seastalker'
+   release 15, even contain routines placed below the high memory
+   mark.  (The original idea behind the high memory mark was that
+   everything below it should be stored in the interpreter's RAM, while
+   what was above could reasonably be kept in "virtual memory", i.e.,
+   loaded off disc as needed.)
+</p>
+
+<p>Note that the total of dynamic plus static memory must not exceed 64K.
+   (In fact, 64K minus 2 bytes.)  This is the most serious limitation
+   on the Z-machine.
+</p>
+
+<p>Throughout the specification, Versions 7 and 8 are identical
+   to Version 5 except as stated at 1.1.4 and 1.2.3 above.
+</p>
+
+<hr>
+
+<p>
+  <a href="index.html">Contents</a> / 
+  <a href="preface.html">Preface</a> /
+  <a href="overview.html">Overview</a>
+</p>
+
+<p>Section
+  <a href="sect01.html">1</a> / <a href="sect02.html">2</a> /
+  <a href="sect03.html">3</a> / <a href="sect04.html">4</a> /
+  <a href="sect05.html">5</a> / <a href="sect06.html">6</a> /
+  <a href="sect07.html">7</a> / <a href="sect08.html">8</a> /
+  <a href="sect09.html">9</a> / <a href="sect10.html">10</a> /
+  <a href="sect11.html">11</a> / <a href="sect12.html">12</a> /
+  <a href="sect13.html">13</a> / <a href="sect14.html">14</a> /
+  <a href="sect15.html">15</a> / <a href="sect16.html">16</a>
+</p>
+
+<p>Appendix
+  <a href="appa.html">A</a> / <a href="appb.html">B</a> /
+  <a href="appc.html">C</a> / <a href="appd.html">D</a> /
+  <a href="appe.html">E</a> / <a href="appf.html">F</a>
+</p>
+
+<hr>
+
+</body>
+</html>

@@ -1,224 +1,294 @@
-<HTML>
-<HEAD><TITLE>The Z-Machine Standards Document: Preface</TITLE>
-<link rev="owns, made" href="mailto:graham@gnelson.demon.co.uk" title="Graham Nelson"></HEAD>
+<!DOCTYPE html>
 
-<BODY BGCOLOR="#DDDDDD"><H1 align=center><IMG height=86 width=82
-SRC="zlogo.gif" ALT="Z"></H1>
-<BR>
-<H3 align=center><I>Preface</I></H3>
-<HR>
-The Z-machine was created on a coffee table in Pittsburgh in 1979.  It
-is an imaginary computer whose programs are adventure games, and is
-well-adapted to its task, implementing complex games remarkably compactly. 
-They were still perhaps 100K long, too large for the memory of the home
-computers of their day, and the Z-machine seems to have made the first
-usage of virtual memory on a microcomputer.  Further ahead of its time
-was the ability to efficiently save and restore the entire execution state.
-<P>
-The design's cardinal principle is that any game is 100% portable to
-different computers: that is, any legal program exactly determines its
-behaviour.  This portability is largely made possible by a willingness to
-constrain maximum as well as minimum levels of performance (for instance,
-dynamic memory allocation is impossible).
-<P>
-Infocom's catalogue continues to be sold and to be played under
-interpreter programs, either original Infocom ones or more recent and
-generally better freeware ones.  About
-<A HREF="appf.html">130 story files</A> compiled by Infocom's compiler
-<B>Zilch</B> survive and since 1993 very many more story files have
-been created with the Inform design system.
-<P>
-Eight Versions of the Z-machine exist, and the first byte of any
-"story file" (that is: any Z-machine program) gives the Version number
-it must be interpreted under.
-<P>
-<HR><H4>Standardisation</H4>
-<P>
-The opcode names used in this document were agreed between 1994 and 1995
-as a standard set by Mark Howell, author of the disassembler <B>Txd</B>
-(part of the <B>Ztools</B> suite of utility programs), and Graham Nelson,
-author of the assembly level of Inform.  They do not correspond to
-Infocom's unpublished opcode names.
-<P>
-This Standard was drawn up in November 1995, drawing on a rougher
-description written in 1993 and, before that, sketches of table
-formats by Mike Threepoint and others.  It has formalised
-what different interpreter writers regard as the Z-machine,
-guaranteeing a reliable and well-featured platform for writers
-of new games.  The first formal Standard was numbered 0.2, and
-this is the second, containing some corrections and clarifications
-but also two new features.  The following changes are worth noting:
-<UL><LI>Support for the Unicode character set has been added,
-introducing a new table and two new opcodes.  <B>S</B>3 has been
-rewritten and there are also changes to <B>S</B>7 and <B>S</B>10, as well
-as the addition of the opcodes to <B>S</B>14 and <B>S</B>15.
-<LI><B>S</B>8.8.3.1, on window attributes in Version 6, has been
-rewritten with extensive corrections.
-<LI><B>S</B>7.1.2.1.1 requires a new feature: handling nested
-usages of output stream 3.
-<LI>It is now explicit that text buffering never applies
-to the upper window in Versions 3 to 5.  (In Standard 0.2 the rules
-allowed text buffering in Version 4 under some conditions.)
-<LI>An optional operand (never used and not useful) has
-been removed from the opcode <B>set_font</B>.  An optional operand,
-discovered by Mark Knibbs, has however been added to the Version 6
-form of <B>set_colour</B>.
-<LI>It is now defined that the input character codes for
-return and delete are 13 and 8 respectively.  (10 and 127 have
-been suggested as alternatives in the past).
-<LI>The fixed-pitch font flag now survives restarts and
-restores, like the transcription flag.
-</UL>
-<P>
-Also, the "character set table" is now called the
-"alphabet table" (for clarity) and the "mouse data table" has
-been renamed the "header extension table."
-<P>
-A companion document to this one, by Martin Frost, defines a standard
-format called <B>Quetzal</B> for saved-game files.  Standard interpreters
-are not <I>required</I> to use <B>Quetzal</B>, since choice of saved-game
-format does not affect Z-Machine behaviour, but interpreter-writers
-are strongly encouraged to consider it.
-<P>
-Andrew Plotkin is currently (June 1997) drafting a standard format
-called <B>Blorb</B> for a "resources" file to accompany or encapsulate
-a Z-machine game, neatly packaging up sound and graphics in modern
-formats.  Again, since the Z-Machine has no formal knowledge of the
-means of storage of sound or graphics, this document does not include
-Andrew's.  A Standard Version-6 interpreter need not provide for <B>Blorb</B>.
-<P>
-<HR><H4>So what is "standard"?</H4>
-<P>
-To call itself "Standard", an interpreter should (as far as anyone knows)
-obey this document exactly for every Version of the Z-machine it claims to
-interpret.  Interpreters need not provide optional features suggested in
-the "remarks" sections, and need not make their source code public.
-Each edition of this document has a Revision number, somewhat like the JFIF
-identification number used by the JPEG standard.  A standard interpreter
-should communicate its revision number in three ways:
-<UL>
-<LI>To someone downloading it from an FTP site or bulletin board:
-by including it in its filename.
-<LI>To the player: for instance by means of an "information" option
-on a menu, or in an initialisation sequence.
-<LI>To the game: by writing it into bytes in the header which were
-always left zero before this standard was devised (see <B>S</B>11).  A game
-compiled with Inform library 5/12 or later prints the revision number in its
-banner (if this isn't 0.0).
-</UL>
-Few arbitrary choices have been made in writing this document.
-Where Infocom's own shipped interpreters disagree, or contain manifest
-bugs, it has usually been possible to decide which was "correct".
-Elsewhere, minimum levels of performance have been
-invented where necessary.  (For example, a minimum call-stack size
-is needed for programmers to be sure of what level of recursion is safe.)
-<P>
-Those few paragraphs which genuinely extend the Infocom format are
-marked <B>***</B>.  In any event, Infocom's original shipped interpreters do
-not conform to this standard document, because of bugs or because of
-slight variations between the Inform output format and Infocom's.
-<P>
-<HR><H4>Notation</H4>
-<P>
-Hexadecimal numbers are written with an initial dollar, as in <B>$ff</B>,
-while binary numbers are written with a double-dollar as in <B>$$11011</B>,
-according to Inform conventions.  The bits in a byte are numbered 0 to 7,
-0 being the least significant and the top bit, 7, the most.
-<P>
-Story files are mechanically best identified by their release number
-and serial code, which are written into the header information
-at the bottom of Z-machine memory.  The release number can be anything
-between 0 and 65535 but is usually between 1 and 100.
-The serial code can consist of any six textual characters but is
-usually the date of compilation, arranged <B>YYMMDD</B>:
-thus 970619 refers to June 19th, 1997.
-<P>
-Paul David Doherty, in his extensive investigations into Infocom's
-released games, introduced the notation
-<P><B>Release number.Serial code</B>
-<P>to identify particular story files: for example the first production
-copy of 'Enchanter' is 10.830810.  This notation is used throughout
-the Standard when individual Infocom files need to be referred to.
-<P>
-<HR><H4>Where are all the grammar tables?</H4><BR>
-<P>
-The Z-machine has some lexical acuity but it doesn't contain a full parser:
-it's like a computer without an operating system.  A game program has to
-contain its own parser and the tables this uses are not part of the formal
-Z-machine specification.  (Many Infocom games have similar parsing
-table formats simply because, until Version 6, they used an evolving
-version of the 'Zork I' parser.  A quite different parser was used
-in Version 6.)  Inform's parsing table formats are documented in the
-<I>Inform Technical Manual</I>.  For the usual format of Infocom's parsing
-tables, see the <B>Ztools</B> utility <B>Infodump</B>.
+<html>
+<head>
+<title>The Z-Machine Standards Document: Preface</title>
+<link rel="stylesheet" type="text/css" href="zspec.css">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
 
-<P>
-<HR><H4>Acknowledgements</H4><BR>
-<BLOCKQUOTE>
-     There is an obvious resemblance between an unreadable script
+<body class="pre">
+
+<img class="icon" src="zlogo.gif" alt="">
+
+<h1>Preface</h1>
+
+<hr>
+
+<p>The Z-machine was created on a coffee table in Pittsburgh in 1979.  It
+   is an imaginary computer whose programs are adventure games, and is
+   well-adapted to its task, implementing complex games remarkably compactly. 
+   They were still perhaps 100K long, too large for the memory of the home
+   computers of their day, and the Z-machine seems to have made the first
+   usage of virtual memory on a microcomputer.  Further ahead of its time
+   was the ability to efficiently save and restore the entire execution state.
+</p>
+
+<p>The design's cardinal principle is that any game is 100% portable to
+   different computers: that is, any legal program exactly determines its
+   behaviour.  This portability is largely made possible by a willingness to
+   constrain maximum as well as minimum levels of performance (for instance,
+   dynamic memory allocation is impossible).
+</p>
+
+<p>Infocom's catalogue continues to be sold and to be played under
+   interpreter programs, either original Infocom ones or more recent and
+   generally better freeware ones.  About
+   <a href="appf.html">130 story files</a> compiled by Infocom's compiler
+   <strong>Zilch</strong> survive and since 1993 very many more story files have
+   been created with the Inform design system.
+</p>
+
+<p>Eight Versions of the Z-machine exist, and the first byte of any
+   "story file" (that is: any Z-machine program) gives the Version number
+   it must be interpreted under.
+</p>
+
+<hr>
+
+<h2>Standardisation</h2>
+<p>The opcode names used in this document were agreed between 1994 and 1995
+   as a standard set by Mark Howell, author of the disassembler <strong>Txd</strong>
+   (part of the <strong>Ztools</strong> suite of utility programs), and Graham Nelson,
+   author of the assembly level of Inform.  They do not correspond to
+   Infocom's unpublished opcode names.
+</p>
+
+<p>This Standard was drawn up in November 1995, drawing on a rougher
+   description written in 1993 and, before that, sketches of table
+   formats by Mike Threepoint and others.  It has formalised
+   what different interpreter writers regard as the Z-machine,
+   guaranteeing a reliable and well-featured platform for writers
+   of new games.  The first formal Standard was numbered 0.2, and
+   this is the second, containing some corrections and clarifications
+   but also two new features.  The following changes are worth noting:
+</p>
+
+<ul>
+  <li>Support for the Unicode character set has been added,
+      introducing a new table and two new opcodes.  <strong>S</strong>3 has been
+      rewritten and there are also changes to <strong>S</strong>7 and <strong>S</strong>10, as well
+      as the addition of the opcodes to <strong>S</strong>14 and <strong>S</strong>15.
+  </li>
+  <li><strong>S</strong>8.8.3.1, on window attributes in Version 6, has been
+      rewritten with extensive corrections.
+  </li>
+  <li><strong>S</strong>7.1.2.1.1 requires a new feature: handling nested
+      usages of output stream 3.
+  </li>
+  <li>It is now explicit that text buffering never applies
+      to the upper window in Versions 3 to 5.  (In Standard 0.2 the rules
+      allowed text buffering in Version 4 under some conditions.)
+  </li>
+  <li>An optional operand (never used and not useful) has
+      been removed from the opcode <strong>set_font</strong>.  An optional operand,
+      discovered by Mark Knibbs, has however been added to the Version 6
+      form of <strong>set_colour</strong>.
+  </li>
+  <li>It is now defined that the input character codes for
+      return and delete are 13 and 8 respectively.  (10 and 127 have
+      been suggested as alternatives in the past).
+  </li>
+  <li>The fixed-pitch font flag now survives restarts and
+      restores, like the transcription flag.
+  </li>
+</ul>
+
+<p>Also, the "character set table" is now called the
+   "alphabet table" (for clarity) and the "mouse data table" has
+   been renamed the "header extension table."
+</p>
+
+<p>A companion document to this one, by Martin Frost, defines a standard
+   format called <strong>Quetzal</strong> for saved-game files.  Standard interpreters
+   are not <em>required</em> to use <strong>Quetzal</strong>, since choice of saved-game
+   format does not affect Z-Machine behaviour, but interpreter-writers
+   are strongly encouraged to consider it.
+</p>
+
+<p>Andrew Plotkin has created a standard format called <strong>Blorb</strong> 
+   for a "resources" file to accompany or encapsulate
+   a Z-machine game, neatly packaging up sound and graphics in modern
+   formats.  Again, since the Z-Machine has no formal knowledge of the
+   means of storage of sound or graphics, interpreters are not required
+   to support <strong>Blorb</strong> but as a growing number of games are
+   contained in Blorb files, it is highly recommended that interpreters
+   support at least basic Blorb capabilities.
+</p>
+
+<hr>
+
+<h2>So what is "standard"?</h2>
+<p>To call itself "Standard", an interpreter should (as far as anyone knows)
+   obey this document exactly for every Version of the Z-machine it claims to
+   interpret.  Interpreters need not provide optional features suggested in
+   the "remarks" sections, and need not make their source code public.
+   Each edition of this document has a Revision number, somewhat like the JFIF
+   identification number used by the JPEG standard.  A standard interpreter
+   should communicate its revision number in three ways:
+</p>
+
+
+<ul>
+  <li>To someone downloading it from the Internet:
+      by including it in its filename.
+  </li>
+  <li>To the player: for instance by means of an "information" option
+      on a menu, or in an initialisation sequence.
+  </li>
+  <li>To the game: by writing it into bytes in the header which were
+      always left zero before this standard was devised (see <strong>S</strong>11).  A game
+      compiled with Inform library 5/12 or later prints the revision number in its
+      banner (if this isn't 0.0).
+  </li>
+</ul>
+
+<p>Few arbitrary choices have been made in writing this document.
+   Where Infocom's own shipped interpreters disagree, or contain manifest
+   bugs, it has usually been possible to decide which was "correct".
+   Elsewhere, minimum levels of performance have been
+   invented where necessary.  (For example, a minimum call-stack size
+   is needed for programmers to be sure of what level of recursion is safe.)
+</p>
+
+<p>Those few paragraphs which genuinely extend the Infocom format are
+   marked <strong>***</strong>.  In any event, Infocom's original shipped interpreters do
+   not conform to this standard document, because of bugs or because of
+   slight variations between the Inform output format and Infocom's.
+</p>
+
+
+<hr>
+
+<h2>Notation</h2>
+
+<p>Hexadecimal numbers are written with an initial dollar, as in <strong>$ff</strong>,
+   while binary numbers are written with a double-dollar as in <strong>$$11011</strong>,
+   according to Inform conventions.  The bits in a byte are numbered 0 to 7,
+   0 being the least significant and the top bit, 7, the most.
+</p>
+
+<p>Story files are mechanically best identified by their release number
+   and serial code, which are written into the header information
+   at the bottom of Z-machine memory.  The release number can be anything
+   between 0 and 65535 but is usually between 1 and 100.
+   The serial code can consist of any six textual characters but is
+   usually the date of compilation, arranged <strong>YYMMDD</strong>:
+   thus 970619 refers to June 19th, 1997.
+</p>
+
+<p>Paul David Doherty, in his extensive investigations into Infocom's
+   released games, introduced the notation
+</p>
+
+<p><strong>Release number.Serial code</strong></p>
+
+<p>to identify particular story files: for example the first production
+   copy of 'Enchanter' is 10.830810.  This notation is used throughout
+   the Standard when individual Infocom files need to be referred to.
+</p>
+
+<hr>
+
+<h2>Where are all the grammar tables?</h2>
+<p>The Z-machine has some lexical acuity but it doesn't contain a full parser:
+   it's like a computer without an operating system.  A game program has to
+   contain its own parser and the tables this uses are not part of the formal
+   Z-machine specification.  (Many Infocom games have similar parsing
+   table formats simply because, until Version 6, they used an evolving
+   version of the 'Zork I' parser.  A quite different parser was used
+   in Version 6.)  Inform's parsing table formats are documented in the
+   <em>Inform Technical Manual</em>.  For the usual format of Infocom's parsing
+   tables, see the <strong>Ztools</strong> utility <strong>Infodump</strong>.
+</p>
+
+<hr>
+
+<h2>Acknowledgements</h2>
+
+<blockquote>
+  <p>There is an obvious resemblance between an unreadable script
      and a secret code; similar methods can be employed to break
      both.  But the differences must not be overlooked.  The code is
      deliberately designed to baffle the investigator; the script
      is only puzzling by accident.
-<P>
-John Chadwick, <B>The Decipherment of Linear B</B>
-</BLOCKQUOTE>
-<P>
-The Z-machine was originally devised by Joel Berez and Marc Blank in 1979.
-Marc Blank made most of the Version 4 extensions, and Version 5 was created
-by Dave Lebling (with contributions from others including Brian Moriarty,
-Duncan Blanchard and Linde Dynneson).  Version 6 was largely the work of Tim
-Anderson and Dave Lebling.
-<P>
-In the reverse direction, decipherment is mostly due to the InfoTaskForce
-(David Beazley, George Janczuk, Peter Lisle, Russell Hoare and Chris Tham),
-Matthias Pfaller, Mike Threepoint, Mark Howell, Paul David Doherty and
-Stefan Jokisch.  Only a few of the pieces in the jigsaw were placed by
-myself.
-<P>
-I gratefully acknowledge the help of Paul David Doherty and Mark Howell, who
-each read drafts of this paper and sent back detailed corrections; also, of
-Stefan Jokisch and Marnix Klooster who have put a great deal of work into
-the fine detail of the specification; and of all those who commented on
-the circulated draft.  Mistakes and misunderstandings remain my own.
-<P>
-<I>Graham Nelson</I>
-<P>
-<I>15 November 1995</I>
-<P>
-<BR>
-Kevin Bracey and Stefan Jokisch discovered most of the mistakes in
-Standard 0.2, in developing the first Version 6 interpreters of the
-modern age: <B>Zip2000</B> and <B>Frotz</B>.  Matthew Russotto
-and Mark Knibbs supplied helpful information about Infocom's own
-Version 6 interpreters.  Stefan also kindly read and commented on
-numerous drafts of the present revision.  Finally, discussion about
-this document was greatly assisted by the Z-Machine Mailing
-List, organised by Marnix Klooster.
-<P>
-<I>Graham Nelson</I>
-<P>
-<I>22 June 1997</I>
-<P>
-<HR>
-<P>
-<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
-<A HREF="overview.html">Overview</A>
-<P>Section
-<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
-<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
-<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
-<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
-<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
-<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
-<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
-<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
-<P>Appendix
-<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
-<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
-<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
-</P>
-<HR>
+  </p>
 
-</BODY>
-</HTML>
+  <p>John Chadwick, <strong>The Decipherment of Linear B</strong></p>
+</blockquote>
+
+<p>The Z-machine was originally devised by Joel Berez and Marc Blank in 1979.
+   Marc Blank made most of the Version 4 extensions, and Version 5 was created
+   by Dave Lebling (with contributions from others including Brian Moriarty,
+   Duncan Blanchard and Linde Dynneson).  Version 6 was largely the work of Tim
+   Anderson and Dave Lebling.
+</p>
+
+<p>In the reverse direction, decipherment is mostly due to the InfoTaskForce
+   (David Beazley, George Janczuk, Peter Lisle, Russell Hoare and Chris Tham),
+   Matthias Pfaller, Mike Threepoint, Mark Howell, Paul David Doherty and
+   Stefan Jokisch.  Only a few of the pieces in the jigsaw were placed by
+   myself.
+</p>
+
+<p>I gratefully acknowledge the help of Paul David Doherty and Mark Howell, who
+   each read drafts of this paper and sent back detailed corrections; also, of
+   Stefan Jokisch and Marnix Klooster who have put a great deal of work into
+   the fine detail of the specification; and of all those who commented on
+   the circulated draft.  Mistakes and misunderstandings remain my own.</p>
+<p><em>Graham Nelson</em></p>
+
+<p><em>15 November 1995</em></p>
+
+<p>Kevin Bracey and Stefan Jokisch discovered most of the mistakes in
+   Standard 0.2, in developing the first Version 6 interpreters of the
+   modern age: <strong>Zip2000</strong> and <strong>Frotz</strong>.  Matthew Russotto
+   and Mark Knibbs supplied helpful information about Infocom's own
+   Version 6 interpreters.  Stefan also kindly read and commented on
+   numerous drafts of the present revision.  Finally, discussion about
+   this document was greatly assisted by the Z-Machine Mailing
+   List, organised by Marnix Klooster.</p>
+<p><em>Graham Nelson</em></p>
+
+<p><em>22 June 1997</em></p>
+
+<p>The majority of the clarifications and updates in this latest revision
+   are the work of Kevin Bracey and Jason C. Penney. Thanks go also to the
+   members of the (now defunct) Z-Machine Mailing List, and those of the
+   intfiction.org forum, especially Dannii Willis, for bringing to light
+   issues with my initial revision. Special thanks to Andrew Plotkin
+   for his notes, advice and general help while working on this revised document.
+</p>
+<p><em>David Fillmore</em></p>
+
+<p><em>21 February 2014</em></p>
+
+<hr>
+
+<p>
+  <a href="index.html">Contents</a> / 
+  <a href="preface.html">Preface</a> /
+  <a href="overview.html">Overview</a>
+</p>
+
+<p>Section
+  <a href="sect01.html">1</a> / <a href="sect02.html">2</a> /
+  <a href="sect03.html">3</a> / <a href="sect04.html">4</a> /
+  <a href="sect05.html">5</a> / <a href="sect06.html">6</a> /
+  <a href="sect07.html">7</a> / <a href="sect08.html">8</a> /
+  <a href="sect09.html">9</a> / <a href="sect10.html">10</a> /
+  <a href="sect11.html">11</a> / <a href="sect12.html">12</a> /
+  <a href="sect13.html">13</a> / <a href="sect14.html">14</a> /
+  <a href="sect15.html">15</a> / <a href="sect16.html">16</a>
+</p>
+
+<p>Appendix
+  <a href="appa.html">A</a> / <a href="appb.html">B</a> /
+  <a href="appc.html">C</a> / <a href="appd.html">D</a> /
+  <a href="appe.html">E</a> / <a href="appf.html">F</a>
+</p>
+
+<hr>
+
+</body>
+</html>

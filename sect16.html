@@ -1,15 +1,23 @@
-<HTML>
-<HEAD><TITLE>The Z-Machine Standards Document</TITLE>
-</HEAD>
+<!DOCTYPE html>
 
-<BODY BGCOLOR="#EEEEEE"><H1 align=center><IMG height=86 width=82
-SRC="icon16.gif" ALT="Z"></H1>
-<BR><H3 align=center><I>16. Font 3 and character graphics</I></H3>
-<BR><B>16.1</B><P>
-The following table of 8x8 bitmaps gives a suitable appearance
-for font 3.  The font must have a fixed pitch and characters must be printed
-immediately next to each other in all four directions.
-<PRE>
+<html>
+<head>
+<title>The Z-Machine Standards Document</title>
+<link rel="stylesheet" type="text/css" href="zspec.css">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
+
+<body>
+<img class="icon" src="icon16.gif" alt="">
+
+<h1>16. Font 3 and character graphics</h1>
+
+<h2>16.1</h2>
+<p>The following table of 8x8 bitmaps gives a suitable appearance
+   for font 3.  The font must have a fixed pitch and characters must be printed
+   immediately next to each other in all four directions.
+</p>
+<pre>
  32( ):  76543210   33(!):  76543210   34("):  76543210   35(#):  76543210
         0                  0                  0                  0       #
         1                  1                  1                  1      # 
@@ -19,7 +27,7 @@ immediately next to each other in all four directions.
         5                  5 ##               5    ##            5  #     
         6                  6  #               6    #             6 #      
         7                  7                  7                  7#       
- 36($):  76543210   37(%):  76543210   38(&):  76543210   39('):  76543210
+ 36($):  76543210   37(%):  76543210   38(&amp;):  76543210   39('):  76543210
         0#                 0                  0                  0        
         1 #                1                  1                  1        
         2  #               2                  2                  2        
@@ -46,8 +54,8 @@ immediately next to each other in all four directions.
         5    #             5   #              5                  5   #    
         6    #             6   #              6                  6   #    
         7    #             7   #              7                  7   #    
-</PRE>
-<PRE>
+</pre>
+<pre>
  48(0):  76543210   49(1):  76543210   50(2):  76543210   51(3):  76543210
         0                  0    #             0   #              0#       
         1                  1    #             1   #              1 #      
@@ -75,7 +83,7 @@ immediately next to each other in all four directions.
         5########          5#####             5   #####          5########
         6########          6#####             6   #####          6########
         7########          7#####             7   #####          7########
- 60(<):  76543210   61(=):  76543210   62(>):  76543210   63(?):  76543210
+ 60(&lt;):  76543210   61(=):  76543210   62(&gt;):  76543210   63(?):  76543210
         0########          0#####             0   #####          0   #####
         1########          1#####             1   #####          1   #####
         2########          2#####             2   #####          2   #####
@@ -93,8 +101,8 @@ immediately next to each other in all four directions.
         5   #####          5#####             5                  5  #     
         6   #####          6#####             6                  6 #      
         7   #####          7#####             7                  7#       
-</PRE>
-<PRE>
+</pre>
+<pre>
  68(D):  76543210   69(E):  76543210   70(F):  76543210   71(G):  76543210
         0#                 0       #          0#####             0       #
         1 #                1      #           1#####             1        
@@ -140,8 +148,8 @@ immediately next to each other in all four directions.
         5#####             5######            5#######           5########
         6########          6########          6########          6########
         7                  7                  7                  7        
-</PRE>
-<PRE>
+</pre>
+<pre>
  88(X):  76543210   89(Y):  76543210   90(Z):  76543210   91([):  76543210
         0                  0                  0#      #          0    #   
         1       #          1#                 1 #    #           1    #   
@@ -187,8 +195,8 @@ immediately next to each other in all four directions.
         5#   # #           5   #              5  ###             5#  #  # 
         6#    ##           6   #              6   #              6#  #  # 
         7                  7                  7                  7        
-</PRE>
-<PRE>
+</pre>
+<pre>
 108(l):  76543210  109(m):  76543210  110(n):  76543210  111(o):  76543210
         0   #              0##   ##           0#  #              0##   #  
         1   ##             1# # # #           1 # #              1# # ##  
@@ -234,94 +242,119 @@ immediately next to each other in all four directions.
         5##    ##          5##    ##          5########
         6###  ###          6###  ###          6###  ###
         7########          7########          7########
-</PRE>
+</pre>
 
-<P>
-<HR><H4><I>Remarks</I></H4><BR>
-Two different versions of font 3 were supplied by Infocom, which we shall
-call the Amiga and PC forms (the Atari form is the same as for the PC).  The
-arrow shape differed slightly and so did the rune alphabet.  Each was an attempt
-to map the late Anglian ("futhorc") runic alphabet, which has 33
-characters, onto our Latin alphabet.  The drawings above are from the Amiga
-set.
-<P>
-Most of the mappings are straightforward (e.g., Latin A maps to Anglian a),
-except that: Latin C is mapped to Anglian eo; K to "other k" (previously a
-z sound); Q to Anglian k (the same rune as c); V to ea; X to z and Z to oe. 
-The PC runes differ as follows: G has an ornamental circle making it more
-look like "other z"; K maps to Anglian k (or c); Q is an Anglian ea (which
-resembles the late Anglian q); V is an oe; X is an "other k" and Z is a
-symbol Infocom seem to have invented themselves.  (Though less well drawn
-the PC runes arguably have a better sound-mapping.)
-<P>
-The font behaviour of 'Beyond Zork', which does have bit 3 of 'Flags 2'
-set, is rather complicated and depends on the interpreter number it
-finds in the header (see <B>S</B> 11).  Specifically:
-<P><B>1.</B>(a Digital terminal) 'BZ' asks whether the player has a VT220
-terminal (a model capable of character graphics) and uses font 3 if
-and only if the answer is yes.  (An in-house convenience:
-Infocom used a Digital mainframe.)
-<P><B>2.</B>(Apple IIe) 'BZ' never uses font 3.
-<P><B>3.</B>(Macintosh) 'BZ' always uses font 3.
-<P><B>4.</B>(Amiga) 'BZ' always uses font 3.
-<P><B>5.</B>(Atari ST) 'BZ' always uses font 3.
-<P><B>6.</B>(MSDOS) 'BZ' uses font 3 if it finds bit 3 of 'Flags 2' set
-(indicating that a graphical screen mode is in use) and otherwise
-uses IBM PC graphics codes.  These need to be converted back into
-ASCII.  The conversion process used by the <B>Zip</B> interpreter is
-as follows:
-<P>
-<PRE>
+
+<hr>
+<h2>Remarks</h2>
+<p>Two different versions of font 3 were supplied by Infocom, which we shall
+   call the Amiga and PC forms (the Atari form is the same as for the PC).  The
+   arrow shape differed slightly and so did the rune alphabet.  Each was an attempt
+   to map the late Anglian ("futhorc") runic alphabet, which has 33
+   characters, onto our Latin alphabet.  The drawings above are from the Amiga
+   set.
+</p>
+
+<p>Most of the mappings are straightforward (e.g., Latin A maps to Anglian a),
+   except that: Latin C is mapped to Anglian eo; K to "other k" (previously a
+   z sound); Q to Anglian k (the same rune as c); V to ea; X to z and Z to oe. 
+   The PC runes differ as follows: G has an ornamental circle making it more
+   look like "other z"; K maps to Anglian k (or c); Q is an Anglian ea (which
+   resembles the late Anglian q); V is an oe; X is an "other k" and Z is a
+   symbol Infocom seem to have invented themselves.  (Though less well drawn
+   the PC runes arguably have a better sound-mapping.)
+</p>
+
+<p>The font behaviour of 'Beyond Zork', which does have bit 3 of 'Flags 2'
+   set, is rather complicated and depends on the interpreter number it
+   finds in the header (see <B>S</B> 11).  Specifically:
+</p>
+
+<ol>
+  <li>(a Digital terminal) 'BZ' asks whether the player has a VT220
+      terminal (a model capable of character graphics) and uses font 3 if
+      and only if the answer is yes.  (An in-house convenience:
+      Infocom used a Digital mainframe.)
+  </li>
+  <li>(Apple IIe) 'BZ' never uses font 3.</li>
+  <li>(Macintosh) 'BZ' always uses font 3.</li>
+  <li>(Amiga) 'BZ' always uses font 3.</li>
+  <li>(Atari ST) 'BZ' always uses font 3.</li>
+  <li>(MSDOS) 'BZ' uses font 3 if it finds bit 3 of 'Flags 2' set
+      (indicating that a graphical screen mode is in use) and otherwise
+      uses IBM PC graphics codes.  These need to be converted back into
+      ASCII.  The conversion process used by the <strong>Zip</strong> interpreter is
+      as follows:
+<pre>
  179   becomes   a vertical stroke (ASCII 124)
  186             a hash (ASCII 35)
  196             a minus sign (ASCII 45)
  205             an equals sign (ASCII 61)
  all others in the range 179 to 218 become a plus sign (ASCII 43)
-</PRE>
-<P>
-<P><B>7.</B>(Commodore 128) 'BZ' always uses font 3.
-<P><B>8.</B>(Commodore 64) 'BZ' always uses font 3.
-<P><B>9.</B>(Apple IIc) 'BZ' uses Apple character graphics (possibly
-"Mousetext"), but has problems when the units used are not $1\times 1$.
-<P><B>10.</B>(Apple IIgs) 'BZ' always uses font 3.
-<P><B>11.</B>(Tandy) 'BZ' crashes on the public interpreters.
-<P>
- A similarly tangled process is used in 'Journey'.  It is
-obviously highly unsatisfactory to have to make the decision in
-the above way, which is why <B>set_font</B> is now required to return
-0 indicating non-availability of a font.
-<P>
-Stefan Jokisch suggests that Infocom originally intended the
-graphics bit as a way to develop Version 5 to allow a graphical
-version in parallel with the normal text one.  For instance, when
-the Infocom MSDOS interpreter starts up, it looks at the graphics
-flag and:
-<P>if clear, it sets the font width/height to 1/1 (so that screen
-units are character positions);
-<P>if set, it enters MGCA, a graphical screen mode and sets the font
-width/height to 8/8 (so that screen units are pixels).
-<P>
-The "COLOR" command in 'BZ' (typed at the keyboard) also behaves
-differently depending on the interpreter number, which is legal behaviour
-and has no impact on the specification.
+</pre>
+  </li>
 
-<HR>
-<P>
-<A HREF="index.html">Contents</A> / <A HREF="preface.html">Preface</A> /
-<A HREF="overview.html">Overview</A>
-<P>Section
-<A HREF="sect01.html">1</A> / <A HREF="sect02.html">2</A> /
-<A HREF="sect03.html">3</A> / <A HREF="sect04.html">4</A> /
-<A HREF="sect05.html">5</A> / <A HREF="sect06.html">6</A> /
-<A HREF="sect07.html">7</A> / <A HREF="sect08.html">8</A> /
-<A HREF="sect09.html">9</A> / <A HREF="sect10.html">10</A> /
-<A HREF="sect11.html">11</A> / <A HREF="sect12.html">12</A> /
-<A HREF="sect13.html">13</A> / <A HREF="sect14.html">14</A> /
-<A HREF="sect15.html">15</A> / <A HREF="sect16.html">16</A>
-<P>Appendix
-<A HREF="appa.html">A</A> / <A HREF="appb.html">B</A> /
-<A HREF="appc.html">C</A> / <A HREF="appd.html">D</A> /
-<A HREF="appe.html">E</A> / <A HREF="appf.html">F</A>
-</P>
-<HR>
-</BODY></HTML>
+  <li>(Commodore 128) 'BZ' always uses font 3.</li>
+  <li>(Commodore 64) 'BZ' always uses font 3.</li>
+  <li>(Apple IIc) 'BZ' uses Apple character graphics (possibly
+      "Mousetext"), but has problems when the units used are not $1\times 1$.
+  </li>
+  <li>(Apple IIgs) 'BZ' always uses font 3.</li>
+  <li>(Tandy) 'BZ' crashes on the public interpreters.</li>
+</ol>
+
+<p>A similarly tangled process is used in 'Journey'.  It is
+   obviously highly unsatisfactory to have to make the decision in
+   the above way, which is why <strong>set_font</strong> is now required to return
+   0 indicating non-availability of a font.
+</p>
+
+<p>Stefan Jokisch suggests that Infocom originally intended the
+   graphics bit as a way to develop Version 5 to allow a graphical
+   version in parallel with the normal text one.  For instance, when
+   the Infocom MSDOS interpreter starts up, it looks at the graphics
+   flag and:
+</p>
+
+<p>if clear, it sets the font width/height to 1/1 (so that screen
+   units are character positions);
+</p>
+
+<p>if set, it enters MGCA, a graphical screen mode and sets the font
+   width/height to 8/8 (so that screen units are pixels).
+</p>
+
+<p>The "COLOR" command in 'BZ' (typed at the keyboard) also behaves
+   differently depending on the interpreter number, which is legal behaviour
+   and has no impact on the specification.
+</p>
+
+<hr>
+
+<p>
+  <a href="index.html">Contents</a> / 
+  <a href="preface.html">Preface</a> /
+  <a href="overview.html">Overview</a>
+</p>
+
+<p>Section
+  <a href="sect01.html">1</a> / <a href="sect02.html">2</a> /
+  <a href="sect03.html">3</a> / <a href="sect04.html">4</a> /
+  <a href="sect05.html">5</a> / <a href="sect06.html">6</a> /
+  <a href="sect07.html">7</a> / <a href="sect08.html">8</a> /
+  <a href="sect09.html">9</a> / <a href="sect10.html">10</a> /
+  <a href="sect11.html">11</a> / <a href="sect12.html">12</a> /
+  <a href="sect13.html">13</a> / <a href="sect14.html">14</a> /
+  <a href="sect15.html">15</a> / <a href="sect16.html">16</a>
+</p>
+
+<p>Appendix
+  <a href="appa.html">A</a> / <a href="appb.html">B</a> /
+  <a href="appc.html">C</a> / <a href="appd.html">D</a> /
+  <a href="appe.html">E</a> / <a href="appf.html">F</a>
+</p>
+
+<hr>
+
+</body>
+</html>

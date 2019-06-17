@@ -1,71 +1,93 @@
-<HTML>
-<HEAD><TITLE>The Z-Machine Standards Document: Contents</TITLE>
-<link rev="owns, made" href="mailto:graham@gnelson.demon.co.uk" title="Graham Nelson"></HEAD>
+<!DOCTYPE html>
 
-<BODY TEXT="#000000" LINK="#FFFFFF" BGCOLOR="#0080C0"><H1 align=center><IMG height=86 width=82
-SRC="zlogo.gif" ALT="Z"></H1>
-<BR>
-<H3 align=center><I>The Z-Machine Standards Document</I></H3>
-<H4 align=center>Version 1.0</H4>
-<P align=center>22nd June 1997</P>
-<P align=center><SMALL>two misprints corrected, 9th August</SMALL></P>
-<P align=center><SMALL>resources appendix updated and discovery added
-to header table, 4th September</SMALL></P>
-<P align=center><SMALL>resources appendix updated and annexe covering
-Quetzal added, 30th September</SMALL></P>
-<HR>
-<UL>
-<LI><A HREF="preface.html"><B>Preface</B></A>
-<LI><A HREF="overview.html"><B>Overview of Z-machine architecture</B></A>
-</UL>
-<HR>
-<B>Fundamentals</B>
-<UL>
-<LI><A HREF="sect01.html"><B>1. The memory map</B></A>
-<LI><A HREF="sect02.html"><B>2. Numbers and arithmetic</B></A>
-<LI><A HREF="sect03.html"><B>3. How text and characters are encoded</B></A>
-<LI><A HREF="sect04.html"><B>4. How instructions are encoded</B></A>
-<LI><A HREF="sect05.html"><B>5. How routines are encoded</B></A>
-<LI><A HREF="sect06.html"><B>6. The game state: storage and routine calls</B></A>
-</UL>
-<B>Input/Output</B>
-<UL>
-<LI><A HREF="sect07.html"><B>7. Output streams and file handling</B></A>
-<LI><A HREF="sect08.html"><B>8. The screen model</B></A>
-<LI><A HREF="sect09.html"><B>9. Sound effects</B></A>
-<LI><A HREF="sect10.html"><B>10. Input streams and devices</B></A>
-</UL>
-<B>Tables</B>
-<UL>
-<LI><A HREF="sect11.html"><B>11. The format of the header</B></A>
-<LI><A HREF="sect12.html"><B>12. The object table</B></A>
-<LI><A HREF="sect13.html"><B>13. The dictionary and lexical analysis</B></A>
-</UL>
-<B>Instruction Set</B>
-<UL>
-<LI><A HREF="sect14.html"><B>14. Complete table of opcodes</A><A HREF="sect14.html#inform"> (with Inform assembly syntax)</B></A>
-<LI><A HREF="sect15.html"><B>15. Dictionary of opcodes</B></A>
-</UL>
-<B>An Unusual Font</B>
-<UL>
-<LI><A HREF="sect16.html"><B>16. Font 3 and character graphics</B></A>
-</UL>
-<HR>
-<B>Appendices</B>
-<UL>
-<LI><A HREF="appa.html"><B>A. Error messages and debugging</B></A>
-<LI><A HREF="appb.html"><B>B. Conventional contents of the header</B></A>
-<LI><A HREF="appc.html"><B>C. Resources available (with WWW links)</B></A>
-<LI><A HREF="appd.html"><B>D. A short history of the Z-machine</B></A>
-<LI><A HREF="appe.html"><B>E. Statistics</B></A>
-<LI><A HREF="appf.html"><B>F. Canonical story files</B></A>
-</UL>
-<HR>
-<B>Related standards documents</B>
-<UL>
-<LI><A HREF="../quetzal/index.html"><B>Quetzal:
-a common format for saved-game files</B></A>
-</UL>
-<HR>
-</BODY>
-</HTML>
+<html>
+<head>
+<title>The Z-Machine Standards Document: Contents</title>
+<link rel="stylesheet" type="text/css" href="zspec.css">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
+
+<body class="index">
+<img class="icon" src="zlogo.gif" alt="">
+
+<h1>The Z-Machine Standards Document</h1>
+
+<h2 class="index">Version 1.0</h2>
+
+<p class="date">22nd June 1997</p>
+
+<p class="update">two misprints corrected, 9th August</p>
+<p class="update">resources appendix updated and discovery added to header table, 4th September</p>
+<p class="update">resources appendix updated and annexe covering Quetzal added, 30th September</p>
+<p class="update">corrections and clarifications added, 21th February 2014 - David Fillmore</p>
+
+<hr>
+
+<ul>
+  <li><a href="preface.html">Preface</a></li>
+  <li><a href="overview.html">Overview of Z-machine architecture</a></li>
+</ul>
+
+<hr>
+
+<h3>Fundamentals</h3>
+<ul>
+  <li><a href="sect01.html">1. The memory map</a></li>
+  <li><a href="sect02.html">2. Numbers and arithmetic</a></li>
+  <li><a href="sect03.html">3. How text and characters are encoded</a></li>
+  <li><a href="sect04.html">4. How instructions are encoded</a></li>
+  <li><a href="sect05.html">5. How routines are encoded</a></li>
+  <li><a href="sect06.html">6. The game state: storage and routine calls</a></li>
+</ul>
+
+<h3>Input/Output</h3>
+<ul>
+  <li><a href="sect07.html">7. Output streams and file handling</a></li>
+  <li><a href="sect08.html">8. The screen model</a></li>
+  <li><a href="sect09.html">9. Sound effects</a></li>
+  <li><a href="sect10.html">10. Input streams and devices</a></li>
+</ul>
+
+<h3>Tables</h3>
+<ul>
+  <li><a href="sect11.html">11. The format of the header</a></li>
+  <li><a href="sect12.html">12. The object table</a></li>
+  <li><a href="sect13.html">13. The dictionary and lexical analysis</a></li>
+</ul>
+
+<h3>Instruction Set</h3>
+<ul>
+  <li><a href="sect14.html">14. Complete table of opcodes</a><a href="sect14.html#inform"> (with Inform assembly syntax)</a></li>
+  <li><a href="sect15.html">15. Dictionary of opcodes</a></li>
+</ul>
+
+<h3>An Unusual Font</h3>
+  <ul>
+  <li><a href="sect16.html">16. Font 3 and character graphics</a></li>
+</ul>
+
+<hr>
+
+<h3>Appendices</h3>
+<ul>
+  <li><a href="appa.html">A. Error messages and debugging</a></li>
+  <li><a href="appb.html">B. Conventional contents of the header</a></li>
+  <li><a href="appc.html">C. Resources available (with WWW links)</a></li>
+  <li><a href="appd.html">D. A short history of the Z-machine</a></li>
+  <li><a href="appe.html">E. Statistics</a></li>
+  <li><a href="appf.html">F. Canonical story files</a></li>
+</ul>
+
+<hr>
+
+<h3>Related standards documents</h3>
+<ul>
+  <li><a href="http://inform-fiction.org/zmachine/standards/quetzal/index.html">Quetzal: a common format for saved-game files</a></li>
+  <li><a href="http://www.eblong.com/zarf/blorb/blorb.html">Blorb: An IF Resource Collection Format Standard</a></li>
+  <li><a href="http://babel.ifarchive.org/">The Treaty of Babel: Software and a standard for IF bibliography</a></li>
+</ul>
+
+<hr>
+
+</body>
+</html>
