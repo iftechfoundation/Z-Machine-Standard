@@ -593,6 +593,22 @@ current   --------------------------
    been hit since last time.
 </p>
 
+<p>In Version 3 and later, many of Infocom's interpreters (and some subsequent
+   interpreters, such as ITF's) treat two consecutive Z-characters 4 or 5 as
+   shift locks, contrary to the Standard. As a result, story files should not
+   use multiple consecutive 4 or 5 codes except for padding at the end of
+   strings and dictionary words. In any case, these shift locks are not used in
+   dictionary words, or any of Infocom's story files.
+</p>
+
+<p>In the available Version 1 and 2 Infocom gamefiles, dictionary words that leave a
+   multi-Z-character construction incomplete due to the truncation to 6 Z-characters do not 
+   have the end-bit of the last word set. However, the Infocom interpreters for these files 
+   do not recognize this, indicating that it is most likely a bug.
+</p>
+
+<hr>
+
 <p>In the past, not just in the Z-machine world, there has been general
    confusion over the rendering of ASCII/ZSCII/Latin-1/Unicode characters $27
    and $60. For the Z-machine, the traditional interpretations of
@@ -614,27 +630,6 @@ current   --------------------------
    closing - but even on many of their interpreters this looked a little odd, so
    suggesting that $27 be a right quote introduces no extra compatibility
    problems.
-</p>
-
-<p>In Version 3 and later, many of Infocom's interpreters (and some subsequent
-   interpreters, such as ITF's) treat two consecutive Z-characters 4 or 5 as
-   shift locks, contrary to the Standard. As a result, story files should not
-   use multiple consecutive 4 or 5 codes except for padding at the end of
-   strings and dictionary words. In any case, these shift locks are not used in
-   dictionary words, or any of Infocom's story files.
-</p>
-
-<p>To handle languages like Arabic or Hebrew, text would have to be output "visually", with manual
-   line breaks (possibly via an in-game formatting engine).
-</p>
-
-<p>Far eastern languages are generally straightforward, except they usually use
-   no spaces, and line wraps can occur almost anywhere. The easiest to way to
-   handle this would be for the game to turn off buffering. A more sophisticated
-   game might include its own formatting engine. Also, fixed-space output is
-   liable to be problematical with most Far Eastern fonts, which use a mixture
-   of "full width" and "half width" forms - all half-width characters would have
-   to be forced to full width.
 </p>
 
 <hr>
