@@ -50,6 +50,12 @@
    question.
 </p>
 
+<h2>9.2.1</h2>
+<p><strong>***[1.1]</strong> Aside from bleeps, there are two types of sound effect, samples and music. 
+   The game has no way of telling the type of a given sound effect.
+</p>
+  
+
 <h2 id="three">9.3</h2>
 <p>Sound effects (other than bleeps) can be played at any volume
    level from 1 to 8 (8 being loudest of these).  The volume level -1
@@ -72,9 +78,11 @@
 </p>
 
 <h2>9.4.2</h2>
-<p>A sound effect (other than a bleep) can then be "stopped" or
-   "started".  Only one sound effect is playing at any given time, and
-   starting a new sound effect automatically stops any current one.
+<p><strong>***[1.1]</strong> A sound effect (other than a bleep) can then be "stopped" or
+   "started".  Only one sound effect of each type can play at any given time,
+   so that starting a new music sound effect stops any current music playing, and starting any
+   new sample sound effect stops any current sample sound playing. Samples and music do not interrupt
+   each other.
 </p>
 
 <h2>9.4.3</h2>
@@ -137,10 +145,12 @@
    to pause sometimes:
 </p>
 
-<p>if a new sound effect is begun while there is still one
+<p>if a new sample sound effect is begun while there is still one
    playing which was started since the last keyboard input,
    then wait until that earlier one finishes one cycle before
-   replacing it with the new sound effect.
+   replacing it with the new sound effect. Music sound effects are not 
+   affected by this. New music should interrupt  old music immediately at 
+   all times.
 </p>
 
 <p>Infocom's MS-DOS interpreters for V4 to V6 set bit 5 of 'Flags 1' in
@@ -158,13 +168,6 @@
    <strong>Blorb</strong> format, which is a more modern way to make sound effects 
    available to newer games. Blorb files have been made available for the Infocom 
    sound effects, so that modern interpreters need no longer support the Infocom format.
-</p>
-
-<p>The Blorb specification contains some revisions to sound features, which are not 
-   formally part of this Standard. Future versions of the Standard will likely 
-   incorporate these revisions. In the meantime, Standard 1.0 compliant interpreters 
-   which support Blorb should follow those revisions, rather than the precise letter 
-   of this Standard. We apologise for the ugliness.
 </p>
 
 <hr> 

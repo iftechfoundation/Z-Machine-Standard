@@ -56,8 +56,7 @@
 
 <h2>15.1</h2>
 <p>The dictionary below is alphabetical and includes entries on every
-   opcode listed in the table above, as well as brief notes on a few opcodes
-   once thought to exist but now disproved.
+   opcode listed in the table above.
 </p>
 
 <h2>15.2</h2>
@@ -129,6 +128,29 @@
 
 <hr>
 
+<h2 id="buffer_screen">buffer_screen</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:29 1D  6/*  buffer_screen mode -> (result)</strong></p>
+<p>Tells the interpreter how to handle display buffering. If <strong>mode</strong> is 0, updates must be made as soon as possible. If
+   <strong>mode</strong> is 1, the interpreter may make changes to a backing store, and need not update the screen. The interpreter
+   is free to ignore the advice, but if so must always act as though the <strong>mode</strong> is 0 (update the screen as soon as possible).
+</p>
+
+<p>With buffer_screen in either state, an update of the visible display can be
+   forced immediately by issuing <strong>buffer_screen</strong> -1, without altering the current
+   buffering state. Note that <strong>buffer_screen</strong> -1 does not flush the text buffer.
+</p>
+
+<p>The return value is the old buffer_screen state.</p>
+
+<p>See <strong>S</strong> 8 for more details.</p>
+
+<p><strong>***[1.1]</strong> This opcode will only be present in interpreters obeying Standard
+   1.1 or later, so story files should check the standard number of the
+   interpreter before executing this opcode.
+</p>
+
+
+<hr>
 <h2 id="call">call</h2>
 <p><strong><a href="sect14.html#VAR">VAR</a>:224  0  1  call            routine ...up to 3 args... -> (result)</strong></p>
 <p>The only call instruction in Version 3, Inform reads this as
@@ -220,7 +242,7 @@
    if and only if the interpreter can receive it from the keyboard.
    Bits 2 to 15 are undefined.
 </p>
-<p><strong>***</strong> This opcode will only be present in interpreters obeying Standard
+<p><strong>***[1.0]</strong> This opcode will only be present in interpreters obeying Standard
    1.0 or later, so story files should check the standard number of the
    interpreter before executing this opcode.
 </p>
@@ -230,13 +252,6 @@
 <h2 id="clear_attr">clear_attr</h2>
 <p><strong><a href="sect14.html#2OP">2OP</a>:12   C     clear_attr      object attribute</strong></p>
 <p>Make <strong>object</strong> not have the attribute numbered <strong>attribute</strong>.</p>
-
-<hr>
-
-<h2 id="clear_flag">"clear_flag"</h2>
-<p>A name once used for one of the not-really-present
-    extended Version 5 opcodes (now removed from the specification).
-</p>
 
 <hr>
 
@@ -469,16 +484,13 @@
 
 <h2 id="je">je</h2>
 <p><strong><a href="sect14.html#2OP">2OP</a>:1    1     je              a b c d ?(label)</strong></p>
-<p>Jump if <strong>a</strong> is equal to any of the subsequent operands. je with just one operand 
-   is not permitted.
-</p>
-
+<p>Jump if <strong>a</strong> is equal to any of the subsequent operands. <strong>je</strong> with just one operand is not permitted.</p>
 
 <hr>
 
 <h2 id="jg">jg</h2>
 <p><strong><a href="sect14.html#2OP">2OP</a>:3    3     jg              a b ?(label)</strong></p>
-<p>Jump if <strong>a > b</strong> (using a signed 16-bit comparison).</p>
+<p>Jump if <strong>a &gt; b</strong> (using a signed 16-bit comparison).</p>
 
 <hr>
 
@@ -800,7 +812,7 @@
 <p>Print a Unicode character.  See <strong>S</strong> 3.8.5.4 and <strong>S</strong> 7.5 for details.
    The given character code must be defined in Unicode.
 </p>
-<p><strong>***</strong> This opcode will only be present in interpreters obeying Standard
+<p><strong>***[1.0]</strong> This opcode will only be present in interpreters obeying Standard
    1.0 or later, so story files should check the standard number of the
    interpreter before executing this opcode.
 </p>
@@ -1045,7 +1057,7 @@
 <h2 id="restore">restore</h2>
 <p><strong><a href="sect14.html#0OP">0OP</a>:182  6  1  restore         ?(label)</strong></p>
 <p><strong><a href="sect14.html#0OP">0OP</a>:182  5  4  restore         -> (result)</strong></p>
-<p><strong><a href="sect14.html#EXT">EXT</a>:1    1  5  restore         table bytes name -> (result)</strong></p>
+<p><strong><a href="sect14.html#EXT">EXT</a>:1    1  5  restore         table bytes name prompt-> (result)</strong></p>
 <p>See <strong>save</strong>.  In Version 3, the branch is never actually made,
    since either the game has successfully picked up again from where it
    was saved, or it failed to load the save game file.
@@ -1054,7 +1066,7 @@
    The interpreter gives the game a way of knowing that a restore has
    just happened (see <strong>save</strong>).
 </p>
-<p><strong>***</strong> From Version 5 it can have optional parameters as
+<p><strong>***[1.0]</strong> From Version 5 it can have optional parameters as
    <strong>save</strong> does, and returns the number of bytes loaded if so.  (Whether
    Infocom intended these options as part of Version 5 is doubtful,
    but it's too useful a feature to exclude from this Standard.)
@@ -1062,6 +1074,10 @@
 <p>If the restore fails, 0 is returned, but once again this necessarily
    happens since otherwise control is already elsewhere.
 </p>
+
+
+
+
 
 <hr>
 
@@ -1105,7 +1121,7 @@
 <h2 id="save">save</h2>
 <p><strong><a href="sect14.html#0OP">0OP</a>:181  5  1  save            ?(label)</strong></p>
 <p><strong><a href="sect14.html#0OP">0OP</a>:181  5  4  save            -> (result)</strong></p>
-<p><strong><a href="sect14.html#EXT">EXT</a>:0    0  5  save            table bytes name -> (result)</strong></p>
+<p><strong><a href="sect14.html#EXT">EXT</a>:0    0  5  save            table bytes name prompt -> (result)</strong></p>
 <p>On Versions 3 and 4, attempts to save the game (all questions
    about filenames are asked by interpreters) and branches if successful.
    From Version 5 it is a store rather than a branch instruction;
@@ -1117,13 +1133,22 @@
    (one called asynchronously by a sound effect, or keyboard timing,
    or newline counting).
 </p>
-<p><strong>***</strong> The extension also has (optional) parameters, which save a region of
+<p><strong>***[1.0]</strong> The extension also has (optional) parameters, which save a region of
    the save area, whose address and length are in bytes, and provides a
-   suggested filename: name is a pointer to an array of ASCII characters
+   suggested filename: <strong>name</strong> is a pointer to an array of ASCII characters
    giving this name (as usual preceded by a byte giving the number of
    characters).  See <strong>S</strong> 7.6.  (Whether Infocom intended these options
    as part of Version 5 is doubtful, but it's too useful a feature to
    exclude from this Standard.)
+</p>
+
+<p><strong>***[1.1]</strong> As of Standard 1.1 an additional optional parameter, <strong>prompt</strong>, 
+   is allowed on Version 5 extended save/restore.  This allows a game author to tell the
+   interpreter whether it should ask for confirmation of the provided file name (<strong>prompt</strong> is 1), 
+   or just silently save/restore using the provided filename (<strong>prompt</strong> is 0). If the parameter is 
+   not provided, whether to prompt or not is a matter for the interpreter - this might be 
+   globally user-configurable. Infocom's interpreters do prompt for filenames, many modern 
+   ones do not.
 </p>
 
 <hr>
@@ -1208,13 +1233,9 @@
 
 <hr>
 
-<h2 id="set_flag">"set_flag"</h2>
-<p>See <strong>clear_flag</strong>.</p>
-
-<hr>
-
 <h2 id="set_font">set_font</h2>
 <p><strong><a href="sect14.html#EXT">EXT</a>:4    4  5  set_font        font -> (result)</strong></p>
+<p><strong><a href="sect14.html#EXT">EXT</a>:4    4  6  set_font        font window -> (result)</strong></p>
 <p>If the requested font is available, then it is chosen for the
    current window, and the store value is the font ID of
    the previous font (which is always positive).  If the font is
@@ -1223,9 +1244,16 @@
 <p>If the font ID requested is 0, the font is not changed, and the ID of the current font is returned.</p>
 <p>(Infocom's old interpreters did not store 0 for an unavailable font,
    but the feature is clearly useful and so was introduced in release
-   0.2 of this Standard.  The opcode had an optional extra
-   <strong>window</strong> operand in Version 6, but this has never been used and
-   is now withdrawn from the Standard.)
+   0.2 of this Standard.  
+</p>
+
+<p><strong>***[1.1]</strong> In Version 6, <strong>set_font</strong> has an optional 
+   window parameter, as for <strong>set_colour</strong>.
+   This was part of the original Infocom design, but omitted by earlier
+   Standards. It is reinstated here, as it is useful to be able to measure
+   a font that is about to be used in another window, so that window can be
+   sized before attempting to place the cursor in it.  A window number of -3
+   signifies "the currently selected window"
 </p>
 
 <hr>
@@ -1247,6 +1275,39 @@
    interpreters (though this is not required) a combination of styles is
    possible (such as reverse video and bold).  In these, changing to
    Roman should turn off all the other styles currently set.
+</p>
+
+<p><strong>***[1.1]</strong> As of Standard 1.1, it is legal to request style 
+   combinations in a single <strong>set_text_style</strong> opcode by adding the 
+   values (which are powers of two) together. If the parameter is non-zero, then 
+   all the styles given are activated. If the parameter is zero, then all styles 
+   are deactivated. If the interpreter is unable to provide the requested style combination, it
+   must give precedence first to the styles requested in the most recent call
+   to <strong>set_text_style</strong>, and within that to the highest bit, making the priority
+   Fixed, Italic, Bold, Reverse.
+</p>
+
+
+<hr>
+
+<h2 id="set_true_colour">set_true_colour</h2>
+<p><strong><a href="sect14.html#EXT">EXT</a>:13 D  5/*  set_true_colour foreground background</strong></p>
+<p><strong><a href="sect14.html#EXT">EXT</a>:13 D  6/*  set_true_colour foreground background window</strong></p>
+<p>The foreground and background are 15-bit colour values:</p>
+
+<pre> bit 15 = 0
+ bits 14-10 blue
+ bits 9-5 green
+ bits 4-0 red
+</pre>
+
+<p>The optional window parameter is only allowed in V6, and operates the same as
+   in <strong>set_colour</strong>.
+</p>
+
+<p><strong>***[1.1]</strong> This opcode will only be present in interpreters 
+   obeying Standard 1.1 or later, so story files should check the standard number 
+   of the interpreter before executing this opcode.
 </p>
 
 <hr>
@@ -1384,13 +1445,6 @@
 <p><strong><a href="sect14.html#2OP">2OP</a>:7    7     test            bitmap flags ?(label)</strong></p>
 <p>Jump if all of the flags in bitmap are set
    (i.e. if <strong>bitmap & flags == flags</strong>).
-</p>
-
-<hr>
-
-<h2 id="test_array">"test_array"</h2>
-<p>See <strong>clear_flag</strong>.  (<strong>ITF</strong> implements this as
-   unconditionally false.)
 </p>
 
 <hr>

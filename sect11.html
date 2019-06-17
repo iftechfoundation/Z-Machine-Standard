@@ -160,12 +160,12 @@
 </p>
 
 <h2>11.1.4</h2>
-<p><strong>***</strong> The use of bit 7 in 'Flags 1' to signal whether timed
-   input is available is new in this document: see the preface.
+<p><strong>***[1.0]</strong> The use of bit 7 in 'Flags 1' to signal whether timed
+   input is available was new in the 1.0 document: see the preface.
 </p>
 
 <h2>11.1.5</h2>
-<p><strong>***</strong> If an interpreter obeys Revision <strong>n.m</strong> of this document
+<p><strong>***[1.0]</strong> If an interpreter obeys Revision <strong>n.m</strong> of this document
    <em>perfectly</em>, as far as anyone knows,
    then byte <strong>$32</strong> should be written with
    <strong>n</strong> and byte <strong>$33</strong> with <strong>m</strong>.
@@ -199,7 +199,7 @@
 </p>
 
 <h2>11.1.7.3</h2>
-<p><strong>***</strong> Words in the header extension table have been allocated
+<p><strong>***[1.0][1.1]</strong> Words in the header extension table have been allocated
    as follows:
 </p>
 
@@ -214,7 +214,30 @@
   <tr><td>  1   </td><td>5  </td><td>    </td><td> *  </td><td>     </td><td>X-coordinate of mouse after a click</td></tr>
   <tr><td>  2   </td><td>5  </td><td>    </td><td> *  </td><td>     </td><td>Y-coordinate of mouse after a click</td></tr>
   <tr><td>  3   </td><td>5  </td><td>    </td><td>    </td><td>     </td><td>Unicode translation table address (optional)</td></tr>
+  <tr><td>  4   </td><td>5  </td><td>    </td><td>    </td><td>     </td><td><em>Flags 3:</em></td></tr>
+
+  <tr><td>      </td><td><em>6</em></td><td>    </td><td> *  </td><td> *   </td>
+      <td>0: If set, game wants to use transparency</td>
+  </tr>
+
+  <tr><td>  5   </td><td>5  </td><td>    </td><td> *  </td><td> *   </td>
+      <td>True default foreground colour</td>
+  </tr>
+
+  <tr><td>  6   </td><td>5  </td><td>    </td><td> *  </td><td> *   </td>
+      <td>True default background colour</td>
+  </tr>
+
 </table>
+
+<h2>11.1.7.4</h2>
+<p><strong>***[1.1]</strong> The bits in Flags 3 are set by the game to request use of a feature. If the interpreter cannot
+   provide a feature, it must clear the relevant bit.
+</p>
+
+<h2>11.1.7.4.1</h2>
+<p><strong>***[1.1]</strong> All unused bits in Flags 3 must be cleared by the interpreter.</p>
+
 
 <hr>
 

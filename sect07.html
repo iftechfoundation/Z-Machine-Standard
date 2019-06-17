@@ -73,7 +73,7 @@
 </p>
 
 <h2>7.1.2.1.1</h2>
-<p><strong>***</strong> It is possible for stream 3 to be selected while
+<p><strong>***[1.0]</strong> It is possible for stream 3 to be selected while
    it is already on.  If this happens, the previous table address is
    remembered and the previous table is resumed when the new one is
    finished.  This nesting can reach a depth of up to 16: if stream 3
@@ -138,7 +138,7 @@
 </p>
 
 <h2 id="five">7.5</h2>
-<p><strong>***</strong> Because of the <strong>print_unicode</strong> opcode, it is possible for
+<p><strong>***[1.0]</strong> Because of the <strong>print_unicode</strong> opcode, it is possible for
    arbitrary Unicode characters to be sent to the output streams: that is,
    for characters which are not in the ZSCII set at all, even in the
    "extra characters" range.
@@ -165,16 +165,21 @@
 <p>Non-ZSCII characters never need to be printed to stream 4.</p>
 
 <h2 id="six">7.6</h2>
-<p><strong>***</strong> In Versions 5 and later, the Z-machine has the ability to load
+<p><strong>***[1.0]</strong> In Versions 5 and later, the Z-machine has the ability to load
    and save files (using optional operands with the <strong>save</strong> and <strong>restore</strong>
    opcodes: these operands were not used in Infocom's Version 5 games,
    but I wish to specify them as in Version 5 anyway).
 </p>
 
 <h2>7.6.1</h2>
-<p><strong>***</strong> Filenames have the following format (approximately the MS-DOS
+<p><strong>***[1.0]</strong> Filenames have the following format (approximately the MS-DOS
    8.3 rule): one to eight alphanumeric characters, a full stop and zero to
    three alphanumeric characters (the "file extension").
+</p>
+
+<h2>7.6.1</h2>
+<p><strong>***[1.1]</strong> The game can pass any string to the interpreter to be used as a
+   filename. In all cases the interpreter will convert the string to an appropriate filename.
 </p>
 
 <h2>7.6.1.1</h2>
@@ -182,19 +187,53 @@
    use.  If no full stop is given, ".AUX" should be appended.
 </p>
 
+<h2>7.6.1.1</h2>
+<p><strong>***[1.1]</strong> The interpreter will delete from the filename any characters illegal 
+   for a filename. This will include all of the following characters (and more, if the OS requires 
+   it): slash, backslash, angle brackets (less-than and greater-than), colon, double-quote, pipe 
+   (vertical bar), question-mark, and asterisk. The interpreter will also truncate the filename at 
+   the first full stop (deleting the first full stop and any following characters). If the result 
+   is the empty string, the interpreter will change it to the string "NULL".
+</p>
+
+
 <h2>7.6.1.2</h2>
 <p>Games should avoid the extensions ".INF", ".H", ".Z"
    followed by a number or ".SAV": otherwise they may be in danger of erasing
    their own object code, source code or saved game files.
 </p>
 
+<h2>7.6.1.2</h2>
+<p><strong>***[1.1]</strong> The interpreter may add any appropriate file extension (that is, a 
+   full stop followed by a further string that identifies the type of the file) to the filename. 
+   Previous versions of this specification suggested a default file extension of ".AUX", but this
+   is not a requirement.
+</p>
+
+<h2>7.6.1.3</h2>
+<p><strong>***[1.1]</strong> The interpreter should delete from the filename any characters illegal
+   for a filename. This will include all of the following characters (and more, if the OS 
+   requires it): slash, backslash, angle brackets (less-than and greater-than), colon, 
+   double-quote, pipe (vertical bar), question-mark, asterisk. The library should also 
+   truncate the argument at the first full stop (delete the first full stop and any following 
+   characters). If the result is the empty string, change it to the string "NULL".
+</p>
+
+<h2>7.6.1.3</h2>
+<p><strong>***[1.1]</strong> When reading a file without using a prompt to the user, the interpreter may 
+   choose to search for the file using any algorithm of its choice, starting from the argument the game 
+   passes. For example, if the argument specifies a filename containing a file extension, the interpreter 
+   may choose to look for a filename with that extension and read it if it is found.
+</p>
+
+
 <h2>7.6.2</h2>
-<p><strong>***</strong> Saved files are not associated with any particular session
+<p><strong>***[1.0]</strong> Saved files are not associated with any particular session
    of a game.  They are not part of the "state of play".
 </p>
 
 <h2>7.6.3</h2>
-<p><strong>***</strong> A game may depend on having up to 32 auxiliary files (with
+<p><strong>***[1.0]</strong> A game may depend on having up to 32 auxiliary files (with
    different names).
 </p>
 
@@ -229,13 +268,16 @@
 
 <hr>
 
+
+
+
 <h2>Remarks</h2>
 <p>The <strong>ITF</strong> interpreter incorrectly applies buffering when printing to
    the upper window.
 </p>
 
 <p>Note that the requirement 7.1.2.1.1, that usages of stream 3 can be
-   'nested', is new in Standard 1.0.  This is potentially important for
+   'nested', was new in Standard 1.0.  This is potentially important for
    Inform games, as stream 3 is often used to examine text before printing,
    for instance to choose between the articles "a" and "an" in front
    of an object name.  But the process of printing an object name may

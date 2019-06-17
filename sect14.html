@@ -40,7 +40,7 @@
 <tr><td>     </td><td>    </td><td>  ------</td><td>   0 </td><td> ---</td><td>---</td><td></td></tr>
 
 <tr><td>     </td><td>  * </td><td>  2OP:1 </td><td>   1 </td><td>    </td>
-    <td>je              a b ?(label)</td><td><a href="sect15.html#je"><strong>je              </strong></a></td>
+    <td>je              a b c d?(label)</td><td><a href="sect15.html#je"><strong>je              </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>  * </td><td>  2OP:2 </td><td>   2 </td><td>    </td>
@@ -154,9 +154,9 @@
     <td><a href="sect15.html#throw"><strong>throw           </strong></a></td>
 </tr>
 
-<tr><td>     </td><td>    </td><td>  ------</td><td>  1D </td><td> ---</td><td>---</td></tr>
-<tr><td>     </td><td>    </td><td>  ------</td><td>  1E </td><td> ---</td><td>---</td></tr>
-<tr><td>     </td><td>    </td><td>  ------</td><td>  1F </td><td> ---</td><td>---</td></tr>
+<tr><td>     </td><td>    </td><td>  ------</td><td>  1D </td><td> ---</td><td>---</td><td></td></tr>
+<tr><td>     </td><td>    </td><td>  ------</td><td>  1E </td><td> ---</td><td>---</td><td></td></tr>
+<tr><td>     </td><td>    </td><td>  ------</td><td>  1F </td><td> ---</td><td>---</td><td></td></tr>
 <tr><td colspan="7" class="note">Opcode numbers 32 to 127: other forms of 2OP with different types.</td></tr>
 </table>
 
@@ -506,11 +506,11 @@
 
 <tr><td>   St</td><td>  Br</td><td>  Opcode</td><td> Hex </td><td> V  </td><td>Inform name and syntax  </td><td>Link</td></tr>
 
-<tr><td>   * </td><td>    </td><td>  EXT:0 </td><td>   0 </td><td> 5  </td><td>save            table bytes name -> (result)</td>
+<tr><td>   * </td><td>    </td><td>  EXT:0 </td><td>   0 </td><td> 5  </td><td>save            table bytes name prompt -> (result)</td>
     <td><a href="sect15.html#save"><strong>save            </strong></a></td>
 </tr>
 
-<tr><td>   * </td><td>    </td><td>  EXT:1 </td><td>   1 </td><td> 5  </td><td>restore         table bytes name -> (result)</td>
+<tr><td>   * </td><td>    </td><td>  EXT:1 </td><td>   1 </td><td> 5  </td><td>restore         table bytes name prompt -> (result)</td>
     <td><a href="sect15.html#restore"><strong>restore         </strong></a></td>
 </tr>
 
@@ -525,6 +525,11 @@
 <tr><td>   * </td><td>    </td><td>  EXT:4 </td><td>   4 </td><td> 5  </td><td>set_font        font -> (result)</td>
     <td><a href="sect15.html#set_font"><strong>set_font        </strong></a></td>
 </tr>
+
+<tr><td>   * </td><td>    </td><td></td><td>     </td><td> 6/-  </td><td>set_font        font window -> (result)</td>
+    <td><a href="sect15.html#set_font"><strong>set_font        </strong></a></td>
+</tr>
+
 
 <tr><td>     </td><td>    </td><td>  EXT:5 </td><td>   5 </td><td> 6  </td><td>draw_picture    picture-number y x</td>
     <td><a href="sect15.html#draw_picture"><strong>draw_picture    </strong></a></td>
@@ -558,7 +563,14 @@
     <td><a href="sect15.html#check_unicode"><strong>check_unicode   </strong></a></td>
 </tr>
 
-<tr><td>     </td><td>    </td><td>  -------</td><td>  D </td><td> ---</td><td>---</td><td></td></tr>
+<tr><td>     </td><td>    </td><td>  EXT:13</td><td>  D </td><td>5/* </td><td>set_true_colour foreground background</td>
+    <td><a href="sect15.html#set_true_colour"><strong>set_true_colour   </strong></a></td>
+</tr>
+
+<tr><td>     </td><td>    </td><td>  </td><td>   </td><td>6/* </td><td>set_true_colour foreground background window</td>
+    <td><a href="sect15.html#set_true_colour"><strong>set_true_colour   </strong></a></td>
+</tr>
+
 <tr><td>     </td><td>    </td><td>  -------</td><td>  E </td><td> ---</td><td>---</td><td></td></tr>
 <tr><td>     </td><td>    </td><td>  -------</td><td>  F </td><td> ---</td><td>---</td><td></td></tr>
 
@@ -614,6 +626,10 @@
     <td><a href="sect15.html#picture_table"><strong>picture_table   </strong></a></td>
 </tr>
 
+<tr><td>   * </td><td>    </td><td>  EXT:29</td><td>  1D </td><td> 6/*</td><td>buffer_screen mode -> (result)</td>
+    <td><a href="sect15.html#buffer_screen"><strong>buffer_screen   </strong></a></td>
+</tr>
+
 </table>
 
 <hr>
@@ -633,15 +649,15 @@
 </p>
 
 <h2>14.2.1</h2>
-<p>However, extended opcodes in the range EXT:29 to EXT:255
+<p>However, extended opcodes in the range EXT:30 to EXT:255
    should be simply ignored (perhaps with a warning message somewhere
    off-screen).
 </p>
 
 <h2>14.2.2</h2>
-<p><strong>***</strong> EXT:11 and EXT:12 are opcodes newly added to Standard 1.0
-   and which can be generated in code compiled by Inform 6.12 or later.
-   EXT:13 to EXT:15, and EXT:29 to EXT:127, are reserved for future versions
+<p><strong>***[1.0][1.1]</strong> EXT:11 and EXT:12 were opcodes added in Standard 1.0
+   and can be generated in code compiled by Inform 6.12 or later. EXT:13 and EXT:29 are new in Standard 1.1.
+   EXT:14 to EXT:15, and EXT:30 to EXT:127, are reserved for future versions
    of this document to specify.
 </p>
 
@@ -687,13 +703,13 @@
    the second is the earliest Version in which the opcode is known actually to
    be used in an Infocom-produced story file.  A dash means that it seems
    never to have been used (in any of Versions 1 to 6).
-   The notation "5/<strong>*</strong>" means that the opcode was introduced in this
+   The notation "5/<strong>*</strong>" or "6/<strong>*</strong>"  means that the opcode was introduced in this
    Standards document long after the Infocom era.
 </p>
 
 <p>The table explicitly marks opcodes which do not exist in any version of the
    Z-machine as <strong>------</strong>: in addition, none of the extended set of codes
-   after EXT:28 were ever used.
+   after EXT:29 have been used.
 </p>
 
 <hr>
