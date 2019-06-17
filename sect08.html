@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+11/06/2014<!DOCTYPE html>
 
 <html>
 <head>
@@ -674,13 +674,12 @@
 </p>
 
 <h2>8.8.3.2.2</h2>
-<p>If the interrupt countdown is set to a non-zero value
-   (which by default it is not), then the line count is decremented on each
-   new-line, and when it hits zero the routine whose packed address is stored
-   in the "newline interrupt routine" property is called before text printing
-   resumes.  (This routine may, for example, meddle with margins to roll text
-   around a crinkly-shaped picture.)  The interrupt routine should not attempt
-   to print anything.
+<p>If the interrupt countdown is set to a non-zero value (which by default it 
+   is not), then it is decremented on each new-line, and when it hits zero the 
+   routine whose packed address is stored in the "newline interrupt routine" 
+   property is called before text printing resumes. (This routine may, for 
+   example, meddle with margins to roll text around a crinkly-shaped picture.) 
+   The interrupt routine should not attempt to print anything.
 </p>
 
 <h2>8.8.3.2.2.1</h2>
@@ -701,9 +700,6 @@
    will depend, unfortunately, on which sequence of events above
    takes place.
 </p>
-
-<h2>8.8.3.2.2.3</h2>
-<p>A line count is never decremented below -999.</p>
 
 <h2>8.8.3.2.3</h2>
 <p>The text style is set just as in Version 4, using
@@ -728,10 +724,12 @@
 </p>
 
 <h2>8.8.3.2.6</h2>
-<p>The interpreter should use the line count to see when it
-   should print "[MORE]".  A line count of -999 means "never print
-   [MORE]".  (Version 6 games often set line counts to manipulate
-   when "[MORE]" is printed.)
+<p>The line count is incremented on each new-line, unless it is 
+   set to -999. The interpreter should use the line count to see when 
+   it should print "[MORE]". A line count of -999 means "never print 
+   [MORE]". (Version 6 games often set line counts to manipulate when 
+   "[MORE]" is printed.) The line count should never be set to less 
+   than -999.
 </p>
 
 <h2>8.8.3.2.7</h2>
@@ -790,11 +788,12 @@
 
 <h2>8.8.4.1</h2>
 <p>The <strong>split_screen</strong> opcode tiles windows 0 and 1 together
-   to fill the screen, so that window 1 has the given height and is
-   placed at the top left, while window 0 is placed just below it
+   to fill the screen vertically, so that window 1 has the given height and 
+   has its y coordinate set to 1, while window 0 is placed just below it
    (with its height suitably shortened, possibly making it disappear
-   altogether if window 1 occupies the whole screen).
+   altogether if the height of window 1 occupies the whole screen).
 </p>
+<p>The x coordinate and width of the windows are not changed.</p>
 
 <h2>8.8.4.2</h2>
 <p>An "unsplit" (that is, a <strong>split_screen 0</strong>) takes place
@@ -1081,10 +1080,9 @@ Lincoln Memorial                              12:03 PM
 <hr>
 
 <p>Some modern Z-Machine interpeters (mainly those using Andrew Plotkin's 
-   <strong>Glk</strong> interface standard) use a seperate text
-   windows for the status line. While this is not Standard behaviour, it
-   largely causes no problems. However Trinity, and many more recent Inform
-   games, print quote boxes using a technique that is not compatible with
+   Glk interface standard) use slightly non-Standard behaviour for the upper
+   window. While this largely causes no problems, Trinity, and many more recent 
+   Inform games, print quote boxes using a technique that is not compatible with 
    this implementation.
 </p>
 
@@ -1123,7 +1121,7 @@ buffer_mode on    ---           ---           word wrap   word wrap
 </pre>
 
 <p>Here "---" means that the interpreter ignores the given state, and
-   the presence of L, R or both after "char clipp" indicates which of the
+   the presence of L, R or both after "char clip" indicates which of the
    left and right margins are respected.  The Amiga behaviour may be due
    to a bug and two bugs have also been found in the MSDOS implementation.
    Under this standard, the appearance is as follows:

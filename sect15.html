@@ -348,8 +348,8 @@
 <p><strong><a href="sect14.html#VAR">VAR</a>:237  D  4  erase_window    window</strong></p>
 <p>Erases window with given number (to background colour);
    or if -1 it unsplits the screen and clears the lot; or if -2 it
-   clears the screen without unsplitting it.  In cases -1 and -2, the
-   cursor may move (see <strong>S</strong> 8 for precise details).
+   clears the screen without unsplitting it. The cursor may move if 
+   the window number given is -1 (see <strong>S</strong> 8 for precise details).
 </p>
 
 <hr>
@@ -796,13 +796,15 @@
 
 <h2 id="print_table">print_table</h2>
 <p><strong><a href="sect14.html#VAR">VAR</a>:254 1E  5  print_table     zscii-text width height skip</strong></p>
-<p>Print a rectangle of text on screen spreading right and
-   down from the current cursor position, of given <strong>width</strong> and <strong>height</strong>, from
-   the table of ZSCII text given.  (Height is optional and defaults to 1.)
-   If a <strong>skip</strong> value is given, then that many characters of text are skipped
-   over in between each line and the next.  (So one could make this display,
-   for instance, a 2 by 3 window onto a giant 40 by 40 character graphics
+<p>Print a rectangle of text on screen spreading right and down from the current cursor position, 
+   of given <strong>width</strong> and <strong>height</strong>, from the table of ZSCII text given.  
+   (Height is optional and defaults to 1.) If a <strong>skip</strong> value is given, then that 
+   many characters of text are skipped over in between each line and the next.  (So one could 
+   make this display, for instance, a 2 by 3 window onto a giant 40 by 40 character graphics
    map.)
+</p>
+<p><strong>print_table</strong> must work in both the upper and lower windows in Version 5 games, but in the lower
+   window a <strong>height</strong> other than 1 is illegal and the result undefined.
 </p>
 
 <hr>
@@ -933,7 +935,8 @@
    input, then <strong>read</strong> assumes that number of characters are left over from an
    interrupted previous input, and writes the new characters after those
    already there.  Note that the interpreter does not redisplay the
-   characters left over: the game does this, if it wants to.  This is
+   characters left over: the game must do this, although it may choose to 
+   redisplay any or all of the characters in uppercase. This is
    unfortunate for any interpreter wanting to give input text a distinctive
    appearance on-screen, but 'Beyond Zork', 'Zork Zero' and 'Shogun'
    clearly require it.  ("Just a tremendous pain in my butt" -- Andrew
@@ -1389,11 +1392,14 @@
    only for bounding cursor movement.  'Journey' creates a status region
    which is the whole screen and then overlays it with two other windows.)
 </p>
-<p>Windows 0 and 1 are tiled together to fill the screen, so that window 1 
-   has the given height and is placed at the top left, while window 0 is placed just 
-   below it (with its height suitably shortened, possibly making it disappear 
-   altogether if window 1 occupies the whole screen).
+<p>Windows 0 and 1 are tiled together to fill the screen vertically, so that window 1 
+   has the given height and has its y coordinate set to 1, while window 0 is placed 
+   just below it (with its height suitably shortened, possibly making it disappear 
+   altogether if the height of window 1 occupies the whole screen).
 </p>
+
+<p>The x coordinate and width of the windows are not changed.</p>
+
 <p>A cursor remains in the same absolute screen position (which means
    that its y-coordinate will be different relative to the window origin,
    since this origin will have moved) unless this position is no longer
