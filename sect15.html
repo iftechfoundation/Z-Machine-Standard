@@ -1047,9 +1047,8 @@
 
 <h2 id="restore">restore</h2>
 <p><strong><a href="sect14.html#0OP">0OP</a>:182  6  1  restore         ?(label)</strong></p>
-<p><strong><a href="sect14.html#0OP">0OP</a>:182  5  4  restore         -> (result)</strong></p>
 <p><strong><a href="sect14.html#EXT">EXT</a>:1    1  5  restore         table bytes name -> (result)</strong></p>
-<p>See <strong>save</strong>.  In Version 3, the branch is never actually made,
+<p>See <strong>save</strong>.  In Versions 4 and earlier, the branch is never actually made,
    since either the game has successfully picked up again from where it
    was saved, or it failed to load the save game file.
 </p>
@@ -1107,7 +1106,6 @@
 
 <h2 id="save">save</h2>
 <p><strong><a href="sect14.html#0OP">0OP</a>:181  5  1  save            ?(label)</strong></p>
-<p><strong><a href="sect14.html#0OP">0OP</a>:181  5  4  save            -> (result)</strong></p>
 <p><strong><a href="sect14.html#EXT">EXT</a>:0    0  5  save            table bytes name -> (result)</strong></p>
 <p>On Versions 3 and 4, attempts to save the game (all questions
    about filenames are asked by interpreters) and branches if successful.
