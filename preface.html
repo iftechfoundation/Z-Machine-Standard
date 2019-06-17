@@ -47,73 +47,77 @@
 <hr>
 
 <h2>Standardisation</h2>
-<p>The opcode names used in this document were agreed between 1994 and 1995
+<p>The majority of opcode names used in this document were agreed between 1994 and 1995
    as a standard set by Mark Howell, author of the disassembler <strong>Txd</strong>
    (part of the <strong>Ztools</strong> suite of utility programs), and Graham Nelson,
    author of the assembly level of Inform.  They do not correspond to
-   Infocom's unpublished opcode names.
+   Infocom's opcode names.
 </p>
 
-<p>This Standard was drawn up in November 1995, drawing on a rougher
-   description written in 1993 and, before that, sketches of table
-   formats by Mike Threepoint and others.  It has formalised
-   what different interpreter writers regard as the Z-machine,
+<p>The first vesion of this Standard was drawn up in November 1995, 
+   drawing on a rougher description written in 1993 and, before that, 
+   sketches of table formats by Mike Threepoint and others.  It 
+   formalised what different interpreter writers regard as the Z-machine,
    guaranteeing a reliable and well-featured platform for writers
-   of new games.  The first formal Standard was numbered 0.2, and
-   this is the second, containing some corrections and clarifications
-   but also two new features.  The following changes are worth noting:
+   of new games.  The initial 0.2 Standard was followed by the 1.0 Standard,
+   which contained mostly corrections and clarifications, but also added some 
+   new features.
 </p>
+
+<p>This third version of the Standard was initially put together by Kevin Bracey
+   and Jason C. Penney and proposed on the Z-Machine Mailing List in December
+   2001. After much discussion, and nine drafts, the final list of changes to
+   the Standard was uploaded to the if-archive in May 2006. This 2014 document
+   adds no new material to that final draft, and is merely a merging of those
+   changes to the main Standard.
+</p>
+
+<p>The main additions in the 1.1 Standard are:</p>
 
 <ul>
-  <li>Support for the Unicode character set has been added,
-      introducing a new table and two new opcodes.  <strong>S</strong>3 has been
-      rewritten and there are also changes to <strong>S</strong>7 and <strong>S</strong>10, as well
-      as the addition of the opcodes to <strong>S</strong>14 and <strong>S</strong>15.
+  <li>Better colour support, giving games access to 32,768 colours as opposed to 
+      the previous 11. Version 6 games may also make use of the new 'transparent'
+      background colour.
   </li>
-  <li><strong>S</strong>8.8.3.1, on window attributes in Version 6, has been
-      rewritten with extensive corrections.
+  <li>Version 6 games may now hint to the interpreter that it is safe to make changes
+      to the display in a backing store and flush them to the screen later, rather than 
+	  making changes directly to the screen. In a program carrying out a complex layered 
+	  graphical composition, this may speed up the process.
   </li>
-  <li><strong>S</strong>7.1.2.1.1 requires a new feature: handling nested
-      usages of output stream 3.
+  <li>The <strong>save</strong> and <strong>restore</strong> opcodes have a new optional
+      operand that allow the game to control whether the interpreter prompts for a filename
+	  or executes the intructions silently.
   </li>
-  <li>It is now explicit that text buffering never applies
-      to the upper window in Versions 3 to 5.  (In Standard 0.2 the rules
-      allowed text buffering in Version 4 under some conditions.)
-  </li>
-  <li>An optional operand (never used and not useful) has
-      been removed from the opcode <strong>set_font</strong>.  An optional operand,
-      discovered by Mark Knibbs, has however been added to the Version 6
-      form of <strong>set_colour</strong>.
-  </li>
-  <li>It is now defined that the input character codes for
-      return and delete are 13 and 8 respectively.  (10 and 127 have
-      been suggested as alternatives in the past).
-  </li>
-  <li>The fixed-pitch font flag now survives restarts and
-      restores, like the transcription flag.
+  <li>The optional operand removed from <strong>set_font</strong> in the previous Standard
+      has been reinstated.
   </li>
 </ul>
 
-<p>Also, the "character set table" is now called the
-   "alphabet table" (for clarity) and the "mouse data table" has
-   been renamed the "header extension table."
-</p>
 
-<p>A companion document to this one, by Martin Frost, defines a standard
-   format called <strong>Quetzal</strong> for saved-game files.  Standard interpreters
-   are not <em>required</em> to use <strong>Quetzal</strong>, since choice of saved-game
-   format does not affect Z-Machine behaviour, but interpreter-writers
-   are strongly encouraged to consider it.
-</p>
+<p>There are three companion documents are attached to this Standard.</p>
 
-<p>Andrew Plotkin has created a standard format called <strong>Blorb</strong> 
-   for a "resources" file to accompany or encapsulate
-   a Z-machine game, neatly packaging up sound and graphics in modern
-   formats.  Again, since the Z-Machine has no formal knowledge of the
-   means of storage of sound or graphics, interpreters are not required
-   to support <strong>Blorb</strong> but as a growing number of games are
-   contained in Blorb files, it is highly recommended that interpreters
-   support at least basic Blorb capabilities.
+<ul>
+  <li><strong>Quetzal</strong> by Martin Frost, defines a standard
+      format for saved-game files, the purpose of which is to allow
+      a player to save a game using one interpreter, and then restore
+      and continure playing on a new interpreter, or even an entirely
+      new machine.
+  </li>
+  <li><strong>Blorb</strong> by Andrew Plotkin is a standard for a "resources" 
+      file to accompany or encapsulate a Z-machine game, neatly packaging up 
+	  sound and graphics in modern formats. 
+  </li>
+  <li><strong>The Treaty of Babel</strong> is a standard for bibliographic 
+      information for interactive fiction games. The aim is to provide a unified
+      way to identify and describe story files of many different internal formats. 
+      The Treaty is not "owned" by any individual, but by a committee of
+      representatives from each of the pieces of software which have signed
+      up.
+  </li>
+</ul>
+
+<p>Standard interpreters are not <em>required</em> to support these standards, since they
+   do not affect Z-Machine behaviour, but interpreter-writers are strongly encouraged to consider it.
 </p>
 
 <hr>
@@ -151,8 +155,10 @@
    is needed for programmers to be sure of what level of recursion is safe.)
 </p>
 
-<p>Those few paragraphs which genuinely extend the Infocom format are
-   marked <strong>***</strong>.  In any event, Infocom's original shipped interpreters do
+<p>Those paragraphs which genuinely extend the Infocom format are
+   marked <strong>***[n.m]</strong>, where <strong>n</strong> and <strong>m</strong>
+   are the major and minor version numbers for the Standard in which the feature was added.
+   In any event, Infocom's original shipped interpreters do
    not conform to this standard document, because of bugs or because of
    slight variations between the Inform output format and Infocom's.
 </p>
@@ -252,17 +258,23 @@
 
 <p><em>22 June 1997</em></p>
 
-<p>The majority of the clarifications and updates in this latest revision
-   are the work of Kevin Bracey and Jason C. Penney. Thanks go also to the
-   members of the (now defunct) Z-Machine Mailing List, and those of the
-   intfiction.org forum, especially Dannii Willis, for bringing to light
-   issues with my initial revision. Special thanks to Andrew Plotkin
-   for his notes, advice and general help while working on this revised document.
+<p>The majority of the clarifications and updates in this latest revision are 
+   the work of Kevin Bracey and Jason C. Penney. Thanks go also to the members 
+   of the (now defunct) Z-Machine Mailing List, and those of the intfiction.org 
+   forum, especially Dannii Willis, for bringing to light issues with my initial
+   revision. Special thanks to Andrew Plotkin for his notes, advice and general
+   help while working on this revised document. 
 </p>
 <p><em>David Fillmore</em></p>
 
 <p><em>21 February 2014</em></p>
 
+<p>The Z-Machine Standard Version 1.1 was the work of Kevin Bracey & Jason C. Penney.
+   The initial document went through several drafts before arriving at the finished 
+   document, thanks to the comments and advice of the members of the Z-Machine Mailing List.
+
+<p><em>David Fillmore</em></p>
+<p><em>24 February 2014</em></p>
 <hr>
 
 <p>
