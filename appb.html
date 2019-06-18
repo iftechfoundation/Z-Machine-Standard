@@ -20,7 +20,7 @@
    These additional slots are described here.
 </p>
 
-<p>As in <strong>S</strong> 11, "Hex" means the address, in hexadecimal; "V" the
+<p>As in <strong>S</strong> 11, "Hex" means the address, in hexadecimal; "Len" the length in bytes; "V" the
    earliest version in which the feature appeared; "Dyn" means that the byte
    or bit may legally be changed by the game during play (no others may legally
    be changed by the game); "Int" means that the interpreter may (in some
@@ -30,32 +30,32 @@
 <table>
   <caption><strong>Conventional usage of unspecified header memory</strong></caption>
 
-  <tr><th>Hex  </th><th>V  </th><th>Dyn </th><th>Int </th><th>Contents</th>
+  <tr><th>Hex  </th><th>Len</th><th>V  </th><th>Dyn </th><th>Int </th><th>Contents</th>
 
-  <tr><td>1</td><td>1</td><td> </td><td> </td><td><em>Flags 1:</em></td></tr>
-  <tr><td>      </td><td><I>3</I> </td><td>    </td><td> *  </td><td>   Bit 3:    The legendary "Tandy" bit (see note)</td></tr>
-  <tr><td>  2   </td><td>1  </td><td>    </td><td>    </td><td> Release number (word)</td></tr>
-  <tr><td> 10   </td><td>1  </td><td> *  </td><td>    </td><td> <I>Flags 2:</I></td></tr>
+  <tr><td>  1   </td><td>1</td><td>1</td><td> </td><td> </td><td><em>Flags 1:</em></td></tr>
+  <tr><td>      </td><td> </td><td><I>3</I> </td><td>    </td><td> *  </td><td>   Bit 3:    The legendary "Tandy" bit (see note)</td></tr>
+  <tr><td>  2   </td><td>2</td><td>1  </td><td>    </td><td>    </td><td> Release number (word)</td></tr>
+  <tr><td> 10   </td><td>2</td><td>1  </td><td> *  </td><td>    </td><td> <I>Flags 2:</I></td></tr>
 
-  <tr><td>      </td><td><I>3</I> </td><td>    </td><td>    </td>
+  <tr><td>      </td><td> </td><td><I>3</I> </td><td>    </td><td>    </td>
       <td>   Bit 4:    Set in the Amiga version of The Lurking Horror so presumably to do with sound effects?</td>
   </tr>
 
-  <tr><td>      </td><td>? </td><td> ?  </td><td> *  </td>
+  <tr><td>      </td><td> </td><td>? </td><td> ?  </td><td> *  </td>
       <td>      10:    Possibly set by interpreter to indicate an error with the printer during transcription</td>
   </tr>
 
-  <tr><td> 12   </td><td>2  </td><td>    </td><td>    </td><td> Serial code (six characters of ASCII)</td></tr>
-  <tr><td>      </td><td>3  </td><td>    </td><td>    </td><td> Serial number (ASCII for the compilation date in the form YYMMDD)</td></tr>
+  <tr><td> 12   </td><td>6</td><td>2  </td><td>    </td><td>    </td><td> Serial code (six characters of ASCII)</td></tr>
+  <tr><td>      </td><td> </td><td>3  </td><td>    </td><td>    </td><td> Serial number (ASCII for the compilation date in the form YYMMDD)</td></tr>
 
-  <tr><td> 38   </td><td>6  </td><td>    </td><td> *  </td>
+  <tr><td> 38   </td><td>8</td><td>6  </td><td>    </td><td> *  </td>
       <td>Infocom used this as 8 bytes of ASCII: the player's user-name on their own mainframe,
           useful to identify which person played a saved-game
           (however, the bytes are all 0 in shipped story files)
       </td>
   </tr>
 
-  <tr><td> 3C   </td><td>   </td><td>    </td><td>    </td>
+  <tr><td> 3C   </td><td>4</td><td>   </td><td>    </td><td>    </td>
       <td>Inform 6 stores 4 bytes of ASCII here, giving the
           version of Inform used to compile the file:
           for instance, "6.11".</td>
