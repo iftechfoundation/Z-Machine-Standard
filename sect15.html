@@ -202,7 +202,7 @@
 <hr>
 
 <h2 id="check_arg_count">check_arg_count</h2>
-<p><strong><a href="sect14.html#VAR">VAR</a>:255 1F  5  check_arg_count argument-number</strong></p>
+<p><strong><a href="sect14.html#VAR">VAR</a>:255 1F  5  check_arg_count argument-number ?(label)</strong></p>
 <p>Branches if the given argument-number (counting
     from 1) has been provided by the routine call to the current routine.
     (This allows routines in Versions 5 and later to distinguish between
@@ -484,8 +484,8 @@
 
 <h2 id="jin">jin</h2>
 <p><strong><a href="sect14.html#2OP">2OP</a>:6    6     jin             obj1 obj2 ?(label)</strong></p>
-<p>Jump if object <strong>a</strong> is a direct child of <strong>b</strong>, i.e., if
-   <strong>parent</strong> of <strong>a</strong> is <strong>b</strong>.
+<p>Jump if object <strong>obj1</strong> is a direct child of <strong>obj2</strong>, i.e., if
+   <strong>parent</strong> of <strong>ob1</strong> is <strong>obj2</strong>.
 </p>
 
 <hr>
@@ -1049,7 +1049,7 @@
 <p><strong><a href="sect14.html#0OP">0OP</a>:182  6  1  restore         ?(label)</strong></p>
 <p><strong><a href="sect14.html#0OP">0OP</a>:182  5  4  restore         -> (result)</strong></p>
 <p><strong><a href="sect14.html#EXT">EXT</a>:1    1  5  restore         table bytes name -> (result)</strong></p>
-<p>See <strong>save</strong>.  In Version 3, the branch is never actually made,
+<p>See <strong>save</strong>.  In Versions 1 to 3, the branch is never actually made,
    since either the game has successfully picked up again from where it
    was saved, or it failed to load the save game file.
 </p>
@@ -1109,7 +1109,7 @@
 <p><strong><a href="sect14.html#0OP">0OP</a>:181  5  1  save            ?(label)</strong></p>
 <p><strong><a href="sect14.html#0OP">0OP</a>:181  5  4  save            -> (result)</strong></p>
 <p><strong><a href="sect14.html#EXT">EXT</a>:0    0  5  save            table bytes name -> (result)</strong></p>
-<p>On Version 3, attempts to save the game (all questions
+<p>On Versions 1 to 3, attempts to save the game (all questions
    about filenames are asked by interpreters) and branches if successful.
    From Version 4 it is a store rather than a branch instruction;
    the store value is 0 for failure, 1 for "save succeeded" and 2 for
@@ -1272,7 +1272,9 @@
 <hr>
 
 <h2 id="sound_effect">sound_effect</h2>
-<p><strong><a href="sect14.html#VAR">VAR</a>:245 15 5/3 sound_effect    number effect volume routine</strong></p>
+<p><strong><a href="sect14.html#VAR">VAR</a>:245 15 5/3 sound_effect    number effect volume</strong></p>
+<p><strong>                                          5 sound_effect    number effect volume routine</strong></p>
+
 <p>The given effect happens to the given sound number.  The low byte of
    <strong>volume</strong> holds the volume level, the high byte the number of repeats.
    (The value 255 means "loudest possible" and "forever" respectively.)
