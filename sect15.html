@@ -247,13 +247,16 @@
    being the absolute value of <strong>size</strong> (i.e., <strong>size</strong> if <strong>size</strong> is positive,
    <strong>-size</strong> if <strong>size</strong> is negative).
 </p>   
-<p>The tables are allowed to overlap.  If <strong>size</strong> is positive, the
-   interpreter must copy either forwards or backwards so as
-   to avoid corrupting <strong>first</strong> in the copying process.
-   If <strong>size</strong> is negative, the interpreter must copy forwards
-   even if this corrupts <strong>first</strong>.  ('Beyond Zork' uses this to fill an
-   array with spaces.)
+
+<p>The tables are allowed to overlap. If <strong>size</strong> is positive, the 
+   interpreter must copy either forwards or backwards so as 
+   to make sure all the original contents of <strong>first</strong> are copied to <strong>second</strong>, 
+   and avoid corrupting data in <strong>first</strong> that has not yet been copied. 
+   If <strong>size</strong> is negative, the interpreter must copy forwards 
+   even if this corrupts <strong>first</strong>. ('Beyond Zork' uses this to fill an 
+   array with spaces.)"
 </p>
+
 <p>(Version 0.2 of this document wrongly specified that if <strong>size</strong> is
    positive then copying should always run backward.  This results in
    the player being unable to cross the river near the start of
