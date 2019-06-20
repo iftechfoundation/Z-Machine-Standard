@@ -982,6 +982,9 @@
    overrun, causing bugs which are very difficult to find.)
 </p>
 
+<p>Interpreters should display a cursor when waiting for input. See <strong>read_char</strong>.
+</p>
+   
 <hr>
 
 <h2 id="read_char">read_char</h2>
@@ -991,6 +994,13 @@
    to support multiple input devices, but only the keyboard was ever
    used).  <strong>time</strong> and <strong>routine</strong> are optional (in Versions 4 and
    later only) and dealt with as in <strong>read</strong> above.
+</p>
+
+<p>If at all possible, interpreters should display a cursor at the current cursor 
+   position in the current window when <strong>read_char</strong> or <strong>read</strong>
+   are waiting for input. While some interpreters may not be able to ensure a cursor is 
+   displayed, the lack of a cursor can be frustrating for the player in some games, 
+   e.g. Bureaucracy.
 </p>
 
 <hr>
