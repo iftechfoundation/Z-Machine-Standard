@@ -235,19 +235,25 @@
 
 <h2 id="four">8.4</h2>
 <p>The screen should ideally be at least 60 characters wide by 14 lines
-   deep.  (Old Apple II interpreters had a 40 character width and some modern
-   laptop ones have a 9 line height, but implementors should seek to avoid
-   these extremes if possible.)  The interpreter may change the exact
+   deep.  (Old Apple II interpreters had a 40 character width and some more 
+   recent laptop ones have a 9 line height, but implementors should seek to 
+   avoid these extremes if possible.)  The interpreter may change the exact
    dimensions whenever it likes but must write the current height (in lines)
-   and width (in characters) into bytes <strong>$20</strong> and <strong>$21</strong> in the header.
+   and width (in characters) into bytes <strong>$20</strong> and <strong>$21</strong> 
+   in the header.
 </p>
 
 <h2>8.4.1</h2>
-<p>The interpreter should use the screen height for calculating
-   when to pause and print "[MORE]".  A screen height of 255 lines means
-   "infinite height", in which case the interpreter should never stop
-   printing for a "[MORE]" prompt.  (In case, say, the screen is actually
-   a teletype printer, or has very good "scrollback".)
+<p>The interpreter should use the screen height for calculating when to pause 
+   and print "[MORE]". 
+</p>
+<p>In theory, a screen height of 255 lines means "infinite 
+   height" (in case, say, the screen is actually a teletype printer), in which 
+   case the interpreter should never stop printing for a "[MORE]" prompt. In 
+   practice, however, interpreters should avoid setting the height to 255 as it 
+   causes serious problems with some Inform and Infocom games. Instead, the 
+   interpreter should simply pick a number for the screen height based on a 
+   sensible maximum size for the upper window.
 </p>
 
 <h2>8.4.2</h2>
@@ -400,13 +406,22 @@
    the interpreter should move the lower window's cursor down to the
    line just below the upper window's new size.
 </p>
-
 <h2>8.7.2.3</h2>
-<p>When the upper window is selected, its cursor position
-   can be moved with <strong>set_cursor</strong>.  This position is given in characters
-   in the form (row, column), with (1,1) at the top left.  The opcode
-   has no effect when the lower window is selected.  It is illegal
-   to move the cursor outside the current size of the upper window.
+<p>The position of the cursor in the upper window can be set and retrieved 
+   with <strong>set_cursor</strong> and <strong>get_cursor</strong>.
+</p>
+
+<h2>8.7.2.3.1</h2>
+<p>When the upper window is selected, its cursor position can be moved with 
+   <strong>set_cursor</strong>. This position is given in characters in the 
+   form (row, column), with (1,1) at the top left. The opcode has no effect 
+   when the lower window is selected. It is illegal to move the cursor outside 
+   the current size of the upper window.
+</p>
+
+<h2>8.7.2.3.2</h2>
+<p>When either the upper or lower windows are selected, get_cursor returns the 
+   position of the cursor in the upper window.
 </p>
 
 <h2>8.7.2.4</h2>
