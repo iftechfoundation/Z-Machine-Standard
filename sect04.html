@@ -87,13 +87,19 @@
 </p>
 
 <h2 id="three">4.3</h2>
-<p>Each instruction has a form (long, short, extended or variable)
-   and an operand count (0OP, 1OP, 2OP or VAR).
+<p>Each instruction has a form (long, short, extended or variable),
+   an operand count (0OP, 1OP, 2OP or VAR) and an opcode number.
    If the top two bits of the opcode are <strong>$$11</strong> the form is variable;
    if <strong>$$10</strong>, the form is short.  If the opcode is 190 (<strong>$BE</strong> in hexadecimal)
    and the version is 5 or later, the form is "extended".  Otherwise, the
-   form is "long".
+   form is "long". 
 </p>
+<p>Which opcode an opcode number refers to generally depends on the operand count,
+   so that there are 0OP, 1OP, 2OP and VAR opcodes (see <strong>S</strong> 14). Opcodes
+   using the "extended" form are referred to as EXT opcodes. In addition,
+   2OP opcodes may also be encoded in variable form.
+</p>
+
 
 <h2>4.3.1</h2>
 <p>In short form, bits 4 and 5 of the opcode byte give an operand
@@ -108,9 +114,9 @@
 </p>
 
 <h2>4.3.3</h2>
-<p>In variable form, if bit 5 is 0 then the count is 2OP;
-   if it is 1, then the count is VAR.  The opcode number is given
-   in the bottom 5 bits.
+<p>In variable form the count is VAR. If bit 5 is 0 then the opcode 
+   is 2OP; if it is 1, then the opcode is VAR.  The opcode number 
+   is given in the bottom 5 bits.
 </p>
 
 <h2>4.3.4</h2>
@@ -149,9 +155,10 @@
 
 
 <h2 id="five">4.5</h2>
-<p>The operands are given next.  Operand counts of 0OP, 1OP or 2OP
-   require 0, 1 or 2 operands to be given, respectively.  If the count is VAR,
-   there must be as many operands as there were types other than 'omitted'.
+<p>The operands are given next. If the operand count is VAR (whether the
+   opcode is a VAR or a 2OP) there must be as many operands as there were 
+   types other than 'omitted'. Otherwise, operand counts of 0OP, 1OP or 2OP require 0, 1 or 2 
+   operands to be given, respectively.
 </p>
 
 <h2>4.5.1</h2>

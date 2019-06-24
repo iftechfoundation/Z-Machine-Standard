@@ -18,6 +18,7 @@
    header which an interpreter must deal with.  (For further notes on
    traditional usage, see <a href="appb.html">Appendix B</a>.)
    "Hex" means the address, in hexadecimal;
+   "Len" means the length in bytes;
    "V" the earliest Version to which the rule is applicable;
    "Dyn" means that the byte or bit may legally be changed by the game
    during play; "Int" means that the interpreter may change it; "Rst"
@@ -27,84 +28,80 @@
 
 <table>
   <caption><strong>Header format</strong></caption>
-  <tr><td><strong> Hex  </strong></td><td><strong>V  </strong></td><td><strong>Dyn </strong></td>
+  <tr><td><strong> Hex  </strong></td><td><strong>Len<td></strong><strong>V  </strong></td><td><strong>Dyn </strong></td>
       <td><strong>Int </strong></td><td><strong>Rst  </strong></td><td><strong>Contents</strong></td>
   </tr>
-  <tr><td>  0   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Version number (1 to 6)</td>
-  <tr><td>  1   </td><td>3  </td><td>    </td><td>    </td><td>     </td><td><em>Flags 1 (in Versions 1 to 3):</em></td></tr>
-  <tr><td>      </td><td>   </td><td>    </td><td>    </td><td>     </td><td>  Bit 1:    Status line type: 0=score/turns, 1=hours:mins</td></tr>
-  <tr><td>      </td><td>   </td><td>    </td><td>    </td><td>     </td><td>      2:    Story file split across two discs?</td></tr>
-  <tr><td>      </td><td>   </td><td>    </td><td> *  </td><td> *   </td><td>      4:    Status line not available?</td></tr>
-  <tr><td>      </td><td>   </td><td>    </td><td> *  </td><td> *   </td><td>      5:    Screen-splitting available?</td></tr>
-  <tr><td>      </td><td>   </td><td>    </td><td> *  </td><td> *   </td><td>      6:    Is a variable-pitch font the default?</td></tr>
-  <tr><td>      </td><td>4  </td><td>    </td><td>    </td><td>     </td><td><em>Flags 1 (from Version 4):</em></td></tr>
-  <tr><td>      </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>  Bit 0:    Colours available?</td></tr>
-  <tr><td>      </td><td><em>6</em> </td><td>    </td><td> *  </td><td> *   </td><td>      1:    Picture displaying available?</td></tr>
-  <tr><td>      </td><td><em>4</em> </td><td>    </td><td> *  </td><td> *   </td><td>      2:    Boldface available?</td></tr>
-  <tr><td>      </td><td><em>4</em> </td><td>    </td><td> *  </td><td> *   </td><td>      3:    Italic available?</td></tr>
+  <tr><td>  0   </td><td>1 </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Version number (1 to 6)</td>
+  <tr><td>  1   </td><td>1 </td><td>3  </td><td>    </td><td>    </td><td>     </td><td><em>Flags 1 (in Versions 1 to 3):</em></td></tr>
+  <tr><td>      </td><td>  </td><td>   </td><td>    </td><td>    </td><td>     </td><td>  Bit 1:    Status line type: 0=score/turns, 1=hours:mins</td></tr>
+  <tr><td>      </td><td>  </td><td>   </td><td>    </td><td>    </td><td>     </td><td>      2:    Story file split across two discs?</td></tr>
+  <tr><td>      </td><td>  </td><td>   </td><td>    </td><td> *  </td><td> *   </td><td>      4:    Status line not available?</td></tr>
+  <tr><td>      </td><td>  </td><td>   </td><td>    </td><td> *  </td><td> *   </td><td>      5:    Screen-splitting available?</td></tr>
+  <tr><td>      </td><td>  </td><td>   </td><td>    </td><td> *  </td><td> *   </td><td>      6:    Is a variable-pitch font the default?</td></tr>
+  <tr><td>      </td><td>  </td><td>4  </td><td>    </td><td>    </td><td>     </td><td><em>Flags 1 (from Version 4):</em></td></tr>
+  <tr><td>      </td><td>  </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>  Bit 0:    Colours available?</td></tr>
+  <tr><td>      </td><td>  </td><td><em>6</em> </td><td>    </td><td> *  </td><td> *   </td><td>      1:    Picture displaying available?</td></tr>
+  <tr><td>      </td><td>  </td><td><em>4</em> </td><td>    </td><td> *  </td><td> *   </td><td>      2:    Boldface available?</td></tr>
+  <tr><td>      </td><td>  </td><td><em>4</em> </td><td>    </td><td> *  </td><td> *   </td><td>      3:    Italic available?</td></tr>
 
-  <tr><td>      </td><td><em>4</em> </td><td>    </td><td> *  </td><td> *   </td>
+  <tr><td>      </td><td>  </td><td><em>4</em> </td><td>    </td><td> *  </td><td> *   </td>
       <td>      4:    Fixed-space style available?</td>
   </tr>
 
-  <tr><td>      </td><td><em>6</em> </td><td>    </td><td> *  </td><td> *   </td><td>      5:    Sound effects available?</td></tr>
-  <tr><td>      </td><td><em>4</em> </td><td>    </td><td> *  </td><td> *   </td><td>      7:    Timed keyboard input available?</td></tr>
-  <tr><td>  4   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Base of high memory (byte address)</td></tr>
-  <tr><td>  6   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Initial value of program counter (byte address)</td></tr>
-  <tr><td>      </td><td>6  </td><td>    </td><td>    </td><td>     </td><td>Packed address of initial "main" routine</td></tr>
-  <tr><td>  8   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Location of dictionary (byte address)</td></tr>
-  <tr><td>  A   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Location of object table (byte address)</td></tr>
-  <tr><td>  C   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Location of global variables table (byte address)</td></tr>
-  <tr><td>  E   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Base of static memory (byte address)</td></tr>
-  <tr><td> 10   </td><td>1  </td><td>    </td><td>    </td><td>     </td><td><em>Flags 2:</em></td></tr>
-  <tr><td>      </td><td><em>1</em> </td><td> *  </td><td> *  </td><td> *   </td><td>  Bit 0:    Set when transcripting is on</td></tr>
+  <tr><td>      </td><td>  </td><td><em>6</em> </td><td>    </td><td> *  </td><td> *   </td><td>      5:    Sound effects available?</td></tr>
+  <tr><td>      </td><td>  </td><td><em>4</em> </td><td>    </td><td> *  </td><td> *   </td><td>      7:    Timed keyboard input available?</td></tr>
+  <tr><td>  4   </td><td>2 </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Base of high memory (byte address)</td></tr>
+  <tr><td>  6   </td><td>2 </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Initial value of program counter (byte address)</td></tr>
+  <tr><td>      </td><td>2 </td><td>6  </td><td>    </td><td>    </td><td>     </td><td>Packed address of initial "main" routine</td></tr>
+  <tr><td>  8   </td><td>2 </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Location of dictionary (byte address)</td></tr>
+  <tr><td>  A   </td><td>2 </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Location of object table (byte address)</td></tr>
+  <tr><td>  C   </td><td>2 </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Location of global variables table (byte address)</td></tr>
+  <tr><td>  E   </td><td>2 </td><td>1  </td><td>    </td><td>    </td><td>     </td><td>Base of static memory (byte address)</td></tr>
+  <tr><td> 10   </td><td>2 </td><td>1  </td><td>    </td><td>    </td><td>     </td><td><em>Flags 2:</em></td></tr>
+  <tr><td>      </td><td>  </td><td><em>1</em> </td><td> *  </td><td> *  </td><td> *   </td><td>  Bit 0:    Set when transcripting is on</td></tr>
 
-  <tr><td>      </td><td><em>3</em> </td><td> *  </td><td>    </td><td> *   </td>
+  <tr><td>      </td><td>  </td><td><em>3</em> </td><td> *  </td><td>    </td><td> *   </td>
       <td>      1:    Game sets to force printing in fixed-pitch font</td>
   </tr>
 
-  <tr><td>      </td><td><em>6</em> </td><td> *  </td><td> *  </td><td>     </td>
+  <tr><td>      </td><td>       </td><td><em>6</em> </td><td> *  </td><td> *  </td><td>     </td>
       <td>      2:    Int sets to request screen redraw: game clears when it complies with this.</td>
   </tr>
 
-  <tr><td>      </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>      3:    If set, game wants to use pictures</td></tr>
-  <tr><td>      </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>      4:    If set, game wants to use the UNDO opcodes</td></tr>
-  <tr><td>      </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>      5:    If set, game wants to use a mouse</td></tr>
-  <tr><td>      </td><td><em>5</em> </td><td>    </td><td>    </td><td>     </td><td>      6:    If set, game wants to use colours</td></tr>
-  <tr><td>      </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>      7:    If set, game wants to use sound effects</td></tr>
-  <tr><td>      </td><td><em>6</em> </td><td>    </td><td> *  </td><td> *   </td><td>      8:    If set, game wants to use menus</td></tr>
+  <tr><td>      </td><td>  </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>      3:    If set, game wants to use pictures</td></tr>
+  <tr><td>      </td><td>  </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>      4:    If set, game wants to use the UNDO opcodes</td></tr>
+  <tr><td>      </td><td>  </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>      5:    If set, game wants to use a mouse</td></tr>
+  <tr><td>      </td><td>  </td><td><em>5</em> </td><td>    </td><td>    </td><td>     </td><td>      6:    If set, game wants to use colours</td></tr>
+  <tr><td>      </td><td>  </td><td><em>5</em> </td><td>    </td><td> *  </td><td> *   </td><td>      7:    If set, game wants to use sound effects</td></tr>
+  <tr><td>      </td><td>  </td><td><em>6</em> </td><td>    </td><td> *  </td><td> *   </td><td>      8:    If set, game wants to use menus</td></tr>
 
-  <tr><td>      </td><td>   </td><td>    </td><td>    </td><td>     </td>
+  <tr><td>      </td><td>  </td><td>   </td><td>    </td><td>    </td><td>     </td>
       <td>             (For bits 3,4,5,7 and 8, Int clears again if it cannot provide the requested effect.)</td>
   </tr>
 
-  <tr><td> 18   </td><td>2  </td><td>    </td><td>    </td><td>     </td><td>Location of abbreviations table (byte address)</td></tr>
-  <tr><td> 1A   </td><td>3+ </td><td>    </td><td>    </td><td>     </td><td>Length of file (see note)</td></tr>
-  <tr><td> 1C   </td><td>3+ </td><td>    </td><td>    </td><td>     </td><td>Checksum of file</td></tr>
-  <tr><td> 1E   </td><td>4  </td><td>    </td><td> *  </td><td> *   </td><td>Interpreter number</td></tr>
-  <tr><td> 1F   </td><td>4  </td><td>    </td><td> *  </td><td> *   </td><td>Interpreter version</td></tr>
+  <tr><td> 18   </td><td>2 </td><td>2 </td><td>    </td><td>    </td><td>     </td><td>Location of abbreviations table (byte address)</td></tr>
+  <tr><td> 1A   </td><td>2 </td><td>3+</td><td>    </td><td>    </td><td>     </td><td>Length of file (see note)</td></tr>
+  <tr><td> 1C   </td><td>2 </td><td>3+</td><td>    </td><td>    </td><td>     </td><td>Checksum of file</td></tr>
+  <tr><td> 1E   </td><td>1 </td><td>4 </td><td>    </td><td> *  </td><td> *   </td><td>Interpreter number</td></tr>
+  <tr><td> 1F   </td><td>1 </td><td>4 </td><td>    </td><td> *  </td><td> *   </td><td>Interpreter version</td></tr>
 
-  <tr><td><strong> Hex  </strong></td><td><strong>V  </strong></td><td><strong>Dyn </strong></td><td><strong>Int </strong></td>
-      <td><strong>Rst  </strong></td><td><strong>Contents</strong></td>
-  </tr>
-
-  <tr><td> 20   </td><td>4  </td><td>    </td><td> *  </td><td> *   </td><td>Screen height (lines): 255 means "infinite"</td></tr>
-  <tr><td> 21   </td><td>4  </td><td>    </td><td> *  </td><td> *   </td><td>Screen width (characters)</td></tr>
-  <tr><td> 22   </td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Screen width in units</td></tr>
-  <tr><td> 24   </td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Screen height in units</td></tr>
-  <tr><td> 26   </td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Font width in units (defined as width of a '0')</td></tr>
-  <tr><td>      </td><td>6  </td><td>    </td><td> *  </td><td> *   </td><td>Font height in units</td></tr>
-  <tr><td> 27   </td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Font height in units</td></tr>
-  <tr><td>      </td><td>6  </td><td>    </td><td> *  </td><td> *   </td><td>Font width in units (defined as width of a '0')</td></tr>
-  <tr><td> 28   </td><td>6  </td><td>    </td><td>    </td><td>     </td><td>Routines offset (divided by 8)</td></tr>
-  <tr><td> 2A   </td><td>6  </td><td>    </td><td>    </td><td>     </td><td>Static strings offset (divided by 8)</td></tr>
-  <tr><td> 2C   </td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Default background colour</td></tr>
-  <tr><td> 2D   </td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Default foreground colour</td></tr>
-  <tr><td> 2E   </td><td>5  </td><td>    </td><td>    </td><td>     </td><td>Address of terminating characters table (bytes)</td></tr>
-  <tr><td> 30   </td><td>6  </td><td>    </td><td> *  </td><td>     </td><td>Total width in pixels of text sent to output stream 3</td></tr>
-  <tr><td> 32   </td><td>1  </td><td>    </td><td> *  </td><td> *   </td><td>Standard revision number</td></tr>
-  <tr><td> 34   </td><td>5  </td><td>    </td><td>    </td><td>     </td><td>Alphabet table address (bytes), or 0 for default</td></tr>
-  <tr><td> 36   </td><td>5  </td><td>    </td><td>    </td><td>     </td><td>Header extension table address (bytes)</td></tr>
+  <tr><td> 20   </td><td>1</td><td>4  </td><td>    </td><td> *  </td><td> *   </td><td>Screen height (lines)</td></tr>
+  <tr><td> 21   </td><td>1</td><td>4  </td><td>    </td><td> *  </td><td> *   </td><td>Screen width (characters)</td></tr>
+  <tr><td> 22   </td><td>2</td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Screen width in units</td></tr>
+  <tr><td> 24   </td><td>2</td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Screen height in units</td></tr>
+  <tr><td> 26   </td><td>1</td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Font width in units (defined as width of a '0')</td></tr>
+  <tr><td>      </td><td> </td><td>6  </td><td>    </td><td> *  </td><td> *   </td><td>Font height in units</td></tr>
+  <tr><td> 27   </td><td>1</td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Font height in units</td></tr>
+  <tr><td>      </td><td> </td><td>6  </td><td>    </td><td> *  </td><td> *   </td><td>Font width in units (defined as width of a '0')</td></tr>
+  <tr><td> 28   </td><td>2</td><td>6  </td><td>    </td><td>    </td><td>     </td><td>Routines offset (divided by 8)</td></tr>
+  <tr><td> 2A   </td><td>2</td><td>6  </td><td>    </td><td>    </td><td>     </td><td>Static strings offset (divided by 8)</td></tr>
+  <tr><td> 2C   </td><td>2</td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Default background colour</td></tr>
+  <tr><td> 2D   </td><td>2</td><td>5  </td><td>    </td><td> *  </td><td> *   </td><td>Default foreground colour</td></tr>
+  <tr><td> 2E   </td><td>2</td><td>5  </td><td>    </td><td>    </td><td>     </td><td>Address of terminating characters table (bytes)</td></tr>
+  <tr><td> 30   </td><td>2</td><td>6  </td><td>    </td><td> *  </td><td>     </td><td>Total width in pixels of text sent to output stream 3</td></tr>
+  <tr><td> 32   </td><td>2</td><td>1  </td><td>    </td><td> *  </td><td> *   </td><td>Standard revision number</td></tr>
+  <tr><td> 34   </td><td>2</td><td>5  </td><td>    </td><td>    </td><td>     </td><td>Alphabet table address (bytes), or 0 for default</td></tr>
+  <tr><td> 36   </td><td>2</td><td>5  </td><td>    </td><td>    </td><td>     </td><td>Header extension table address (bytes)</td></tr>
 </table>
 
 <p>Some early Version 3 files do not contain length and checksum

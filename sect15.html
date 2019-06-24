@@ -224,7 +224,7 @@
 <hr>
 
 <h2 id="check_arg_count">check_arg_count</h2>
-<p><strong><a href="sect14.html#VAR">VAR</a>:255 1F  5  check_arg_count argument-number</strong></p>
+<p><strong><a href="sect14.html#VAR">VAR</a>:255 1F  5  check_arg_count argument-number ?(label)</strong></p>
 <p>Branches if the given argument-number (counting
     from 1) has been provided by the routine call to the current routine.
     (This allows routines in Versions 5 and later to distinguish between
@@ -262,13 +262,16 @@
    being the absolute value of <strong>size</strong> (i.e., <strong>size</strong> if <strong>size</strong> is positive,
    <strong>-size</strong> if <strong>size</strong> is negative).
 </p>   
-<p>The tables are allowed to overlap.  If <strong>size</strong> is positive, the
-   interpreter must copy either forwards or backwards so as
-   to avoid corrupting <strong>first</strong> in the copying process.
-   If <strong>size</strong> is negative, the interpreter must copy forwards
-   even if this corrupts <strong>first</strong>.  ('Beyond Zork' uses this to fill an
-   array with spaces.)
+
+<p>The tables are allowed to overlap. If <strong>size</strong> is positive, the 
+   interpreter must copy either forwards or backwards so as 
+   to make sure all the original contents of <strong>first</strong> are copied to <strong>second</strong>, 
+   and avoid corrupting data in <strong>first</strong> that has not yet been copied. 
+   If <strong>size</strong> is negative, the interpreter must copy forwards 
+   even if this corrupts <strong>first</strong>. ('Beyond Zork' uses this to fill an 
+   array with spaces.)"
 </p>
+
 <p>(Version 0.2 of this document wrongly specified that if <strong>size</strong> is
    positive then copying should always run backward.  This results in
    the player being unable to cross the river near the start of
@@ -372,9 +375,13 @@
 
 <h2 id="get_cursor">get_cursor</h2>
 <p><strong><a href="sect14.html#VAR">VAR</a>:240 10 4/6 get_cursor      array</strong></p>
-<p>Puts the current cursor row into the word 0 of the
-   given array, and the current cursor column into word 1.
+<p>Puts the current cursor position (in units) into the given array, such that the y position 
+   is put into word 0 of the array, and the x position into word 1.
    (The array is not a table and has no size information in its initial entry.)
+</p>
+
+<p>In Version 6, returns the position of the cursor in the current window. In other Versions, returns
+   the position of the cursor in the upper window, even if the lower window is currently selected.
 </p>
 
 <hr>
@@ -496,8 +503,8 @@
 
 <h2 id="jin">jin</h2>
 <p><strong><a href="sect14.html#2OP">2OP</a>:6    6     jin             obj1 obj2 ?(label)</strong></p>
-<p>Jump if object <strong>a</strong> is a direct child of <strong>b</strong>, i.e., if
-   <strong>parent</strong> of <strong>a</strong> is <strong>b</strong>.
+<p>Jump if object <strong>obj1</strong> is a direct child of <strong>obj2</strong>, i.e., if
+   <strong>parent</strong> of <strong>ob1</strong> is <strong>obj2</strong>.
 </p>
 
 <hr>
@@ -994,6 +1001,9 @@
    overrun, causing bugs which are very difficult to find.)
 </p>
 
+<p>Interpreters should display a cursor when waiting for input. See <strong>read_char</strong>.
+</p>
+   
 <hr>
 
 <h2 id="read_char">read_char</h2>
@@ -1003,6 +1013,13 @@
    to support multiple input devices, but only the keyboard was ever
    used).  <strong>time</strong> and <strong>routine</strong> are optional (in Versions 4 and
    later only) and dealt with as in <strong>read</strong> above.
+</p>
+
+<p>If at all possible, interpreters should display a cursor at the current cursor 
+   position in the current window when <strong>read_char</strong> or <strong>read</strong>
+   are waiting for input. While some interpreters may not be able to ensure a cursor is 
+   displayed, the lack of a cursor can be frustrating for the player in some games, 
+   e.g. Bureaucracy.
 </p>
 
 <hr>
@@ -1061,7 +1078,7 @@
 <p><strong><a href="sect14.html#0OP">0OP</a>:182  6  1  restore         ?(label)</strong></p>
 <p><strong><a href="sect14.html#0OP">0OP</a>:182  5  4  restore         -> (result)</strong></p>
 <p><strong><a href="sect14.html#EXT">EXT</a>:1    1  5  restore         table bytes name prompt-> (result)</strong></p>
-<p>See <strong>save</strong>.  In Version 3, the branch is never actually made,
+<p>See <strong>save</strong>.  In Versions 1 to 3, the branch is never actually made,
    since either the game has successfully picked up again from where it
    was saved, or it failed to load the save game file.
 </p>
@@ -1125,9 +1142,9 @@
 <p><strong><a href="sect14.html#0OP">0OP</a>:181  5  1  save            ?(label)</strong></p>
 <p><strong><a href="sect14.html#0OP">0OP</a>:181  5  4  save            -> (result)</strong></p>
 <p><strong><a href="sect14.html#EXT">EXT</a>:0    0  5  save            table bytes name prompt -> (result)</strong></p>
-<p>On Versions 3 and 4, attempts to save the game (all questions
+<p>On Versions 1 to 3, attempts to save the game (all questions
    about filenames are asked by interpreters) and branches if successful.
-   From Version 5 it is a store rather than a branch instruction;
+   From Version 4 it is a store rather than a branch instruction;
    the store value is 0 for failure, 1 for "save succeeded" and 2 for
    "the game is being restored and is resuming execution again from here,
    the point where it was saved".
@@ -1222,12 +1239,16 @@
 
 <h2 id="set_cursor">set_cursor</h2>
 <p><strong><a href="sect14.html#VAR">VAR</a>:239  F  4  set_cursor      line column</strong></p>
-<p><strong>            6  set_cursor      line column window</strong></p>
-<p>Move cursor in the current window to the position (x,y) (in units)
-   relative to (1,1) in the top left.  (In Version 6 the
-   window is supplied and need not be the current one. Also, if
-   the cursor would lie outside the current margin settings, it is
-   moved to the left margin of the current line.)
+<p><strong>            6  set_cursor      y x window</strong></p>
+<p>Move cursor in the current window to the position (y,x) (in units)
+   relative to (1,1) in the top left.
+</p>
+<p>In Version 6 the window is optionally supplied, otherwise it is the current one. Also, if
+   the cursor would lie outside the current margin settings, it is moved to the left margin 
+   of the current line.
+</p>
+<p>In Versions other than 6, <strong>set_cursor</strong> can only set the position of the cursor
+   in the upper window, and has no effect when the lower window is selected.
 </p>
 <p>In Version 6, <strong>set_cursor -1</strong> turns the cursor off, and either
    <strong>set_cursor -2</strong> or <strong>set_cursor -2 0</strong> turn it back on.  It is not known
@@ -1333,7 +1354,9 @@
 <hr>
 
 <h2 id="sound_effect">sound_effect</h2>
-<p><strong><a href="sect14.html#VAR">VAR</a>:245 15 5/3 sound_effect    number effect volume routine</strong></p>
+<p><strong><a href="sect14.html#VAR">VAR</a>:245 15 5/3 sound_effect    number effect volume</strong></p>
+<p><strong>                                          5 sound_effect    number effect volume routine</strong></p>
+
 <p>The given effect happens to the given sound number.  The low byte of
    <strong>volume</strong> holds the volume level, the high byte the number of repeats.
    (The value 255 means "loudest possible" and "forever" respectively.)
