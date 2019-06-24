@@ -44,6 +44,9 @@
    The width of a font is defined as the width of its
    '0' character.
 </p>
+<p>This must be updated whenever the size of the current font changes, for instance if a new 
+   window is selected, the current font is changed, or a different style is chosen.
+</p>
 
 <h2>8.1.2</h2>
 <p>An interpreter should ideally provide 4 fonts, with ID numbers
@@ -645,6 +648,9 @@
 <h2>8.8.3.2.5</h2>
 <p>The font height (in pixels) is stored in the upper byte of the
    font size property, the font width (in pixels) in the lower byte.
+</p>
+<p>This must be updated whenever the font size changes, for instance
+   because of <strong>set_font</strong> or <strong>set_text_style<strong>.
 </p>
 
 <h2>8.8.3.2.6</h2>
