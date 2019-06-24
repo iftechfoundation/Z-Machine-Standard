@@ -372,8 +372,8 @@
 <h2>8.7.2</h2>
 <p>There are two "windows", called "upper" and "lower": at
    any given time one of these two is selected.  (Initially it is the lower
-   window.)  The game uses the <strong>set_window</strong> opcode to select one of the
-   two.  Each window has its own cursor position at which text is
+   window.)  The game uses the <strong>set_window</strong> opcode to select 
+   one of the two.  Each window has its own cursor position at which text is
    printed.  Operations in the upper window do not move the cursor of the
    lower.  Whenever the upper window is selected, its cursor position is
    reset to the top left.
@@ -413,15 +413,15 @@
 
 <h2>8.7.2.3.1</h2>
 <p>When the upper window is selected, its cursor position can be moved with 
-   <strong>set_cursor</strong>. This position is given in characters in the 
+   <strong>set_cursor</strong>. This position is given in units in the 
    form (row, column), with (1,1) at the top left. The opcode has no effect 
    when the lower window is selected. It is illegal to move the cursor outside 
    the current size of the upper window.
 </p>
 
 <h2>8.7.2.3.2</h2>
-<p>When either the upper or lower windows are selected, get_cursor returns the 
-   position of the cursor in the upper window.
+<p>When either the upper or lower windows are selected, <strong>get_cursor</strong>
+   returns the position of the cursor (in units) in the upper window.
 </p>
 
 <h2>8.7.2.4</h2>
