@@ -360,9 +360,13 @@
 
 <h2 id="get_cursor">get_cursor</h2>
 <p><strong><a href="sect14.html#VAR">VAR</a>:240 10 4/6 get_cursor      array</strong></p>
-<p>Puts the current cursor row into the word 0 of the
-   given array, and the current cursor column into word 1.
+<p>Puts the current cursor position (in units) into the given array, such that the y position 
+   is put into word 0 of the array, and the x position into word 1.
    (The array is not a table and has no size information in its initial entry.)
+</p>
+
+<p>In Version 6, returns the position of the cursor in the current window. In other Versions, returns
+   the position of the cursor in the upper window, even if the lower window is currently selected.
 </p>
 
 <hr>
@@ -1210,12 +1214,16 @@
 
 <h2 id="set_cursor">set_cursor</h2>
 <p><strong><a href="sect14.html#VAR">VAR</a>:239  F  4  set_cursor      line column</strong></p>
-<p><strong>            6  set_cursor      line column window</strong></p>
-<p>Move cursor in the current window to the position (x,y) (in units)
-   relative to (1,1) in the top left.  (In Version 6 the
-   window is supplied and need not be the current one. Also, if
-   the cursor would lie outside the current margin settings, it is
-   moved to the left margin of the current line.)
+<p><strong>            6  set_cursor      y x window</strong></p>
+<p>Move cursor in the current window to the position (y,x) (in units)
+   relative to (1,1) in the top left.
+</p>
+<p>In Version 6 the window is optionally supplied, otherwise it is the current one. Also, if
+   the cursor would lie outside the current margin settings, it is moved to the left margin 
+   of the current line.
+</p>
+<p>In Versions other than 6, <strong>set_cursor</strong> can only set the position of the cursor
+   in the upper window, and has no effect when the lower window is selected.
 </p>
 <p>In Version 6, <strong>set_cursor -1</strong> turns the cursor off, and either
    <strong>set_cursor -2</strong> or <strong>set_cursor -2 0</strong> turn it back on.  It is not known
