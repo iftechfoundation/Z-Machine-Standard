@@ -113,9 +113,9 @@
    below).
 </p>
 <h2 id="four">3.4</h2>
-<p>Z-character 6 from A2 means that the two subsequent Z-characters
-   specify a ten-bit ZSCII character code: the next Z-character gives the
-   top 5 bits and the one after the bottom 5.
+<p>Z-character 6 from A2 is a 'ZSCII escape' character. It means that the two subsequent 
+   Z-characters specify a ten-bit ZSCII character code: the next Z-character gives the top 
+   5 bits and the one after the bottom 5.
 </p>
 
 <h2 id="five">3.5</h2>
@@ -144,12 +144,13 @@ current   --------------------------
   A2       ^0123456789.,!?_#'"/\-:()
           --------------------------
 </pre>
-
-<p>(Character 6 in A2 is printed as a space here, but is not translated
-   using the alphabet table: see <strong>S</strong> 3.4 above.  Character 7 in A2,
-   written here as a circumflex <strong>^</strong>, is a new-line.)  For example,
-   in alphabet A1 the Z-character 12 is translated as a capital G
+<p>For example, in alphabet A1 the Z-character 12 is translated as a capital G
    (ZSCII character code 71).
+</p>
+
+<p>Character 6 in A2 is printed as a space here, but it is a 'ZSCII escape' character, and not 
+   translated using the alphabet table: see S 3.4 above. Character 7 in A2, written here as a 
+   circumflex ^, is a new-line (ZSCII 13).
 </p>
 
 <h2>3.5.4</h2>
@@ -173,10 +174,9 @@ current   --------------------------
 </p>
 
 <h2>3.5.5.1</h2>
-<p>Such an alphabet table consists of 78 bytes arranged
-   as 3 blocks of 26 ZSCII values, translating Z-characters 6 to 31
-   for alphabets A0, A1 and A2.  Z-characters 6 and 7 of A2, however,
-   are still translated as escape and newline codes (as above).
+<p>Such an alphabet table consists of 78 bytes arranged as 3 blocks of 26 ZSCII values, 
+   translating Z-characters 6 to 31 for alphabets A0, A1 and A2. Z-characters 6 and 7 of 
+   A2, however, are still translated as ZSCII escape and new-line (ZSCII 13) codes (as above).
 </p>
 
 <h2 id="six">3.6</h2>
