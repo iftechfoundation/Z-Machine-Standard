@@ -706,7 +706,7 @@
 </p>
 
 <h2>8.8.4.1</h2>
-<p>The <strong>split_screen</strong> opcode tiles windows 0 and 1 together
+<p>The <strong>split_window</strong> opcode tiles windows 0 and 1 together
    to fill the screen vertically, so that window 1 has the given height and 
    has its y coordinate set to 1, while window 0 is placed just below it
    (with its height suitably shortened, possibly making it disappear
@@ -715,7 +715,7 @@
 <p>The x coordinate and width of the windows are not changed.</p>
 
 <h2>8.8.4.2</h2>
-<p>An "unsplit" (that is, a <strong>split_screen 0</strong>) takes place
+<p>An "unsplit" (that is, a <strong>split_window 0</strong>) takes place
    when the entire screen is cleared with <strong>erase_window -1</strong>, if a
    "split" has previously occurred (meaning that windows 0 and 1
    have been set up as above).
