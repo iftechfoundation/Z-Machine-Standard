@@ -248,83 +248,83 @@
 <tr><td>   St</td><td>  Br</td><td>  Opcode</td><td> Hex </td><td> V  </td><td>Inform name and syntax  </td><td>ZIL name</td><td>Link</td></tr>
 
 <tr><td>     </td><td>    </td><td>  0OP:176</td><td>  0 </td><td>    </td><td>rtrue</td>
-    <td>XXX</td><td><a href="sect15.html#rtrue"><strong>rtrue</strong></a></td>
+    <td>RTRUE</td><td><a href="sect15.html#rtrue"><strong>rtrue</strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  0OP:177</td><td>  1 </td><td>    </td><td>rfalse</td>
-    <td>XXX</td><td><a href="sect15.html#rfalse"><strong>rfalse</strong></a></td>
+    <td>RFALSE</td><td><a href="sect15.html#rfalse"><strong>rfalse</strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  0OP:178</td><td>  2 </td><td>    </td>
-    <td>print           (literal-string)</td><td>XXX</td><td><a href="sect15.html#print"><strong>print           </strong></a></td>
+    <td>print           (literal-string)</td><td>PRINTI</td><td><a href="sect15.html#print"><strong>print           </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  0OP:179</td><td>  3 </td><td>    </td>
-    <td>print_ret       (literal-string)</td><td>XXX</td><td><a href="sect15.html#print_ret"><strong>print_ret       </strong></a></td>
+    <td>print_ret       (literal-string)</td><td>PRINTR</td><td><a href="sect15.html#print_ret"><strong>print_ret       </strong></a></td>
 </tr>
 
-<tr><td>     </td><td>    </td><td>  0OP:180</td><td>  4 </td><td>1/- </td><td>nop</td><td>XXX</td><td><a href="sect15.html#nop"><strong>nop</strong></a></td></tr>
+<tr><td>     </td><td>    </td><td>  0OP:180</td><td>  4 </td><td>1/- </td><td>nop</td><td>NOOP</td><td><a href="sect15.html#nop"><strong>nop</strong></a></td></tr>
 
 <tr><td>     </td><td>  * </td><td>  0OP:181</td><td>  5 </td><td> 1  </td>
-    <td>save            ?(label)</td><td>XXX</td><td><a href="sect15.html#save"><strong>save            </strong></a></td>
+    <td>save            ?(label)</td><td></td><td><a href="sect15.html#save"><strong>save            </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>        </td><td>     </td><td> 4  </td><td>save            -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#save"><strong>save            </strong></a></td>
+    <td></td><td><a href="sect15.html#save"><strong>save            </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>        </td><td>     </td><td> 5  </td><td>[illegal]</td><td></td><td></td></tr>
 
 <tr><td>     </td><td>  * </td><td>  0OP:182</td><td>  6 </td><td> 1  </td><td>restore         ?(label)</td>
-    <td>XXX</td><td><a href="sect15.html#restore"><strong>restore         </strong></a></td>
+    <td></td><td><a href="sect15.html#restore"><strong>restore         </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>        </td><td>     </td><td> 4  </td><td>restore         -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#restore"><strong>restore         </strong></a></td>
+    <td></td><td><a href="sect15.html#restore"><strong>restore         </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>        </td><td>     </td><td> 5  </td><td>[illegal]</td><td></td><td></td></tr>
 
 <tr><td>     </td><td>    </td><td>  0OP:183</td><td>  7 </td><td>    </td><td>restart</td>
-    <td>XXX</td><td><a href="sect15.html#restart"><strong>restart</strong></a></td>
+    <td>RESTART</td><td><a href="sect15.html#restart"><strong>restart</strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  0OP:184</td><td>  8 </td><td>    </td><td>ret_popped</td>
-    <td>XXX</td><td><a href="sect15.html#ret_popped"><strong>ret_popped</strong></a></td>
+    <td>RSTACK</td><td><a href="sect15.html#ret_popped"><strong>ret_popped</strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  0OP:185</td><td>  9 </td><td> 1  </td><td>pop</td>
-    <td>XXX</td><td><a href="sect15.html#pop"><strong>pop</strong></a></td>
+    <td></td><td><a href="sect15.html#pop"><strong>pop</strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>        </td><td>     </td><td>5/6 </td><td>catch           -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#catch"><strong>catch           </strong></a></td>
+    <td>CATCH</td><td><a href="sect15.html#catch"><strong>catch           </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  0OP:186</td><td>  A </td><td>    </td><td>quit</td>
-    <td>XXX</td><td><a href="sect15.html#quit"><strong>quit</strong></a></td>
+    <td>QUIT</td><td><a href="sect15.html#quit"><strong>quit</strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  0OP:187</td><td>  B </td><td>    </td><td>new_line</td>
-    <td>XXX</td><td><a href="sect15.html#new_line"><strong>new_line</strong></a></td>
+    <td>CRLF</td><td><a href="sect15.html#new_line"><strong>new_line</strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  0OP:188</td><td>  C </td><td> 3  </td><td>show_status</td>
-    <td>XXX</td><td><a href="sect15.html#show_status"><strong>show_status</strong></a></td>
+    <td>USL</td><td><a href="sect15.html#show_status"><strong>show_status</strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>        </td><td>     </td><td> 4  </td><td>[illegal]</td><td></td><td></td></tr>
 
 <tr><td>     </td><td>  * </td><td>  0OP:189</td><td>  D </td><td> 3  </td><td>verify          ?(label)</td>
-    <td>XXX</td><td><a href="sect15.html#verify"><strong>verify          </strong></a></td>
+    <td>VERIFY</td><td><a href="sect15.html#verify"><strong>verify          </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  0OP:190</td><td>  E </td><td> 5  </td><td>[first byte of extended opcode]</td>
-    <td>XXX</td><td><a href="sect15.html#extended"><strong>extended</strong></a></td>
+    <td></td><td><a href="sect15.html#extended"><strong>extended</strong></a></td>
 </tr>
 
 <tr><td>     </td><td>  * </td><td>  0OP:191</td><td>  F </td><td>5/- </td><td>piracy          ?(label)</td>
-    <td>XXX</td><td><a href="sect15.html#piracy"><strong>piracy          </strong></a></td>
+    <td>ORIGINAL?</td><td><a href="sect15.html#piracy"><strong>piracy          </strong></a></td>
 </tr>
 
 <tr><td colspan="8" class="note">Opcode numbers 192 to 223: VAR forms of 2OP:0 to 2OP:31.</td></tr>
