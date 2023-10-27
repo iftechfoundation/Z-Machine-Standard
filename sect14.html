@@ -168,71 +168,71 @@
 <tr><td>   St</td><td>  Br</td><td>  Opcode</td><td> Hex </td><td> V  </td><td>Inform name and syntax  </td><td>ZIL name</td><td>Link</td></tr>
 
 <tr><td>     </td><td>  * </td><td>  1OP:128</td><td>  0 </td><td>    </td><td>jz              a ?(label)</td>
-    <td>XXX</td><td><a href="sect15.html#jz"><strong>jz              </strong></a></td>
+    <td>ZERO?</td><td><a href="sect15.html#jz"><strong>jz              </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>  * </td><td>  1OP:129</td><td>  1 </td><td>    </td><td>get_sibling     object -> (result) ?(label)</td>
-    <td>XXX</td><td><a href="sect15.html#get_sibling"><strong>get_sibling     </strong></a></td>
+    <td>NEXT?</td><td><a href="sect15.html#get_sibling"><strong>get_sibling     </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>  * </td><td>  1OP:130</td><td>  2 </td><td>    </td><td>get_child       object -> (result) ?(label)</td>
-    <td>XXX</td><td><a href="sect15.html#get_child"><strong>get_child       </strong></a></td>
+    <td>FIRST?</td><td><a href="sect15.html#get_child"><strong>get_child       </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>  1OP:131</td><td>  3 </td><td>    </td><td>get_parent      object -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#get_parent"><strong>get_parent      </strong></a></td>
+    <td>LOC</td><td><a href="sect15.html#get_parent"><strong>get_parent      </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>  1OP:132</td><td>  4 </td><td>    </td><td>get_prop_len    property-address -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#get_prop_len"><strong>get_prop_len    </strong></a></td>
+    <td>PTSIZE</td><td><a href="sect15.html#get_prop_len"><strong>get_prop_len    </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  1OP:133</td><td>  5 </td><td>    </td><td>inc             (variable)</td>
-    <td>XXX</td><td><a href="sect15.html#inc"><strong>inc             </strong></a></td>
+    <td>INC</td><td><a href="sect15.html#inc"><strong>inc             </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  1OP:134</td><td>  6 </td><td>    </td><td>dec             (variable)</td>
-    <td>XXX</td><td><a href="sect15.html#dec"><strong>dec             </strong></a></td>
+    <td>DEC</td><td><a href="sect15.html#dec"><strong>dec             </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  1OP:135</td><td>  7 </td><td>    </td><td>print_addr      byte-address-of-string</td>
-    <td>XXX</td><td><a href="sect15.html#print_addr"><strong>print_addr      </strong></a></td>
+    <td>PRINTB</td><td><a href="sect15.html#print_addr"><strong>print_addr      </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>  1OP:136</td><td>  8 </td><td> 4  </td><td>call_1s         routine -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#call_1s"><strong>call_1s         </strong></a></td>
+    <td>CALL1</td><td><a href="sect15.html#call_1s"><strong>call_1s         </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  1OP:137</td><td>  9 </td><td>    </td><td>remove_obj      object</td>
-    <td>XXX</td><td><a href="sect15.html#remove_obj"><strong>remove_obj      </strong></a></td>
+    <td>REMOVE</td><td><a href="sect15.html#remove_obj"><strong>remove_obj      </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  1OP:138</td><td>  A </td><td>    </td><td>print_obj       object</td>
-    <td>XXX</td><td><a href="sect15.html#print_obj"><strong>print_obj       </strong></a></td>
+    <td>PRINTD</td><td><a href="sect15.html#print_obj"><strong>print_obj       </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  1OP:139</td><td>  B </td><td>    </td><td>ret             value</td>
-    <td>XXX</td><td><a href="sect15.html#ret"><strong>ret             </strong></a></td>
+    <td>RETURN</td><td><a href="sect15.html#ret"><strong>ret             </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  1OP:140</td><td>  C </td><td>    </td><td>jump            ?(label)</td>
-    <td>XXX</td><td><a href="sect15.html#jump"><strong>jump            </strong></a></td>
+    <td>JUMP</td><td><a href="sect15.html#jump"><strong>jump            </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  1OP:141</td><td>  D </td><td>    </td><td>print_paddr     packed-address-of-string</td>
-    <td>XXX</td><td><a href="sect15.html#print_paddr"><strong>print_paddr     </strong></a></td>
+    <td>PRINT</td><td><a href="sect15.html#print_paddr"><strong>print_paddr     </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>  1OP:142</td><td>  E </td><td>    </td><td>load            (variable) -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#load"><strong>load            </strong></a></td>
+    <td>VALUE</td><td><a href="sect15.html#load"><strong>load            </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>  1OP:143</td><td>  F </td><td>1/4 </td><td>not             value -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#not"><strong>not             </strong></a></td>
+    <td></td><td><a href="sect15.html#not"><strong>not             </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>        </td><td>     </td><td> 5  </td><td>call_1n         routine</td>
-    <td>XXX</td><td><a href="sect15.html#call_1n"><strong>call_1n         </strong></a></td>
+    <td>ICALL1</td><td><a href="sect15.html#call_1n"><strong>call_1n         </strong></a></td>
 </tr>
 
 <tr><td colspan="8" class="note">Opcode numbers 144 to 175: other forms of 1OP with different types.</td></tr>
