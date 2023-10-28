@@ -511,55 +511,55 @@
 <tr><td>   St</td><td>  Br</td><td>  Opcode</td><td> Hex </td><td> V  </td><td>Inform name and syntax  </td><td>ZIL name</td><td>Link</td></tr>
 
 <tr><td>   * </td><td>    </td><td>  EXT:0 </td><td>   0 </td><td> 5  </td><td>save            table bytes name prompt -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#save"><strong>save            </strong></a></td>
+    <td>SAVE</td><td><a href="sect15.html#save"><strong>save            </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>  EXT:1 </td><td>   1 </td><td> 5  </td><td>restore         table bytes name prompt -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#restore"><strong>restore         </strong></a></td>
+    <td>RESTORE</td><td><a href="sect15.html#restore"><strong>restore         </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>  EXT:2 </td><td>   2 </td><td> 5  </td><td>log_shift       number places -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#log_shift"><strong>log_shift       </strong></a></td>
+    <td>SHIFT</td><td><a href="sect15.html#log_shift"><strong>log_shift       </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>  EXT:3 </td><td>   3 </td><td>5/- </td><td>art_shift       number places -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#art_shift"><strong>art_shift       </strong></a></td>
+    <td>ASHIFT</td><td><a href="sect15.html#art_shift"><strong>art_shift       </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>  EXT:4 </td><td>   4 </td><td> 5  </td><td>set_font        font -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#set_font"><strong>set_font        </strong></a></td>
+    <td>FONT</td><td><a href="sect15.html#set_font"><strong>set_font        </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  EXT:5 </td><td>   5 </td><td> 6  </td><td>draw_picture    picture-number y x</td>
-    <td>XXX</td><td><a href="sect15.html#draw_picture"><strong>draw_picture    </strong></a></td>
+    <td>DISPLAY</td><td><a href="sect15.html#draw_picture"><strong>draw_picture    </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>   *</td><td>  EXT:6 </td><td>   6 </td><td> 6  </td><td>picture_data    picture-number array ?(label)</td>
-    <td>XXX</td><td><a href="sect15.html#picture_data"><strong>picture_data    </strong></a></td>
+    <td>PICINF</td><td><a href="sect15.html#picture_data"><strong>picture_data    </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  EXT:7 </td><td>   7 </td><td> 6  </td><td>erase_picture   picture-number y x</td>
-    <td>XXX</td><td><a href="sect15.html#erase_picture"><strong>erase_picture   </strong></a></td>
+    <td>DCLEAR</td><td><a href="sect15.html#erase_picture"><strong>erase_picture   </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  EXT:8 </td><td>   8 </td><td> 6  </td><td>set_margins     left right window</td>
-    <td>XXX</td><td><a href="sect15.html#set_margins"><strong>set_margins     </strong></a></td>
+    <td>MARGIN</td><td><a href="sect15.html#set_margins"><strong>set_margins     </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>  EXT:9 </td><td>   9 </td><td> 5  </td><td>save_undo       -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#save_undo"><strong>save_undo       </strong></a></td>
+    <td>ISAVE</td><td><a href="sect15.html#save_undo"><strong>save_undo       </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>  EXT:10</td><td>   A </td><td> 5  </td><td>restore_undo    -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#restore_undo"><strong>restore_undo    </strong></a></td>
+    <td>IRESTORE</td><td><a href="sect15.html#restore_undo"><strong>restore_undo    </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  EXT:11</td><td>   B </td><td>5/* </td><td>print_unicode   char-number</td>
-    <td>XXX</td><td><a href="sect15.html#print_unicode"><strong>print_unicode   </strong></a></td>
+    <td>PRINTU</td><td><a href="sect15.html#print_unicode"><strong>print_unicode   </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>  EXT:12</td><td>   C </td><td>5/* </td><td>check_unicode   char-number -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#check_unicode"><strong>check_unicode   </strong></a></td>
+    <td>CHECKU</td><td><a href="sect15.html#check_unicode"><strong>check_unicode   </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  -------</td><td>  D </td><td> ---</td><td>---</td><td></td></tr>
@@ -567,55 +567,55 @@
 <tr><td>     </td><td>    </td><td>  -------</td><td>  F </td><td> ---</td><td>---</td><td></td></tr>
 
 <tr><td>     </td><td>    </td><td>  EXT:16</td><td>  10 </td><td> 6  </td><td>move_window     window y x</td>
-    <td>XXX</td><td><a href="sect15.html#move_window"><strong>move_window     </strong></a></td>
+    <td>WINPOS</td><td><a href="sect15.html#move_window"><strong>move_window     </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  EXT:17</td><td>  11 </td><td> 6  </td><td>window_size     window y x</td>
-    <td>XXX</td><td><a href="sect15.html#window_size"><strong>window_size     </strong></a></td>
+    <td>WINSIZE</td><td><a href="sect15.html#window_size"><strong>window_size     </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  EXT:18</td><td>  12 </td><td> 6  </td><td>window_style    window flags operation</td>
-    <td>XXX</td><td><a href="sect15.html#window_style"><strong>window_style    </strong></a></td>
+    <td>WINATTR</td><td><a href="sect15.html#window_style"><strong>window_style    </strong></a></td>
 </tr>
 
 <tr><td>   * </td><td>    </td><td>  EXT:19</td><td>  13 </td><td> 6  </td><td>get_wind_prop   window property-number -> (result)</td>
-    <td>XXX</td><td><a href="sect15.html#get_wind_prop"><strong>get_wind_prop   </strong></a></td>
+    <td>WINGET</td><td><a href="sect15.html#get_wind_prop"><strong>get_wind_prop   </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  EXT:20</td><td>  14 </td><td> 6  </td><td>scroll_window   window pixels</td>
-    <td>XXX</td><td><a href="sect15.html#scroll_window"><strong>scroll_window   </strong></a></td>
+    <td>SCROLL</td><td><a href="sect15.html#scroll_window"><strong>scroll_window   </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  EXT:21</td><td>  15 </td><td> 6  </td><td>pop_stack       items stack</td>
-    <td>XXX</td><td><a href="sect15.html#pop_stack"><strong>pop_stack       </strong></a></td>
+    <td>FSTACK</td><td><a href="sect15.html#pop_stack"><strong>pop_stack       </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  EXT:22</td><td>  16 </td><td> 6  </td><td>read_mouse      array</td>
-    <td>XXX</td><td><a href="sect15.html#read_mouse"><strong>read_mouse      </strong></a></td>
+    <td>MOUSE-INFO</td><td><a href="sect15.html#read_mouse"><strong>read_mouse      </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  EXT:23</td><td>  17 </td><td> 6  </td><td>mouse_window    window</td>
-    <td>XXX</td><td><a href="sect15.html#mouse_window"><strong>mouse_window    </strong></a></td>
+    <td>MOUSE-LIMIT</td><td><a href="sect15.html#mouse_window"><strong>mouse_window    </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>   *</td><td>  EXT:24</td><td>  18 </td><td> 6  </td><td>push_stack      value stack ?(label)</td>
-    <td>XXX</td><td><a href="sect15.html#push_stack"><strong>push_stack      </strong></a></td>
+    <td>XPUSH</td><td><a href="sect15.html#push_stack"><strong>push_stack      </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  EXT:25</td><td>  19 </td><td> 6  </td><td>put_wind_prop   window property-number value</td>
-    <td>XXX</td><td><a href="sect15.html#put_wind_prop"><strong>put_wind_prop   </strong></a></td>
+    <td>WINPUT</td><td><a href="sect15.html#put_wind_prop"><strong>put_wind_prop   </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  EXT:26</td><td>  1A </td><td> 6  </td><td>print_form      formatted-table</td>
-    <td>XXX</td><td><a href="sect15.html#print_form"><strong>print_form      </strong></a></td>
+    <td>PRINTF</td><td><a href="sect15.html#print_form"><strong>print_form      </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>   *</td><td>  EXT:27</td><td>  1B </td><td> 6  </td><td>make_menu       number table ?(label)</td>
-    <td>XXX</td><td><a href="sect15.html#make_menu"><strong>make_menu       </strong></a></td>
+    <td>MENU</td><td><a href="sect15.html#make_menu"><strong>make_menu       </strong></a></td>
 </tr>
 
 <tr><td>     </td><td>    </td><td>  EXT:28</td><td>  1C </td><td> 6  </td><td>picture_table   table</td>
-    <td>XXX</td><td><a href="sect15.html#picture_table"><strong>picture_table   </strong></a></td>
+    <td>PICSET</td><td><a href="sect15.html#picture_table"><strong>picture_table   </strong></a></td>
 </tr>
 
 </table>
