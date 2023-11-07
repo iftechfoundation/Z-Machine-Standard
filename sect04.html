@@ -21,19 +21,19 @@
 
 <hr>
 
-<p>4.1 <a href="#one">Instructions</a> / 
-   4.2 <a href="#two">Operand types</a> / 
-   4.3 <a href="#three">Form and operand count</a> /
-   4.4 <a href="#four">Specifying operand types</a> / 
-   4.5 <a href="#five">Operands</a> / 
-   4.6 <a href="#six">Stores</a> / 
-   4.7 <a href="#seven">Branches</a> / 
-   4.8 <a href="#eight">Text opcodes</a>
+<p>4.1 <a href="#4.1">Instructions</a> / 
+   4.2 <a href="#4.2">Operand types</a> / 
+   4.3 <a href="#4.3">Form and operand count</a> /
+   4.4 <a href="#4.4">Specifying operand types</a> / 
+   4.5 <a href="#4.5">Operands</a> / 
+   4.6 <a href="#4.6">Stores</a> / 
+   4.7 <a href="#4.7">Branches</a> / 
+   4.8 <a href="#4.8">Text opcodes</a>
 </p>
 
 <hr>
 
-<h2 id="one">4.1</h2>
+<h2 id="4.1">4.1</h2>
 <p>A single Z-machine instruction consists of the following
    sections (and in the order shown):
 </p>
@@ -50,7 +50,7 @@
 <p>Bracketed sections are not present in all opcodes.  (A few opcodes
    take both "store" and "branch".)
 </p>
-<h2 id="two">4.2</h2>
+<h2 id="4.2">4.2</h2>
 <p>There are four 'types' of operand.  These are often specified
    by a number stored in 2 binary digits:
 </p>
@@ -62,14 +62,14 @@
   $$11    Omitted altogether             0 bytes
 </pre>
 
-<h2>4.2.1</h2>
+<h2 id="4.2.1">4.2.1</h2>
 <p>Large constants, like all 2-byte words of data in the Z-machine,
    are stored with most significant byte first (e.g. <strong>$2478</strong> is stored as
    <strong>$24</strong> followed by <strong>$78</strong>).  A 'large constant' may in fact be a small
    number.
 </p>
 
-<h2>4.2.2</h2>
+<h2 id="4.2.2">4.2.2</h2>
 <p>Variable number <strong>$00</strong> refers to the top of the stack,
    <strong>$01</strong> to <strong>$0f</strong> mean the local variables of the current routine
    and <strong>$10</strong> to <strong>$ff</strong> mean the global variables.  It is illegal to
@@ -77,16 +77,18 @@
    (there may even be none).
 </p>
 
-<h2>4.2.3</h2>
+<h2 id="4.2.2">4.2.3</h2>
 <p>The type 'Variable' really means "variable by value".  Some
    instructions take as an operand a "variable by reference": for instance,
-   <strong>inc</strong> has one operand, the reference number of a variable to increment.
-   This operand usually has type 'Small constant' (and Inform automatically
-   assembles a line like <strong>@inc turns</strong> by writing the operand <strong>turns</strong> as
-   a small constant with value the reference number of the variable <strong>turns</strong>).
+   <a href="sect15.html#inc"><strong>inc</strong><a/> has one operand, the 
+   reference number of a variable to increment. This operand usually has type 
+   'Small constant' (and Inform automatically assembles a line like 
+   <strong>@inc turns</strong> by writing the operand <strong>turns</strong> as
+   a small constant with value the reference number of the variable 
+   <strong>turns</strong>).
 </p>
 
-<h2 id="three">4.3</h2>
+<h2 id="4.3.2">4.3</h2>
 <p>Each instruction has a form (long, short, extended or variable)
    and an operand count (0OP, 1OP, 2OP or VAR).
    If the top two bits of the opcode are <strong>$$11</strong> the form is variable;
@@ -95,36 +97,36 @@
    form is "long".
 </p>
 
-<h2>4.3.1</h2>
+<h2 id="4.3.1">4.3.1</h2>
 <p>In short form, bits 4 and 5 of the opcode byte give an operand
    type as above.  If this is <strong>$11</strong> then the operand count is
    0OP; otherwise, 1OP.  In either case the opcode number is
    given in the bottom 4 bits.
 </p>
 
-<h2>4.3.2</h2>
+<h2 id="4.3.2">4.3.2</h2>
 <p>In long form the operand count is always 2OP.  The opcode number
    is given in the bottom 5 bits.
 </p>
 
-<h2>4.3.3</h2>
+<h2 id="4.3.3">4.3.3</h2>
 <p>In variable form, if bit 5 is 0 then the count is 2OP;
    if it is 1, then the count is VAR.  The opcode number is given
    in the bottom 5 bits.
 </p>
 
-<h2>4.3.4</h2>
+<h2 id="4.3.4">4.3.4</h2>
 <p>In extended form, the operand count is VAR.  The opcode number
    is given in a second opcode byte.
 </p>
 
-<h2 id="four">4.4</h2>
+<h2 id="4.4">4.4</h2>
 <p>Next, the types of the operands are specified.</p>
 
-<h2>4.4.1</h2>
+<h2 id="4.4.1">4.4.1</h2>
 <p> In short form, bits 4 and 5 of the opcode give the type.</p>
 
-<h2>4.4.2</h2>
+<h2 id="4.4.2">4.4.2</h2>
 <p>In long form, bit 6 of the opcode gives the type of
    the first operand, bit 5 of the second.  A value of 0 means a small
    constant and 1 means a variable.  (If a 2OP instruction needs a
@@ -132,7 +134,7 @@
    rather than long form.)
 </p>
 
-<h2>4.4.3</h2>
+<h2 id="4.4.3">4.4.3</h2>
 <p>In variable or extended forms, a byte of 4 operand types is
    given next.  This contains 4 2-bit fields: bits 6 and 7 are the first
    field, bits 0 and 1 the fourth.  The values are operand types as above.
@@ -141,25 +143,28 @@
    (and no third or fourth opcode).
 </p>
 
-<h2>4.4.3.1</h2>
+<h2 id="4.4.3.1">4.4.3.1</h2>
 <p>In the special case of the "double variable" VAR opcodes
-   <strong>call_vs2</strong> and <strong>call_vn2</strong> (opcode numbers 12 and 26), a second byte
-   of types is given, containing the types for the next four operands.
+   <a href="sect15.html#call_vs2"><strong>call_vs2</strong></a> and 
+   <a href="sect15.html#call_vn2"><strong>call_vn2</strong></a> (opcode 
+   numbers 12 and 26), a second byte of types is given, containing the types 
+   for the next four operands.
 </p>
 
 
-<h2 id="five">4.5</h2>
+<h2 id="4.5">4.5</h2>
 <p>The operands are given next.  Operand counts of 0OP, 1OP or 2OP
    require 0, 1 or 2 operands to be given, respectively.  If the count is VAR,
    there must be as many operands as there were types other than 'omitted'.
 </p>
 
-<h2>4.5.1</h2>
-<p>Note that only <strong>call_vs2</strong> and <strong>call_vn2</strong> can have more than 4
+<h2 id="4.5.1">4.5.1</h2>
+<p>Note that only <a href="sect15.html#call_vs2"><strong>call_vs2</strong></a> and 
+   <a href="sect15.html#call_vn2"><strong>call_vn2</strong></a> can have more than 4
    operands, and no instruction can have more than 8.
 </p>
 
-<h2>4.5.2</h2>
+<h2 id="4.5.2">4.5.2</h2>
    <p>Opcode operands are always evaluated from first to last - this order is
    important when the stack pointer appears as an argument. Thus</p>
 <pre>@sub sp sp -> i;</pre>
@@ -168,13 +173,14 @@
 </p>
 
 
-<h2 id="six">4.6</h2>
-<p>"Store" instructions return a value: e.g., <strong>mul</strong> multiplies
+<h2 id="4.6">4.6</h2>
+<p>"Store" instructions return a value: e.g., 
+   <a href="sect15.html#mul"><strong>mul</strong></a> multiplies
    its two operands together.  Such instructions must be followed by a
    single byte giving the variable number of where to put the result.
 </p>
 
-<h2 id="seven">4.7</h2>
+<h2 id="4.7">4.7</h2>
 <p>Instructions which test a condition are called "branch"
    instructions.  The branch information is stored in one or two bytes,
    indicating what to do with the result of the test.  If bit 7 of
@@ -186,12 +192,12 @@
    followed by all 8 of the second.
 </p>
 
-<h2>4.7.1</h2>
+<h2 id="4.7.1">4.7.1</h2>
 <p>An offset of 0 means "return false from the current
    routine", and 1 means "return true from the current routine".
 </p>
 
-<h2>4.7.2</h2>
+<h2 id="4.7.2">4.7.2</h2>
 <p>Otherwise, a branch moves execution to the instruction at
    address
 </p>
@@ -200,19 +206,21 @@
 </pre>
 
 
-<h2 id="eight">4.8</h2>
-<p>Two opcodes, <strong>print</strong> and <strong>print_ret</strong>, are followed by a text
-   string.  This is stored according to the usual rules: in particular
-   execution continues after the last 2-byte word of text (the one with
-   top bit set).
+<h2 id="4.8">4.8</h2>
+<p>Two opcodes, <a href="sect15.html#print"><strong>print</strong></a> and 
+   <a href="sect15.html#print_ret"><strong>print_ret</strong></a>, are followed 
+   by a text string.  This is stored according to the usual rules: in particular
+   execution continues after the last 2-byte word of text (the one with top bit 
+   set).
 </p>
 
 <hr>
 
-<h2>Remarks</h2>
+<h2 id="remarks">Remarks</h2>
 <p>Some opcodes have type VAR only because the available codes for
-   the other types had run out; <strong>print_char</strong>, for instance.  Others, especially
-   <strong>call</strong>, need the flexibility to have between 1 and 4 operands.
+   the other types had run out; <a href="sect15.html#print_char"><strong>print_char</strong></a>, 
+   for instance. Others, especially <a href="sect15.html#call"><strong>call</strong></a>, 
+   need the flexibility to have between 1 and 4 operands.
 </p>
 
 <p>The Inform assembler can assemble branches in either form, though
@@ -239,10 +247,11 @@
 
 <p>If the rule were simply "add the offset" then, since the offset couldn't
    be 0 or 1 (because of the return-false and return-true values), we would
-   never be able to skip past a 1-byte instruction (say, a 0OP like <strong>quit</strong>),
-   or specify the branch "don't branch at all" (sometimes useful to ignore
-   the result of the test altogether).  Subtracting 2 means that the only
-   effects we can't achieve are
+   never be able to skip past a 1-byte instruction (say, a 0OP like 
+   <a href="sect15.html#quit"><strong>quit</strong></a>), or specify the 
+   branch "don't branch at all" (sometimes useful to ignore the result of 
+   the test altogether).  Subtracting 2 means that the only effects we can't 
+   achieve are
 </p>
 
 <pre>
@@ -256,7 +265,7 @@
 
 <hr>
 
-<h2>On disassembly</h2>
+<h2 id="disassembly">On disassembly</h2>
 
 <p>Briefly, the first byte of an instruction can be decoded
    using the following table:
