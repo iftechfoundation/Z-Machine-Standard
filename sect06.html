@@ -237,6 +237,13 @@
    have appeared.
 </p>
 
+<p>Given the existence of <strong>Quetzal</strong>, it is quite
+   possible that after loading, the game may be running on a different
+   interpreter to that on which the game started. As a result, it is strongly
+   advisable for games to recheck any interpreter capabilities (eg Standard version,
+   unicode support, etc) after loading.
+</p>
+
 <p>The stack is stored in the interpreter's own memory, not anywhere in the
    Z-machine.  The game program has no direct access to the stack memory or
    stack pointer; on some implementations the game's main stack is also used to
@@ -263,13 +270,6 @@
    failing.  Some Infocom-written interpreters will only provide "undo" to a
    game which has bit 4 of 'Flags 2' set: but Inform 5.5 doesn't set this bit,
    so modern interpreters should be more generous.
-</p>
-
-<p>Given the existence of Quetzal, a portable saved file format, it is quite
-   possible that after loading, the game may be running on a different
-   interpreter to that on which the game started. As a result, it is strongly
-   advisable for games to recheck any interpreter capabilities (eg Standard version,
-   unicode support, etc) after loading.
 </p>
 
 <hr>
