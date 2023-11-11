@@ -9,18 +9,18 @@
 
 <body>
 
-<img class="icon" src="icon01.gif" alt="">
+<img class="icon" src="images/icon01.gif" alt="">
 
 <h1>1. The memory map</h1>
 
 <hr>
 
-<p>1.1 <a href="#one">Regions of memory</a> / 
-   1.2 <a href="#two">Addresses</a></p>
+<p>1.1 <a href="#1.1">Regions of memory</a> / 
+   1.2 <a href="#1.2">Addresses</a></p>
 
 <hr>
 
-<h2 id="one">1.1</h2>
+<h2 id="1.1">1.1</h2>
 <p>The memory map of the Z-machine is an array of bytes with
    "byte addresses" running from 0 upwards.  This is divided into
    three regions: "dynamic", "static" and "high".  Dynamic
@@ -36,38 +36,40 @@
    the top of static memory (but not with dynamic memory).
 </p>
 
-<h2>1.1.1</h2>
+<h2 id="1.1.1">1.1.1</h2>
 <p>Dynamic memory can be read or written to (either directly,
-   using <strong>loadb</strong>, <strong>loadw</strong>, <strong>storeb</strong> and <strong>storew</strong>, or indirectly with
-   opcodes such as <strong>insert_obj</strong> and <strong>remove_obj</strong>).
+   using <a href="sect15.html#loadb"><strong>loadb</strong></a>, <a href="sect15.html#loadw"><strong>loadw</strong></a>, 
+   <a href="sect15.html#storeb"><strong>storeb</strong></a> and <a href="sect15.html#storew"><strong>storew</strong></a>, 
+   or indirectly with opcodes such as <a href="sect15.html#insert_obj"><strong>insert_obj</strong></a> and 
+   <a href="sect15.html#remove_obj"><strong>remove_obj</strong></a>).
 </p>
 
-<h2>1.1.1.1</h2>
+<h2 id="1.1.1.1">1.1.1.1</h2>
 <p>By tradition, the first 64 bytes are known as the
    "header".  The contents of this are given later but note that games
    are not permitted to alter many bits inside it.
 </p>
 
-<h2>1.1.1.2</h2>
+<h2 id="1.1.1.2">1.1.1.2</h2>
 <p>It is legal for games to alter any of the tables stored
    in dynamic memory above the header, provided they leave the tables
    in legal states.
 </p>
 
-<h2>1.1.2</h2>
-<p>Static memory can be read using the opcodes <strong>loadb</strong> and
-   <strong>loadw</strong>.  It is illegal for a game to attempt to write to static
+<h2 id="1.1.2">1.1.2</h2>
+<p>Static memory can be read using the opcodes <a href="sect15.html#loadb"><strong>loadb</strong></a> and
+   <a href="sect15.html#loadw"><strong>loadw</strong></a>.  It is illegal for a game to attempt to write to static
    memory.
 </p>
 
-<h2>1.1.3</h2>
+<h2 id="1.1.3">1.1.3</h2>
 <p>Except for its (possible) overlap with static memory,
    high memory cannot be directly accessed at all by a
    game program.  It contains routines, which can be called,
    and strings, which can be printed using <strong>print_paddr</strong>.
 </p>
 
-<h2>1.1.4</h2>
+<h2 id="1.1.4">1.1.4</h2>
 <p>The maximum permitted length of a story file depends
    on the Version, as follows:
 </p>
@@ -78,25 +80,26 @@
 </pre>
 
 
-<h2 id="two">1.2</h2>
+<h2 id="1.2">1.2</h2>
 <p>There are three kinds of address in the Z-machine, all of
    which can be stored in a 2-byte number: byte addresses, word
    addresses and packed addresses.
 </p>
 
-<h2>1.2.1</h2>
+<h2 id="1.2.1">1.2.1</h2>
 <p>A byte address specifies a byte in memory in the range 0
    up to the last byte of static memory.
 </p>
 
-<h2>1.2.2</h2>
+<h2 id="1.2.2">1.2.2</h2>
 <p>A word address specifies an even address in the bottom
    128K of memory (by giving the address divided by 2).  (Word addresses
    are used only in the abbreviations table.)
 </p>
 
-<h2>1.2.3</h2>
-<p><strong>***</strong> A packed address specifies where a routine or string begins
+<h2 id="1.2.3">1.2.3</h2>
+<p><strong>***</strong>
+   A packed address specifies where a routine or string begins
    in high memory.  Given a packed address <em>P</em>, the formula to obtain the
    corresponding byte address <em>B</em> is:
 </p>
@@ -110,15 +113,16 @@
 </pre>
    
 <p><em>R_O</em> and <em>S_O</em> are the routine and strings offsets
-   (specified in the header as words at <strong>$28</strong> and <strong>$2a</strong>,
+   (specified in the <a href="sect11.html">header</a> as words at <strong>$28</strong> and <strong>$2a</strong>,
    respectively).
 </p>
 
-<h2>1.2.4</h2>
-<p><strong>***</strong> Throughout the specification, Versions 7 and 8 are identical
-   to Version 5 except as stated at <strong>S</strong> 1.1.4 and <strong>S</strong> 
-   1.2.3 above, and in the constant used to find the file length, as stated in 
-   <strong>S</strong> 11.1.6.
+<h2 id="1.2.4">1.2.4</h2>
+<p><strong>***</strong>
+   Throughout the specification, Versions 7 and 8 are identical
+   to Version 5 except as stated at <a href=sect01.html#1.1.4><strong>S</strong> 1.1.4</a> and 
+   <a href=sect01.html#1.2.3><strong>S</strong> 1.2.3</a> above, and in the constant used to 
+   find the file length, as stated in <a href=sect11.html#11.1.6><strong>S</strong> 11.1.6</a>.
 </p>
 
 <hr>

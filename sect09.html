@@ -9,21 +9,21 @@
 
 <body>
 
-<img class="icon" src="icon09.gif" alt="">
+<img class="icon" src="images/icon09.gif" alt="">
 
 <h1>9. Sound effects</h1>
 
 <hr>
 
-<p>9.1 <a href="#one">Sound effects</a> /
-   9.2 <a href="#two">Numbering of</a> /
-   9.3 <a href="#three">Volume</a> /
-   9.4 <a href="#four">Sound playing autonymously</a>
+<p>9.1 <a href="#9.1">Sound effects</a> /
+   9.2 <a href="#9.2">Numbering of</a> /
+   9.3 <a href="#9.3">Volume</a> /
+   9.4 <a href="#9.4">Sound playing autonymously</a>
 </p>
 
 <hr>
 
-<h2 id="one">9.1</h2>
+<h2 id="9.1">9.1</h2>
 <p>Some games, from Version 3 onward, have sound effects attached.
    These are not stored in the story files (or the Z-machine) itself,
    and the interpreter is simply expected to know where to find them.
@@ -31,58 +31,58 @@
    way: a beep or bell sound, which we shall call a "bleep".
 </p>
 
-<h2>9.1.1</h2>
+<h2 id="9.1.1">9.1.1</h2>
 <p>In Version 6, the interpreter should set bit 5 of 'Flags 1'
    if it can provide sound effects beyond a bleep.
 </p>
 
-<h2>9.1.2</h2>
+<h2 id="9.1.2">9.1.2</h2>
 <p>In Version 5 and later, a game should have bit 7 of 'Flags 2'
    set in its story file if it wants to use sound effects beyond a bleep.
    The interpreter should then clear this bit if it cannot oblige.
 </p>
 
 
-<h2 id="two">9.2</h2>
+<h2 id="9.2">9.2</h2>
 <p>Sound effects are numbered upwards from 1.  Number 1 is a
    high-pitched bleep, number 2 a low-pitched one and effects from 3 upward
    are supplied by the interpreter somehow for the particular game in
    question.
 </p>
 
-<h2 id="three">9.3</h2>
+<h2 id="9.3">9.3</h2>
 <p>Sound effects (other than bleeps) can be played at any volume
    level from 1 to 8 (8 being loudest of these).  The volume level -1
    should be implemented as "loudest possible".
 </p>
 
 
-<h2 id="four">9.4</h2>
+<h2 id="9.4">9.4</h2>
 <p>Bleeps are immediate and brief.  Other sound effects take place
    in the background, while normal operation of the Z-machine is going on.
-   Control is via the <strong>sound_effect</strong> opcode, allowing the game to prepare,
+   Control is via the <a href="sect15.html#sound_effect"><strong>sound_effect</strong></a> opcode, allowing the game to prepare,
    start, stop or finish with an effect.
 </p>
 
-<h2>9.4.1</h2>
+<h2 id="9.4.1">9.4.1</h2>
 <p>The game may (but need not) "prepare" a sound effect before
    use.  This would indicate to the interpreter that the game intends
    to use the effect soon: an interpreter might act on this information by
    loading the sampled sound off disc and into a memory cache.
 </p>
 
-<h2>9.4.2</h2>
+<h2 id="9.4.2">9.4.2</h2>
 <p>A sound effect (other than a bleep) can then be "stopped" or
    "started".  Only one sound effect is playing at any given time, and
    starting a new sound effect automatically stops any current one.
 </p>
 
-<h2>9.4.3</h2>
+<h2 id="9.4.3">9.4.3</h2>
 <p>In Versions 5 and later, a sound effect may repeat any specified
    number of times, or repeat forever (until stopped).
 </p>
 
-<h2>9.4.4</h2>
+<h2 id="9.4.4">9.4.4</h2>
 <p>Eventually, though, if it has not been stopped, it may end by itself.
    A routine (specified at start time) can then be called.  The intention is that
    this routine may implement effects such as fading in and out, by replaying
@@ -92,7 +92,7 @@
    routine is not called.
 </p>
 
-<h2>9.4.5</h2>
+<h2 id="9.4.5">9.4.5</h2>
 <p>The game may, but need not, explicitly "finish with"
    any sound effect which is not likely to occur again for a while:
    the interpreter can then throw it out of memory.
@@ -100,17 +100,17 @@
 
 <hr>
 
-<h2>Remarks</h2>
+<h2 id="remarks">Remarks</h2>
 <p>The safest way an Inform program can try to produce a bleep is by
-   executing <strong>@sound_effect 1</strong>.  Some ports of <strong>Zip</strong> believe that the
+   executing <a href="sect15.html#sound_effect"><strong>@sound_effect 1</strong></a>.  Some ports of <strong>Zip</strong> believe that the
    first operand of this is the number of bleeps to make (so that
-   <strong>@sound_effect 2</strong> bleeps twice), but this is incorrect.
+   <a href="sect15.html#sound_effect"><strong>@sound_effect 2</strong></a> bleeps twice), but this is incorrect.
 </p>
 
-<p>Several Infocom games bleep (using <strong>sound_effect</strong> with only one
+<p>Several Infocom games bleep (using <a href="sect15.html#sound_effect"><strong>sound_effect</strong></a> with only one
    operand, always equal to 1 or 2).  Two provided sampled sound effects
    but did not bleep: 'The Lurking Horror' and 'Sherlock'.
-   Their story files contain the following usages of <strong>sound_effect</strong>:
+   Their story files contain the following usages of <a href="sect15.html#sound_effect"><strong>sound_effect</strong></a>:
 </p>
 
 <pre>
@@ -133,7 +133,7 @@
 <p>A further difficulty with 'TLH' is that it assumes the interpreter is
    as slow as Infocom's Amiga interpreter was: it fires off several sound
    effects in one game round, assuming there will be time for it to play
-   most of each one.  To simulate this, <strong>sound_effect</strong> must be rewritten
+   most of each one.  To simulate this, <a href="sect15.html#sound_effect"><strong>sound_effect</strong></a> must be rewritten
    to pause sometimes:
 </p>
 
@@ -151,11 +151,11 @@
 <p>Infocom implemented sound effects differently on different machines.
    The format of Infocom's shipped sound effects files has been
    documented by Stefan Jokisch and his notes are available from
-   <strong>www.ifarchive.org</strong>. 
+   <a href="https://ifarchive.org/if-archive/infocom/info/sound_format.txt">the Interactive Fiction Archive</a>. 
 </p>
 
 <p>However, modern interpreters are strong encouraged to support Andrew Plotkin's
-   <strong>Blorb</strong> format, which is a more modern way to make sound effects 
+   <a href="http://www.eblong.com/zarf/blorb/blorb.html"><strong>Blorb</strong></a> format, which is a more modern way to make sound effects 
    available to newer games. Blorb files have been made available for the Infocom 
    sound effects, so that modern interpreters need no longer support the Infocom format.
 </p>
