@@ -27,7 +27,7 @@
 
 <h2 id="13.1">13.1</h2>
 <p>The dictionary table is held in static memory and its byte
-   address is stored in the word at <strong>$08</strong> in the header.
+   address is stored in the word at <strong>$08</strong> in the <a href="sect11.html">header</a>.
 </p>
 
 <h2 id="13.2">13.2</h2>
@@ -82,7 +82,7 @@
 
 <h2 id="13.6">13.6</h2>
 <p>Lexical analysis takes place in two circumstances: on request
-   of a <strong>tokenise</strong> opcode (in which case it can use any dictionary table
+   of a <a href="sect15.html#tokenise"><strong>tokenise</strong></a> opcode (in which case it can use any dictionary table
    it likes, in the format above) and during acceptance of a game command
    (in which case the standard dictionary is used).
 </p>
@@ -108,7 +108,7 @@ fred / , / go / fishing
 <p>A "parse table" is then written, recording the number of
    words, the length and position of each word and the dictionary
    address of each word which is recognised.  For the format, see the
-   <strong>read</strong> opcode.
+   <a href="sect15.html#read"><strong>read</strong></a> opcode.
 </p>
 <hr>
 
@@ -121,7 +121,7 @@ fred / , / go / fishing
 <p>It is essential that dictionary entries are in numerical order of the
    bytes of encrypted text so that interpreters can search the dictionary
    efficiently (e.g. by a binary-chop algorithm).  Because the letters in
-   A0 are in alphabetical order, because the bits are ordered in the right
+   <a href="sect03.html#3.5.3">A0</a> are in alphabetical order, because the bits are ordered in the right
    way and because the pad character 5 is less than the values for the
    letters, the numerical ordering corresponds to normal English alphabetical
    order for ordinary words.  (For instance "an" comes before
