@@ -27,10 +27,5 @@ td.note { font-style: italic; text-align: center; }
 table.opcodes { margin-left: auto; margin-right: auto; margin-bottom: 1em; }
 table caption { font-weight: bold; text-align: center; }
 
-ins { color: #009F00; }
-.index ins { color: #00CF00; }
-del { color: red; }
-.alter { color: blue; }
-
-ol ol { list-style-type: lower-alpha; } 
+ol ol { list-style-type: lower-alpha; }
 
