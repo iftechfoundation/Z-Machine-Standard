@@ -144,7 +144,8 @@
 
 <p>See <strong>S</strong> 8 for more details.</p>
 
-<p><strong>***[1.1]</strong> This opcode will only be present in interpreters obeying Standard
+<p><strong>***[1.1]</strong>
+   This opcode will only be present in interpreters obeying Standard
    1.1 or later, so story files should check the standard number of the
    interpreter before executing this opcode.
 </p>
@@ -242,7 +243,8 @@
    if and only if the interpreter can receive it from the keyboard.
    Bits 2 to 15 are undefined.
 </p>
-<p><strong>***[1.0]</strong> This opcode will only be present in interpreters obeying Standard
+<p><strong>***[1.0]</strong>
+   This opcode will only be present in interpreters obeying Standard
    1.0 or later, so story files should check the standard number of the
    interpreter before executing this opcode.
 </p>
@@ -821,7 +823,8 @@
 <p>Print a Unicode character.  See <strong>S</strong> 3.8.5.4 and <strong>S</strong> 7.5 for details.
    The given character code must be defined in Unicode.
 </p>
-<p><strong>***[1.0]</strong> This opcode will only be present in interpreters obeying Standard
+<p><strong>***[1.0]</strong>
+   This opcode will only be present in interpreters obeying Standard
    1.0 or later, so story files should check the standard number of the
    interpreter before executing this opcode.
 </p>
@@ -1086,7 +1089,8 @@
    The interpreter gives the game a way of knowing that a restore has
    just happened (see <strong>save</strong>).
 </p>
-<p><strong>***[1.0]</strong> From Version 5 it can have optional parameters as
+<p><strong>***[1.0]</strong>
+   From Version 5 it can have optional parameters as
    <strong>save</strong> does, and returns the number of bytes loaded if so.  (Whether
    Infocom intended these options as part of Version 5 is doubtful,
    but it's too useful a feature to exclude from this Standard.)
@@ -1153,7 +1157,8 @@
    (one called asynchronously by a sound effect, or keyboard timing,
    or newline counting).
 </p>
-<p><strong>***[1.0]</strong> The extension also has (optional) parameters, which save a region of
+<p><strong>***[1.0]</strong>
+   The extension also has (optional) parameters, which save a region of
    the save area, whose address and length are in bytes, and provides a
    suggested filename: <strong>name</strong> is a pointer to an array of ASCII characters
    giving this name (as usual preceded by a byte giving the number of
@@ -1162,7 +1167,8 @@
    exclude from this Standard.)
 </p>
 
-<p><strong>***[1.1]</strong> As of Standard 1.1 an additional optional parameter, <strong>prompt</strong>, 
+<p><strong>***[1.1]</strong>
+   As of Standard 1.1 an additional optional parameter, <strong>prompt</strong>, 
    is allowed on Version 5 extended save/restore.  This allows a game author to tell the
    interpreter whether it should ask for confirmation of the provided file name (<strong>prompt</strong> is 1), 
    or just silently save/restore using the provided filename (<strong>prompt</strong> is 0). If the parameter is 
@@ -1271,7 +1277,8 @@
    0.2 of this Standard.  
 </p>
 
-<p><strong>[1.1]</strong> In Version 6, <strong>set_font</strong> has an optional 
+<p><strong>[1.1]</strong>
+   In Version 6, <strong>set_font</strong> has an optional 
    window parameter, as for <strong>set_colour</strong>.
    This was part of the original Infocom design, but omitted by earlier
    Standards. It is reinstated here, as it is useful to be able to measure
@@ -1301,7 +1308,8 @@
    Roman should turn off all the other styles currently set.
 </p>
 
-<p><strong>***[1.1]</strong> As of Standard 1.1, it is legal to request style 
+<p><strong>***[1.1]</strong>
+   As of Standard 1.1, it is legal to request style 
    combinations in a single <strong>set_text_style</strong> opcode by adding the 
    values (which are powers of two) together. If the parameter is non-zero, then 
    all the styles given are activated. If the parameter is zero, then all styles 
@@ -1329,7 +1337,8 @@
    in <strong>set_colour</strong>.
 </p>
 
-<p><strong>***[1.1]</strong> This opcode will only be present in interpreters 
+<p><strong>***[1.1]</strong>
+   This opcode will only be present in interpreters 
    obeying Standard 1.1 or later, so story files should check the standard number 
    of the interpreter before executing this opcode.
 </p>
