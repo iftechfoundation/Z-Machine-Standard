@@ -70,15 +70,17 @@
 </p>
 
 <h2>8.1.3</h2>
-<p><strong>***[1.0]</strong> A game must not use fonts other than 1 unless allowed
+<p><strong>***[1.0]</strong>
+   A game must not use fonts other than 1 unless allowed
    to by the interpreter: see the <strong>set_font</strong> opcode for how to give
-   or refuse permission.  (This paragraph is marked <strong>***[1.0]</strong> because
+   or refuse permission.  (This paragraph is marked <strong>***</strong> because
    existing Infocom games determined the availability of font 3 for
    'Beyond Zork' in a complicated and unsatisfactory way: see <strong>S</strong> 16.)
 </p>
 
 <h2>8.1.3.1</h2>
-<p><strong>***[1.0]</strong> It is legal for a game to change font at any time,
+<p><strong>***[1.0]</strong>
+   It is legal for a game to change font at any time,
    including halfway through the printing of a word.  (This might be
    needed to introduce exotic foreign accents in the future.)
 </p>
@@ -208,7 +210,8 @@
 <p>Colours 15 and -1 are available only in Version 6.</p>
 
 <h2>8.3.1.1</h2>
-<p><strong>***[1.1]</strong> The equivalences between the colour numbers 
+<p><strong>***[1.1]</strong>
+   The equivalences between the colour numbers 
    and true colours are recommended. The interpreter may allow the user to 
    change the mapping, but the given values should be the default. If necessary, 
    the game can check what true colour is being used for a given colour number 
@@ -258,7 +261,8 @@
 </p>
 
 <h2>8.3.6</h2>
-<p><strong>***[1.1]</strong> In Version 6 only, colour 15 is defined 
+<p><strong>***[1.1]</strong>
+   In Version 6 only, colour 15 is defined 
    as transparent.  This is only valid as a background colour; an attempt 
    to select it for the foreground should produce a diagnostic. Interpreters 
    not supporting transparency must ignore any attempt to select colour 15.
@@ -287,7 +291,8 @@
 </p>
 
 <h2>8.3.7</h2>
-<p><strong>***[1.1]</strong> Standard 1.1 adds the ability for games
+<p><strong>***[1.1]</strong>
+   Standard 1.1 adds the ability for games
    to select many more colours with <strong>set_true_colour</strong>, which uses
    15-bit RBG colour values, with the following special values:
 </p>
@@ -299,7 +304,8 @@
 </pre>
 
 <h2>8.3.7.1</h2>
-<p><strong>***[1.1]</strong> The interpreter selects the closest approximations available to
+<p><strong>***[1.1]</strong>
+   The interpreter selects the closest approximations available to
    the requested colours. In V6, the interpreter may store the approximations
    in window properties 16 and 17, so the program can tell how close it got
    (although it is acceptable for the interpreter to just store the requested
@@ -726,7 +732,8 @@
 </p>
 
 <h2>8.8.3.2.3.1</h2>
-<p><strong>***[1.1]</strong> The property must show 
+<p><strong>***[1.1]</strong>
+   The property must show 
    the actual style combination currently in use; with this a story file can 
    probe for the availability of particular combinations.
 </p>
@@ -761,7 +768,8 @@
 </p>
 
 <h2>8.8.3.2.8</h2>
-<p><strong>***[1.1]</strong> The true foreground and background colours 
+<p><strong>***[1.1]</strong>
+   The true foreground and background colours 
    show the actual colour being used for the foreground and background, 
    whether it was set using <strong>set_colour</strong> or <strong>set_true_colour</strong>.
    Transparent is indicated as -4. If the colour was sampled from a picture 
@@ -881,7 +889,8 @@
 </p>
 
 <h2>8.8.7</h2>
-<p><strong>***[1.1]</strong> Interpreters may use a backing store to store 
+<p><strong>***[1.1]</strong>
+   Interpreters may use a backing store to store 
    the Z-machine screen state, rather than plotting directly to the screen. 
    This would normally be the case in a windowed operating system environment. 
    If a backing store is in use, display changes executed by the Z-machine may 
@@ -892,7 +901,8 @@
 </p>
   
 <h2>8.8.7.1</h2>
-<p><strong>***[1.1]</strong> When <strong>buffer_screen</strong> is set to 0 (the default), all display changes are
+<p><strong>***[1.1]</strong>
+   When <strong>buffer_screen</strong> is set to 0 (the default), all display changes are
    expected to become visible to the user either immediately, or within a short
    period of time, at the interpreter's discretion. At a minimum, all updates
    become visible before waiting for input. Any intermediate display states
@@ -915,7 +925,8 @@
 </p>
 
 <h2>8.8.7.2</h2>
-<p><strong>***[1.1]</strong> With buffer_screen in either state, an update of the visible display can be
+<p><strong>***[1.1]</strong>
+   With buffer_screen in either state, an update of the visible display can be
    forced immediately by issuing <strong>buffer_screen</strong> -1, without altering the current
    buffering state. Note that <strong>buffer_screen</strong> -1 does not flush the text buffer.
 </p>
