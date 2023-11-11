@@ -220,7 +220,8 @@
    if and only if the interpreter can receive it from the keyboard.
    Bits 2 to 15 are undefined.
 </p>
-<p><strong>***</strong> This opcode will only be present in interpreters obeying Standard
+<p><strong>***</strong>
+   This opcode will only be present in interpreters obeying Standard
    1.0 or later, so story files should check the standard number of the
    interpreter before executing this opcode.
 </p>
@@ -809,7 +810,8 @@
 <p>Print a Unicode character.  See <strong>S</strong> 3.8.5.4 and <strong>S</strong> 7.5 for details.
    The given character code must be defined in Unicode.
 </p>
-<p><strong>***</strong> This opcode will only be present in interpreters obeying Standard
+<p><strong>***</strong>
+   This opcode will only be present in interpreters obeying Standard
    1.0 or later, so story files should check the standard number of the
    interpreter before executing this opcode.
 </p>
@@ -1074,7 +1076,8 @@
    The interpreter gives the game a way of knowing that a restore has
    just happened (see <strong>save</strong>).
 </p>
-<p><strong>***</strong> From Version 5 it can have optional parameters as
+<p><strong>***</strong>
+   From Version 5 it can have optional parameters as
    <strong>save</strong> does, and returns the number of bytes loaded if so.  (Whether
    Infocom intended these options as part of Version 5 is doubtful,
    but it's too useful a feature to exclude from this Standard.)
@@ -1137,7 +1140,8 @@
    (one called asynchronously by a sound effect, or keyboard timing,
    or newline counting).
 </p>
-<p><strong>***</strong> The extension also has (optional) parameters, which save a region of
+<p><strong>***</strong>
+   The extension also has (optional) parameters, which save a region of
    the save area, whose address and length are in bytes, and provides a
    suggested filename: name is a pointer to an array of ASCII characters
    giving this name (as usual preceded by a byte giving the number of
