@@ -9,7 +9,7 @@
 
 <body>
 
-<img class="icon" src="icon03.gif" alt="">
+<img class="icon" src="images/icon03.gif" alt="">
 
 <h1>3. How text and characters are encoded</h1>
 
@@ -24,28 +24,28 @@
 
 <hr>
 
-<p>3.1 <a href="#one">Text</a> / 
-   3.2 <a href="#two">Alphabets</a> / 
-   3.3 <a href="#three">Abbreviations</a> /
-   3.4 <a href="#four">ZSCII escape</a> / 
-   3.5 <a href="#five">Alphabet table</a> / 
-   3.6 <a href="#six">Padding and incompleteness</a> / 
-   3.7 <a href="#seven">Dictionary truncation</a> / 
-   3.8 <a href="#eight">Definition of ZSCII and Unicode</a>
+<p>3.1 <a href="#3.1">Text</a> / 
+   3.2 <a href="#3.2">Alphabets</a> / 
+   3.3 <a href="#3.3">Abbreviations</a> /
+   3.4 <a href="#3.4">ZSCII escape</a> / 
+   3.5 <a href="#3.5">Alphabet table</a> / 
+   3.6 <a href="#3.6">Padding and incompleteness</a> / 
+   3.7 <a href="#3.7">Dictionary truncation</a> / 
+   3.8 <a href="#3.8">Definition of ZSCII and Unicode</a>
 </p>
 
 <hr>
 
 
-<h2 id="one">3.1</h2>
+<h2 id="3.1">3.1</h2>
 <p>Z-machine text is a sequence of ZSCII character codes (ZSCII is
-   a system similar to ASCII: see <strong>S</strong> 3.8 below).  These ZSCII values are
+   a system similar to ASCII: see <a href="sect03.html#3.8"><strong>S</strong> 3.8</a> below).  These ZSCII values are
    encoded into memory using a string of Z-characters.  The process of
-   converting between Z-characters and ZSCII values is given in <strong>SS</strong> 3.2 to
-   3.7 below.
+   converting between Z-characters and ZSCII values is given in <a href="sect03.html#3.2"><strong>S</strong> 3.2 to
+   3.7</a> below.
 </p>
 
-<h2 id="two">3.2</h2>
+<h2 id="3.2">3.2</h2>
 <p>Text in memory consists of a sequence of 2-byte words.  Each word
    is divided into three 5-bit 'Z-characters', plus 1 bit left over, arranged
    as
@@ -61,14 +61,14 @@
    end.
 </p>
 
-<h2>3.2.1</h2>
+<h2 id="3.2.1">3.2.1</h2>
 <p>There are three 'alphabets', A0 (lower case), A1 (upper case) and
    A2 (punctuation) and during printing one of these is current at any given
    time.  Initially A0 is current.  The meaning of a Z-character may depend on
    which alphabet is current.
 </p>
 
-<h2>3.2.2</h2>
+<h2 id="3.2.2">3.2.2</h2>
 <p>In Versions 1 and 2, the current alphabet can be any of the
    three.  The Z-characters 2 and 3 are called 'shift' characters and change
    the alphabet for the next character only.  The new alphabet depends on
@@ -85,19 +85,19 @@
    same table, and are called 'shift lock' characters.
 </p>
 
-<h2>3.2.3</h2>
+<h2 id="3.2.3">3.2.3</h2>
 <p>In Versions 3 and later, the current alphabet is always A0
    unless changed for 1 character only: Z-characters 4 and 5 are shift
    characters.  Thus 4 means "the next character is in A1" and 5 means
    "the next is in A2".  There are no shift lock characters.
 </p>
 
-<h2>3.2.4</h2>
+<h2 id="3.2.4">3.2.4</h2>
 <p>An indefinite sequence of shift or shift lock characters is
    legal (but prints nothing).
 </p>
 
-<h2 id="three">3.3</h2>
+<h2 id="3.3">3.3</h2>
 <p>In Versions 3 and later, Z-characters 1, 2 and 3 represent
    abbreviations, sometimes also called 'synonyms' (for traditional reasons):
    the next Z-character indicates which abbreviation string to print.  If z
@@ -106,32 +106,32 @@
    print the string at that word address.  In Version 2, Z-character 1 has this
    effect (but 2 and 3 do not, so there are only 32 abbreviations).
 </p>
-<h2>3.3.1</h2>
+<h2 id="3.3.1">3.3.1</h2>
 <p>Abbreviation string-printing follows all the rules of this section
    except that an abbreviation string must not itself use abbreviations and
-   must not end with an incomplete multi-Z-character construction (see <strong>S</strong> 3.6.1
-   below).
+   must not end with an incomplete multi-Z-character construction (see 
+   <a href="sect03.html#3.6.1"><strong>S</strong> 3.6.1</a> below).
 </p>
-<h2 id="four">3.4</h2>
+<h2 id="3.4">3.4</h2>
 <p>Z-character 6 from A2 is a 'ZSCII escape' character. It means that the two subsequent 
    Z-characters specify a ten-bit ZSCII character code: the next Z-character gives the top 
    5 bits and the one after the bottom 5.
 </p>
 
-<h2 id="five">3.5</h2>
+<h2 id="3.5">3.5</h2>
 <p>The remaining Z-characters are translated into ZSCII character
    codes using the "alphabet table".
 </p>
 
-<h2>3.5.1</h2>
+<h2 id="3.5.1">3.5.1</h2>
 <p>The Z-character 0 is printed as a space (ZSCII 32).</p>
 
-<h2>3.5.2</h2>
+<h2 id="3.5.2">3.5.2</h2>
 <p>In Version 1, Z-character 1 is printed as a new-line
    (ZSCII 13).
 </p>
 
-<h2>3.5.3</h2>
+<h2 id="3.5.3">3.5.3</h2>
 <p>In Versions 2 to 4, the alphabet table for converting
    Z-characters into ZSCII character codes is as follows:
 </p>
@@ -149,11 +149,11 @@ current   --------------------------
 </p>
 
 <p>Character 6 in A2 is printed as a space here, but it is a 'ZSCII escape' character, and not 
-   translated using the alphabet table: see S 3.4 above. Character 7 in A2, written here as a 
-   circumflex ^, is a new-line (ZSCII 13).
+   translated using the alphabet table: see <a href="sect03.html#3.4"><strong>S</strong> 3.4</a> 
+   above. Character 7 in A2, written here as a circumflex ^, is a new-line (ZSCII 13).
 </p>
 
-<h2>3.5.4</h2>
+<h2 id="3.5.4">3.5.4</h2>
 <p>Version 1 has a slightly different A2 row in its alphabet
    table (new-line is not needed, making room for the <strong> &lt; </strong> character):
 </p>
@@ -165,28 +165,28 @@ current   --------------------------
           --------------------------
 </pre>
 
-<h2>3.5.5</h2>
+<h2 id="3.5.5">3.5.5</h2>
 <p>In Versions 5 and later, the interpreter should look at
-   the word at <strong>$34</strong> in the header.  If this is zero, then the
-   alphabet table drawn out in <strong>S</strong> 3.5.3 continues in use.  Otherwise
+   the word at <strong>$34</strong> in the <a href="sect11.html">header</a>.  If this is zero, then the
+   alphabet table drawn out in <a href="sect03.html#3.5.3"><strong>S</strong> 3.5.3</a> continues in use.  Otherwise
    it is interpreted as the byte address of an alphabet table
    specific to this story file.
 </p>
 
-<h2>3.5.5.1</h2>
+<h2 id="3.5.5.1">3.5.5.1</h2>
 <p>Such an alphabet table consists of 78 bytes arranged as 3 blocks of 26 ZSCII values, 
    translating Z-characters 6 to 31 for alphabets A0, A1 and A2. Z-characters 6 and 7 of 
    A2, however, are still translated as ZSCII escape and new-line (ZSCII 13) codes (as above).
 </p>
 
-<h2 id="six">3.6</h2>
+<h2 id="3.6">3.6</h2>
 <p>Since the end-bit only comes up once every three Z-characters,
    a string may have to be 'padded out' with null values.  This is
    conventionally achieved with a sequence of 5's, though a sequence of
    (for example) 4's would work equally well.
 </p>
 
-<h2>3.6.1</h2>
+<h2 id="3.6.1">3.6.1</h2>
 <p>It is legal for the string to end while a multi-Z-character
    construction is incomplete: for instance, after only the top half of
    an ASCII value has been given.  The partial construction is simply
@@ -194,7 +194,7 @@ current   --------------------------
    been guillotined to the dictionary resolution of 6 or 9 Z-characters.)
 </p>
 
-<h2 id="seven">3.7</h2>
+<h2 id="3.7">3.7</h2>
 <p>When an interpreter is encrypting typed-in text to match against
    dictionary words, the following restrictions apply.  Text should be
    converted to lower case (as a result A1 will not be needed unless the
@@ -210,7 +210,7 @@ current   --------------------------
 
 <p><strong>$48a5</strong> <strong>$14a5</strong> <strong>$94a5</strong></p>
 
-<h2>3.7.1</h2>
+<h2 id="3.7.1">3.7.1</h2>
 <p>In Versions 1 and 2 only, when encoding text for dictionary words,
    shift-lock Z-characters 4 and 5 are used instead of the single-shift
    Z-characters 2 and 3 when the next two characters come from the same
@@ -218,7 +218,7 @@ current   --------------------------
 </p>
 
 
-<h2 id="eight">3.8</h2>
+<h2 id="3.8">3.8</h2>
 <p>The character set of the Z-machine is called ZSCII (Zork
    Standard Code for Information Interchange; pronounced to rhyme with
    "xyzzy").  ZSCII codes are 10-bit unsigned values between 0 and
@@ -252,25 +252,25 @@ current   --------------------------
   <tr> <td>255-1023</td> <td>----</td>                    <td></td>             </tr>
 </table>
 
-<h2>3.8.1</h2>
+<h2 id="3.8.1">3.8.1</h2>
 <p>The codes 256 to 1023 are undefined, so that for all
    practical purposes ZSCII is an 8-bit unsigned code.
 </p>
 
-<h2>3.8.2</h2>
+<h2 id="3.8.2">3.8.2</h2>
 <p>The codes 0 to 31 are undefined except as follows:</p>
 
-<h2>3.8.2.1</h2>
+<h2 id="3.8.2.1">3.8.2.1</h2>
 <p>ZSCII code 0 ("null") is defined for output
    but has no effect in any output stream.  (It is also used as
    a value meaning "no character" when reporting terminating
    character codes, but is not formally defined for input.)
 </p>
 
-<h2>3.8.2.2</h2>
+<h2 id="3.8.2.2">3.8.2.2</h2>
 <p>ZSCII code 8 ("delete") is defined for input only.</p>
 
-<h2>3.8.2.3</h2>
+<h2 id="3.8.2.3">3.8.2.3</h2>
 <p>ZSCII code 9 ("tab") is defined for output in Version 6 only.
    At the start of a screen line this should print a paragraph indentation
    suitable for the font being used: if it is printed in the middle of a
@@ -278,24 +278,24 @@ current   --------------------------
    interpreters do not do this, however).
 </p>
 
-<h2>3.8.2.4</h2>
+<h2 id="3.8.2.4">3.8.2.4</h2>
 <p>ZSCII code 11 ("sentence space") is defined for output in
    Version 6 only.  This should be printed as a suitable gap between two
    sentences (in the same way that typographers normally place larger spaces
    after the full stops ending sentences than after words or commas).
 </p>
 
-<h2>3.8.2.5</h2>
+<h2 id="3.8.2.5">3.8.2.5</h2>
 <p>ZSCII code 13 ("carriage return") is defined for input and
    output.
 </p>
 
-<h2>3.8.2.6</h2>
+<h2 id="3.8.2.6">3.8.2.6</h2>
 <p>ZSCII code 27 ("escape" or "break") is defined for input
    only.
 </p>
 
-<h2>3.8.3</h2>
+<h2 id="3.8.3">3.8.3</h2>
 <p>ZSCII codes between 32 ("space") and 126 ("tilde") are
    defined for input and output, and agree with standard ASCII (as well as
    all of the ISO 8859 character sets and Unicode).  Specifically:
@@ -315,12 +315,12 @@ current   --------------------------
    here for typesetting reasons.)
 </p>
 
-<h2>3.8.3.1</h2>
+<h2 id="3.8.3.1">3.8.3.1</h2>
 <p>ZSCII codes 127 ("delete" in some forms of ASCII)
    and 128 are undefined.
 </p>
 
-<h2>3.8.4</h2>
+<h2 id="3.8.4">3.8.4</h2>
 <p> ZSCII codes 129 to 154 are defined for input only:</p>
 
 <pre>
@@ -329,7 +329,7 @@ current   --------------------------
 145: keypad 0   146: keypad 1     ....              154: keypad 9
 </pre>
 
-<h2>3.8.5</h2>
+<h2 id="3.8.5">3.8.5</h2>
 <p>The block of codes between 155 and 251 are the "extra
    characters" and are used differently by different story files.
    Some will need accented Latin characters (such as French E-acute),
@@ -338,7 +338,7 @@ current   --------------------------
    characters, mathematical or musical symbols, and so on.
 </p>
 
-<h2>3.8.5.1</h2>
+<h2 id="3.8.5.1">3.8.5.1</h2>
 <p><strong>***[1.0]</strong>
    To define which characters are required, the Unicode
    (or ISO 10646-1) Basic Multilingual Plane character set is used: characters are specified
@@ -356,43 +356,43 @@ current   --------------------------
    outside the range U+0000 to U+FFFF).
 </p>
 
-<h2>3.8.5.2</h2>
+<h2 id="3.8.5.2">3.8.5.2</h2>
 <p><strong>***[1.0]</strong>
    The story file chooses its stock of extra characters
    with a "Unicode translation table" as follows.  Under Versions
-   1 to 4, the "default table" is always used (see below).
+   1 to 4, the "default table" is always used (<a href="sect03.html#table1">see below</a>).
    In Version 5 or later, if Word 3 of the header extension table is
    present and non-zero then it is interpreted as the byte address
    of the Unicode translation table.  If Word 3 is absent or zero,
    the default table is used.
 </p>
 
-<h2>3.8.5.2.1</h2>
+<h2 id="3.8.5.2.1">3.8.5.2.1</h2>
 <p>The table consists of one byte giving a number N,
    followed by N two-byte words.
 </p>
 
-<h2>3.8.5.2.2</h2>
+<h2 id="3.8.5.2.2">3.8.5.2.2</h2>
 <p>This indicates that ZSCII characters 155 to 155+N-1
    are defined for both input and output.  (It's possible for N to
    be zero, leaving the whole range 155 to 251 undefined.)
 </p>
 
-<h2>3.8.5.2.3</h2>
+<h2 id="3.8.5.2.3">3.8.5.2.3</h2>
 <p>The words in the table give Unicode character codes
    for each of the ZSCII characters 155 to 155+N-1 in turn.
 </p>
 
-<h2>3.8.5.3</h2>
-<p>The default table is as shown in Table 1.</p>
+<h2 id="3.8.5.3">3.8.5.3</h2>
+<p>The default table is as shown in <a href="sect03.html#table1">Table 1</a>.</p>
 
-<h2>3.8.5.4</h2>
+<h2 id="3.8.5.4">3.8.5.4</h2>
 <p>The defined extra characters are entirely normal
    ZSCII characters.  They can appear in a story file's alphabet
    table, in an array created by print stream 3 and so on.
 </p>
 
-<h2>3.8.5.4.1</h2>
+<h2 id="3.8.5.4.1">3.8.5.4.1</h2>
 <p><strong>***[1.0]</strong>
    The interpreter is required to be able to print
    representations of every defined Unicode character under <strong>$0100</strong>
@@ -401,7 +401,7 @@ current   --------------------------
    be used (such as "ss" in place of German sharp "s").
 </p>
 
-<h2>3.8.5.4.2</h2>
+<h2 id="3.8.5.4.2">3.8.5.4.2</h2>
 <p>Normally, and where sensibly possible, all
    punctuation and letter characters in ISO 8859-1 Latin1
    should be readable from the interpreter's keyboard.  (However,
@@ -410,7 +410,7 @@ current   --------------------------
    for example.)
 </p>
 
-<h2>3.8.5.4.3</h2>
+<h2 id="3.8.5.4.3">3.8.5.4.3</h2>
 <p><strong>***[1.0]</strong>
    An interpreter is not required to have suitable
    letter-forms for printing Unicode characters <strong>$0100</strong> to <strong>$FFFF</strong>.
@@ -421,7 +421,7 @@ current   --------------------------
    instead.
 </p>
 
-<h2>3.8.5.4.4</h2>
+<h2 id="3.8.5.4.4">3.8.5.4.4</h2>
 <p>The Z-machine is not required to handle complex Unicode formatting like
    combining characters, bidirectional formatting and unusual line-wrapping
    rules.
@@ -431,12 +431,12 @@ current   --------------------------
    in window 0. In window 1, and all version 6 windows, they should be ignored.
 </p>
 
-<h2>3.8.5.4.5</h2>
+<h2 id="3.8.5.4.5">3.8.5.4.5</h2>
 <p>Unicode characters U+0000 to U+001F and U+007F to U+009F are control codes,
    and must not be used.
 </p>
 
-<h2>3.8.6</h2>
+<h2 id="3.8.6">3.8.6</h2>
 <p>ZSCII codes 252 to 254 are defined for input only:</p>
 
 <pre>
@@ -449,7 +449,7 @@ current   --------------------------
    whether the mouse is clicked once or twice.
 </p>
 
-<h2>3.8.7</h2>
+<h2 id="3.8.7">3.8.7</h2>
 <p>ZSCII code 255 is undefined.  (This value is needed in
    the "terminating characters table" as a wildcard, indicating
    "any Input-only character with code 128 or above."  However,
@@ -458,8 +458,8 @@ current   --------------------------
 
 <hr>
 
-<table>
-<caption><strong>Table 1: default Unicode translations (see S 3.8.5.3)</strong></caption>
+<table id="table1">
+<caption><strong>Table 1: default Unicode translations (see <a href="sect03.html#3.8.5.3">S 3.8.5.3</a>)</strong></caption>
 
 <tr> <th>ZSCII code (dec)</th> <th>Unicode code (hex)</th> <th>Name</th> <th>Character</th> <th>Textual Equivalent</th> </tr>
 
@@ -538,7 +538,7 @@ current   --------------------------
 
 <hr>
 
-<h2>Remarks</h2>
+<h2 id="remarks">Remarks</h2>
 
 <p>In practice the text compression factor is not really very good: for
    instance, 155000 characters of text squashes into 99000 bytes.  (Text
@@ -573,7 +573,8 @@ current   --------------------------
 </p>
 
 <p>Ideally, an interpreter should be able to read time delays (for timed input)
-   from stream 1 (i.e., from a script file).  See the remarks in <strong>S</strong> 7.
+   from stream 1 (i.e., from a script file).  See the <a href="sect07.html#remarks">
+   remarks</a> in <strong>S</strong> 7.
 </p>
 
 <p>The 'Beyond Zork' story file is capable of receiving both mouse-click
