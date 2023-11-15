@@ -15,28 +15,28 @@
 
 <hr>
 
-<p>2.1 <a href="#one">Numbers</a> /
-   2.2 <a href="#two">Signed operations</a> /
-   2.3 <a href="#three">Arithmetic errors</a> /
-   2.4 <a href="#four">Random number generator</a>
+<p>2.1 <a href="#2.1">Numbers</a> /
+   2.2 <a href="#2.2">Signed operations</a> /
+   2.3 <a href="#2.3">Arithmetic errors</a> /
+   2.4 <a href="#2.4">Random number generator</a>
 </p>
 
 <hr>
 
-<h2 id="one">2.1</h2>
+<h2 id="2.1">2.1</h2>
 <p> In the Z-machine, numbers are usually stored in 2 bytes
     (in the form most-significant-byte first, then least-significant)
     and hold any value in the range <strong>$0000</strong> to <strong>$ffff</strong> (0 to 65535
     decimal).
 </p>
 
-<h2 id="two">2.2</h2>
+<h2 id="2.2">2.2</h2>
 <p>These values are sometimes regarded as signed, in the range
    -32768 to 32767.  In effect -n is stored as 65536-n
    and so the top bit is the sign bit.
 </p>
 
-<h2>2.2.1</h2>
+<h2 id="2.2.1">2.2.1</h2>
 <p>The operations of numerical comparison, multiplication,
    addition, subtraction, division, remainder-after-division and
    printing of numbers are signed; bitwise operations are unsigned.
@@ -44,30 +44,30 @@
    two addresses using simply <strong>jl</strong> and <strong>jg</strong>.)
 </p>
 
-<h2 id="three">2.3</h2>
+<h2 id="2.3">2.3</h2>
 
 <p>Arithmetic errors:</p>
 
-<h2>2.3.1</h2>
+<h2 id="2.3.1">2.3.1</h2>
 <p>It is illegal to divide by 0 (or to ask for remainder after
    division by 0) and an interpreter should halt with an error message
    if this occurs.
 </p>
 
-<h2>2.3.2</h2>
+<h2 id="2.3.2">2.3.2</h2>
 <p>Formally it has never been specified what the result of an
    out-of-range calculation should be.  The author suggests that the
    result should be reduced modulo <strong>$10000</strong>.
 </p>
 
-<h2 id="four">2.4</h2>
+<h2 id="2.4">2.4</h2>
 <p>The Z-machine needs a random number generator which at any time
    has one of two states, "random" and "predictable".  When the game
    starts or restarts the state becomes "random".  Ideally the generator
    should not produce identical sequences after each restart.
 </p>
 
-<h2>2.4.1</h2>
+<h2 id="2.4.1">2.4.1</h2>
 <p>When "random", it must be capable of generating a uniformly
    random integer in the range 1 &lt;= x &lt;= n, for any value
    1 &lt;= n &lt;= 32767.  Any method can be used for this (for instance,
@@ -78,7 +78,7 @@
    odd and even).
 </p>
 
-<h2>2.4.2</h2>
+<h2 id="2.4.2">2.4.2</h2>
 <p>The generator is switched into "predictable" state with a
    seed value.  On any two occasions when the same seed is sown, identical
    sequences of values must result (for an indefinite period) until
@@ -87,14 +87,14 @@
    depend on the seed containing many non-zero bits.
 </p>
 
-<h2>2.4.3</h2>
+<h2 id="2.4.3">2.4.3</h2>
 <p>The interpreter is permitted to switch between these states
    on request of the player.  (This is useful for testing purposes.)
 </p>
 
 <hr>
 
-<h2>Remarks</h2>
+<h2 id="remarks">Remarks</h2>
 <p>It is dangerous to rely on the older ANSI C random number routines (rand() and srand()), as some
    implementations of these are very poor.  This has made some games (in
    particular, 'Balances') unwinnable on some Unix ports of <strong>Zip</strong>.

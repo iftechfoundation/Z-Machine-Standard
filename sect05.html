@@ -15,46 +15,46 @@
 
 <hr>
 
-<p>5.1 <a href="#one">Start position</a> /
-   5.2 <a href="#two">Header</a> /
-   5.3 <a href="#three">First instruction</a> /
-   5.4 <a href="#four">Main routine (V6)</a> /
-   5.5 <a href="#five">Initial execution point (other versions)</a>
+<p>5.1 <a href="#5.1">Start position</a> /
+   5.2 <a href="#5.2">Header</a> /
+   5.3 <a href="#5.3">First instruction</a> /
+   5.4 <a href="#5.4">Main routine (V6)</a> /
+   5.5 <a href="#5.5">Initial execution point (other versions)</a>
 </p>
 <hr>
 
 
-<h2 id="one">5.1</h2>
+<h2 id="5.1">5.1</h2>
 <p>A routine is required to begin at an address in memory which
    can be represented by a packed address (for instance, in Version 5
    it must occur at a byte address which is divisible by 4).
 </p>
 
-<h2 id="two">5.2</h2>
+<h2 id="5.2">5.2</h2>
 <p>A routine begins with one byte indicating the number of local
    variables it has (between 0 and 15 inclusive).
 </p>
 
-<h2>5.2.1</h2>
+<h2 id="5.2.1">5.2.1</h2>
 <p>In Versions 1 to 4, that number of 2-byte words follows,
    giving initial values for these local variables.  In Versions 5 and
    later, the initial values are all zero.
 </p>
 
-<h2 id="three">5.3</h2>
+<h2 id="5.3">5.3</h2>
 <p>Execution of instructions begins from the byte after this
    header information.  There is no formal 'end-marker' for a routine
    (it is simply assumed that execution eventually results in a return
    taking place).
 </p>
 
-<h2 id="four">5.4</h2>
+<h2 id="5.4">5.4</h2>
 <p>In Version 6, there is a "main" routine (whose packed address
    is stored in the word at <strong>$06</strong> in the header) called when the game
    starts up.  It is illegal to return from this routine.
 </p>
 
-<h2 id="five">5.5</h2>
+<h2 id="5.5">5.5</h2>
 <p>In all other Versions, the word at <strong>$06</strong> contains the
    byte address of the first instruction to execute.  The Z-machine
    starts in an environment with no local variables from which, again,
@@ -63,7 +63,7 @@
 
 <hr>
 
-<h2>Remarks</h2>
+<h2 id="remarks">Remarks</h2>
 <p>Note that it is permissible for a routine to be in dynamic memory.
    Marnix Klooster suggests this might be used for compiling code at
    run time!
