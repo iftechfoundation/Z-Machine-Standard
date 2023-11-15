@@ -80,10 +80,12 @@
 <h2 id="4.2.2">4.2.3</h2>
 <p>The type 'Variable' really means "variable by value".  Some
    instructions take as an operand a "variable by reference": for instance,
-   <strong>inc</strong> has one operand, the reference number of a variable to increment.
-   This operand usually has type 'Small constant' (and Inform automatically
-   assembles a line like <strong>@inc turns</strong> by writing the operand <strong>turns</strong> as
-   a small constant with value the reference number of the variable <strong>turns</strong>).
+   <a href="sect15.html#inc"><strong>inc</strong><a/> has one operand, the 
+   reference number of a variable to increment. This operand usually has type 
+   'Small constant' (and Inform automatically assembles a line like 
+   <strong>@inc turns</strong> by writing the operand <strong>turns</strong> as
+   a small constant with value the reference number of the variable 
+   <strong>turns</strong>).
 </p>
 
 <h2 id="4.3.2">4.3</h2>
@@ -143,8 +145,10 @@
 
 <h2 id="4.4.3.1">4.4.3.1</h2>
 <p>In the special case of the "double variable" VAR opcodes
-   <strong>call_vs2</strong> and <strong>call_vn2</strong> (opcode numbers 12 and 26), a second byte
-   of types is given, containing the types for the next four operands.
+   <a href="sect15.html#call_vs2"><strong>call_vs2</strong></a> and 
+   <a href="sect15.html#call_vn2"><strong>call_vn2</strong></a> (opcode 
+   numbers 12 and 26), a second byte of types is given, containing the types 
+   for the next four operands.
 </p>
 
 
@@ -155,7 +159,8 @@
 </p>
 
 <h2 id="4.5.1">4.5.1</h2>
-<p>Note that only <strong>call_vs2</strong> and <strong>call_vn2</strong> can have more than 4
+<p>Note that only <a href="sect15.html#call_vs2"><strong>call_vs2</strong></a> and 
+   <a href="sect15.html#call_vn2"><strong>call_vn2</strong></a> can have more than 4
    operands, and no instruction can have more than 8.
 </p>
 
@@ -169,7 +174,8 @@
 
 
 <h2 id="4.6">4.6</h2>
-<p>"Store" instructions return a value: e.g., <strong>mul</strong> multiplies
+<p>"Store" instructions return a value: e.g., 
+   <a href="sect15.html#mul"><strong>mul</strong></a> multiplies
    its two operands together.  Such instructions must be followed by a
    single byte giving the variable number of where to put the result.
 </p>
@@ -201,18 +207,20 @@
 
 
 <h2 id="4.8">4.8</h2>
-<p>Two opcodes, <strong>print</strong> and <strong>print_ret</strong>, are followed by a text
-   string.  This is stored according to the usual rules: in particular
-   execution continues after the last 2-byte word of text (the one with
-   top bit set).
+<p>Two opcodes, <a href="sect15.html#print"><strong>print</strong></a> and 
+   <a href="sect15.html#print_ret"><strong>print_ret</strong></a>, are followed 
+   by a text string.  This is stored according to the usual rules: in particular
+   execution continues after the last 2-byte word of text (the one with top bit 
+   set).
 </p>
 
 <hr>
 
 <h2 id="remarks">Remarks</h2>
 <p>Some opcodes have type VAR only because the available codes for
-   the other types had run out; <strong>print_char</strong>, for instance.  Others, especially
-   <strong>call</strong>, need the flexibility to have between 1 and 4 operands.
+   the other types had run out; <a href="sect15.html#print_char"><strong>print_char</strong></a>, 
+   for instance. Others, especially <a href="sect15.html#call"><strong>call</strong></a>, 
+   need the flexibility to have between 1 and 4 operands.
 </p>
 
 <p>The Inform assembler can assemble branches in either form, though
@@ -239,10 +247,11 @@
 
 <p>If the rule were simply "add the offset" then, since the offset couldn't
    be 0 or 1 (because of the return-false and return-true values), we would
-   never be able to skip past a 1-byte instruction (say, a 0OP like <strong>quit</strong>),
-   or specify the branch "don't branch at all" (sometimes useful to ignore
-   the result of the test altogether).  Subtracting 2 means that the only
-   effects we can't achieve are
+   never be able to skip past a 1-byte instruction (say, a 0OP like 
+   <a href="sect15.html#quit"><strong>quit</strong></a>), or specify the 
+   branch "don't branch at all" (sometimes useful to ignore the result of 
+   the test altogether).  Subtracting 2 means that the only effects we can't 
+   achieve are
 </p>
 
 <pre>
