@@ -38,8 +38,10 @@
 
 <h2 id="1.1.1">1.1.1</h2>
 <p>Dynamic memory can be read or written to (either directly,
-   using <strong>loadb</strong>, <strong>loadw</strong>, <strong>storeb</strong> and <strong>storew</strong>, or indirectly with
-   opcodes such as <strong>insert_obj</strong> and <strong>remove_obj</strong>).
+   using <a href="sect15.html#loadb"><strong>loadb</strong></a>, <a href="sect15.html#loadw"><strong>loadw</strong></a>, 
+   <a href="sect15.html#storeb"><strong>storeb</strong></a> and <a href="sect15.html#storew"><strong>storew</strong></a>, 
+   or indirectly with opcodes such as <a href="sect15.html#insert_obj"><strong>insert_obj</strong></a> and 
+   <a href="sect15.html#remove_obj"><strong>remove_obj</strong></a>).
 </p>
 
 <h2 id="1.1.1.1">1.1.1.1</h2>
@@ -55,8 +57,8 @@
 </p>
 
 <h2 id="1.1.2">1.1.2</h2>
-<p>Static memory can be read using the opcodes <strong>loadb</strong> and
-   <strong>loadw</strong>.  It is illegal for a game to attempt to write to static
+<p>Static memory can be read using the opcodes <a href="sect15.html#loadb"><strong>loadb</strong></a> and
+   <a href="sect15.html#loadw"><strong>loadw</strong></a>.  It is illegal for a game to attempt to write to static
    memory.
 </p>
 
@@ -110,15 +112,15 @@
 </pre>
    
 <p><em>R_O</em> and <em>S_O</em> are the routine and strings offsets
-   (specified in the header as words at <strong>$28</strong> and <strong>$2a</strong>,
+   (specified in the <a href="sect11.html">header</a> as words at <strong>$28</strong> and <strong>$2a</strong>,
    respectively).
 </p>
 
 <h2 id="1.2.4">1.2.4</h2>
 <p><strong>***</strong> Throughout the specification, Versions 7 and 8 are identical
-   to Version 5 except as stated at <strong>S</strong> 1.1.4 and <strong>S</strong> 
-   1.2.3 above, and in the constant used to find the file length, as stated in 
-   <strong>S</strong> 11.1.6.
+   to Version 5 except as stated at <a href=sect01.html#1.1.4><strong>S</strong> 1.1.4</a> and 
+   <a href=sect01.html#1.2.3><strong>S</strong> 1.2.3</a> above, and in the constant used to 
+   find the file length, as stated in <a href=sect11.html#11.1.6><strong>S</strong> 11.1.6</a>.
 </p>
 
 <hr>
