@@ -9,7 +9,7 @@
 
 <body>
 
-<img class="icon" src="icon15.gif" alt="">
+<img class="icon" src="images/icon15.gif" alt="">
 <hr>
 
 <h1 id="dict">15. Dictionary of opcodes</h1>
@@ -54,13 +54,13 @@
 
 <hr>
 
-<h2>15.1</h2>
+<h2 id="15.1">15.1</h2>
 <p>The dictionary below is alphabetical and includes entries on every
    opcode listed in the table in <strong>S</strong> 14, as well as brief 
    notes on a few opcodes once thought to exist but now disproved.
 </p>
 
-<h2>15.2</h2>
+<h2 id="15.2">15.2</h2>
 <p>The Z-machine has the same concept of "table" (as an internal
    data structure) as Inform.  Specifically, a table is an array of words
    (in dynamic or static memory) of which the initial entry is the number
@@ -68,7 +68,7 @@
    entries occupies 8 bytes, arranged as the words 3, x, y, z.
 </p>
 
-<h2>15.3</h2>
+<h2 id="15.3">15.3</h2>
 <p>In all cases below where one operand is supposed to be in
    a particular range, behaviour is undefined if it is not.  For instance
    an interpreter complies with the Standard even if it crashes when an
@@ -220,7 +220,8 @@
    if and only if the interpreter can receive it from the keyboard.
    Bits 2 to 15 are undefined.
 </p>
-<p><strong>***</strong> This opcode will only be present in interpreters obeying Standard
+<p><strong>***</strong>
+   This opcode will only be present in interpreters obeying Standard
    1.0 or later, so story files should check the standard number of the
    interpreter before executing this opcode.
 </p>
@@ -809,7 +810,8 @@
 <p>Print a Unicode character.  See <strong>S</strong> 3.8.5.4 and <strong>S</strong> 7.5 for details.
    The given character code must be defined in Unicode.
 </p>
-<p><strong>***</strong> This opcode will only be present in interpreters obeying Standard
+<p><strong>***</strong>
+   This opcode will only be present in interpreters obeying Standard
    1.0 or later, so story files should check the standard number of the
    interpreter before executing this opcode.
 </p>
@@ -1074,7 +1076,8 @@
    The interpreter gives the game a way of knowing that a restore has
    just happened (see <strong>save</strong>).
 </p>
-<p><strong>***</strong> From Version 5 it can have optional parameters as
+<p><strong>***</strong>
+   From Version 5 it can have optional parameters as
    <strong>save</strong> does, and returns the number of bytes loaded if so.  (Whether
    Infocom intended these options as part of Version 5 is doubtful,
    but it's too useful a feature to exclude from this Standard.)
@@ -1137,7 +1140,8 @@
    (one called asynchronously by a sound effect, or keyboard timing,
    or newline counting).
 </p>
-<p><strong>***</strong> The extension also has (optional) parameters, which save a region of
+<p><strong>***</strong>
+   The extension also has (optional) parameters, which save a region of
    the save area, whose address and length are in bytes, and provides a
    suggested filename: name is a pointer to an array of ASCII characters
    giving this name (as usual preceded by a byte giving the number of

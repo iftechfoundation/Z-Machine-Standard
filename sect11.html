@@ -9,11 +9,11 @@
 
 <body>
 
-<img class="icon" src="icon11.gif" alt="">
+<img class="icon" src="images/icon11.gif" alt="">
 
 <h1>11. The format of the header</h1>
 
-<h2>11.1</h2>
+<h2 id="11.1">11.1</h2>
 <p>The header table summarises those locations in the Z-machine's
    header which an interpreter must deal with.  (For further notes on
    traditional usage, see <a href="appb.html">Appendix B</a>.)
@@ -111,13 +111,13 @@
    data, hence the notation <strong>3+</strong>.
 </p>
 
-<h2>11.1.1</h2>
+<h2 id="11.1.1">11.1.1</h2>
 <p>It is illegal for a game to alter those
    fields not marked as "Dyn".  An interpreter is therefore free to
    store values of such fields in its own variables.
 </p>
 
-<h2>11.1.2</h2>
+<h2 id="11.1.2"> 11.1.2</h2>
 <p>The state of the transcription bit
    (bit 0 of Flags 2) can
    be changed directly by the game to turn transcribing on or off
@@ -127,7 +127,7 @@
    interpreter ensures that its value survives a restart or restore.
 </p>
 
-<h2>11.1.3</h2>
+<h2 id="11.1.3"> 11.1.3</h2>
 <p>Infocom used the interpreter numbers:</p>
 
 <pre>
@@ -148,7 +148,7 @@
    (There are, for instance, specifically Amiga versions.)
 </p>
 
-<h2>11.1.3.1</h2>
+<h2 id="11.1.3.1"> 11.1.3.1</h2>
 <p>Interpreter versions are conventionally ASCII codes for
    upper-case letters in Versions 4 and 5 (note that Infocom's Version 6
    interpreters just store numbers here).
@@ -159,13 +159,15 @@
    provides many better ways to query the interpreter for information.
 </p>
 
-<h2>11.1.4</h2>
-<p><strong>***</strong> The use of bit 7 in 'Flags 1' to signal whether timed
+<h2 id="11.1.4"> 11.1.4</h2>
+<p><strong>***</strong>
+   The use of bit 7 in 'Flags 1' to signal whether timed
    input is available is new in this document: see the preface.
 </p>
 
-<h2>11.1.5</h2>
-<p><strong>***</strong> If an interpreter obeys Revision <strong>n.m</strong> of this document
+<h2 id="11.1.5"> 11.1.5</h2>
+<p><strong>***</strong>
+   If an interpreter obeys Revision <strong>n.m</strong> of this document
    <em>perfectly</em>, as far as anyone knows,
    then byte <strong>$32</strong> should be written with
    <strong>n</strong> and byte <strong>$33</strong> with <strong>m</strong>.
@@ -173,33 +175,34 @@
    interpreter, it should leave these bytes as 0.
 </p>
 
-<h2>11.1.6</h2>
+<h2 id="11.1.6"> 11.1.6</h2>
 <p>The file length stored at <strong>$1a</strong> is actually divided by a constant,
    depending on the Version, to make it fit into a header word.  This constant
    is 2 for Versions 1 to 3, 4 for Versions 4 to 5 or 8 for Versions 6 and
    later.
 </p>
 
-<h2>11.1.7</h2>
+<h2 id="11.1.7"> 11.1.7</h2>
 <p>The header extension table provides potentially unlimited
    room for further header information.  It is a table of word entries,
    in which the initial word contains the number of words of data to follow.
 </p>
 
-<h2>11.1.7.1</h2>
+<h2 id="11.1.7.1"> 11.1.7.1</h2>
 <p>If the interpreter needs to read a word which is beyond the
    length of the extension table, or the extension table doesn't exist at
    all, then the result is 0.
 </p>
 
-<h2>11.1.7.2</h2>
+<h2 id="11.1.7.2"> 11.1.7.2</h2>
 <p>If the interpreter needs to write a word which is beyond the
    length of the extension table, or the extension table doesn't exist at
    all, then the result is that nothing happens.
 </p>
 
-<h2>11.1.7.3</h2>
-<p><strong>***</strong> Words in the header extension table have been allocated
+<h2 id="11.1.7.3"> 11.1.7.3</h2>
+<p><strong>***</strong>
+   Words in the header extension table have been allocated
    as follows:
 </p>
 
@@ -218,7 +221,7 @@
 
 <hr>
 
-<h2>Remarks</h2>
+<h2 id="remarks">Remarks</h2>
 <p>In the Infocom period, the larger Version 3 story files would
    not entirely fit on a single Atari 800 disc (though they would fit
    on a single Apple II, or a single PC disc).  Atari versions were

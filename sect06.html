@@ -8,22 +8,22 @@
 
 <body>
 
-<img class="icon" src="icon06.gif" alt="">
+<img class="icon" src="images/icon06.gif" alt="">
 
 <h1>6. The game state: storage and routine calls</h1>
 
 <hr>
 
-<p>6.1 <a href="#one">Saved states</a> /
-   6.2 <a href="#two">Storage of global variables</a> /
-   6.3 <a href="#three">The stack</a> /
-   6.4 <a href="#four">Routine calls</a> /
-   6.5 <a href="#five">Stack frames</a> /
-   6.6 <a href="#six">User stacks (V6)</a>
+<p>6.1 <a href="6.1">Saved states</a> /
+   6.2 <a href="6.2">Storage of global variables</a> /
+   6.3 <a href="6.3">The stack</a> /
+   6.4 <a href="6.4">Routine calls</a> /
+   6.5 <a href="6.5">Stack frames</a> /
+   6.6 <a href="6.6">User stacks (V6)</a>
 </p>
 <hr>
 
-<h2 id="one">6.1</h2>
+<h2 id="6.1">6.1</h2>
 <p>The "state of play" is defined as the following: the contents
    of dynamic memory; the contents of the stack; the value of the program
    counter (PC), and the "routine call state" (that is, the chain of routines
@@ -33,13 +33,13 @@
    private memory.
 </p>
 
-<h2>6.1.1</h2>
+<h2 id="6.1.1">6.1.1</h2>
 <p> The entire state of play must be stored when the game is saved.</p>
 
-<h2>6.1.1.1</h2>
+<h2 id="6.1.1.1">6.1.1.1</h2>
 <p> The format of a saved game file is not specified.</p>
 
-<h2>6.1.1.2</h2>
+<h2 id="6.1.1.2">6.1.1.2</h2>
 <p>An internal saved game for "undo" purposes (if there is one) is
    not part of the state of play.  This is important: if a saved game file also
    contained the internal saved game at the time of saving, it would be
@@ -48,15 +48,16 @@
    predecessors.
 </p>
 
-<h2>6.1.1.3</h2>
-<p>It is illegal to save the game (either with <strong>save</strong> or
-   <strong>save_undo</strong>) during an "interrupt routine"
+<h2 id="6.1.1.3">6.1.1.3</h2>
+<p>It is illegal to save the game (either with <a href="sect15.html#save">
+   <strong>save</strong></a> or <a href="sect15.html#save_undo">
+   <strong>save_undo</strong></a>) during an "interrupt routine"
    (one coming about through timed input, sound effect termination or
    newline interrupts).  Therefore saved games need not store information
    capable of restoring such a position.
 </p>
 
-<h2>6.1.2</h2>
+<h2 id="6.1.2">6.1.2</h2>
 <p>On a "restore" or "undo" (which restores a game saved into
    internal memory), the entire state of play is written back except that
    'Flags 2' in the header is preserved.  (This information includes whether
@@ -64,31 +65,32 @@
    font is being used.)
 </p>
 
-<h2>6.1.2.1</h2>
+<h2 id="6.1.2.1">6.1.2.1</h2>
 <p>Before a "restore", an interpreter should check that the
    file to be used has been saved from the same game currently being played.
    (See remark below.)
 </p>
 
-<h2>6.1.2.2</h2>
+<h2 id="6.1.2.2">6.1.2.2</h2>
 <p>After a "restore" or "undo", an interpreter should reset
-   the header values marked <strong>Rst</strong> in the header table of <strong>S</strong> 11.  (It should
+   the header values marked <strong>Rst</strong> in the header table of 
+   <a href="sect11.html"><strong>S</strong> 11</a>.  (It should
    not be assumed that the game was saved by the same interpreter.)
 </p>
 
-<h2>6.1.3</h2>
+<h2 id="6.1.3">6.1.3</h2>
 <p>A "restart" is similar: the entire state is restored from the
    original story file, and the stack is emptied; but 'Flags 2' is
    preserved; and the interpreter should reset the <strong>Rst</strong> parts of the header.
 </p>
 
-<h2>6.1.4</h2>
+<h2 id="6.1.4">6.1.4</h2>
 <p>In Versions 5 and later, an interpreter unable to save the game
    state into internal memory (for "undo" purposes) must clear bit 4 of
    'Flags 2' in the header.
 </p>
 
-<h2 id="two">6.2</h2>
+<h2 id="6.2">6.2</h2>
 <p>Global variables (variable numbers <strong>$10</strong> to <strong>$ff</strong>) are stored
    in a table in the Z-machine's dynamic memory, at a byte address given in
    word 6 of the header.  The table consists of 240 2-byte words and the
@@ -97,24 +99,24 @@
    directly in play, though not for it to change the table's address.)
 </p>
 
-<h2 id="three">6.3</h2>
+<h2 id="6.3">6.3</h2>
 <p>Writing to the stack pointer (variable number <strong>$00</strong>) pushes a
    value onto the stack; reading from it pulls a value off.  Stack entries
    are 2-byte words as usual.
 </p>
 
-<h2>6.3.1</h2>
+<h2 id="6.3.1">6.3.1</h2>
 <p>The stack is considered as empty at the start of each routine:
    it is illegal to pull values from it unless values have first been pushed
    on.
 </p>
 
-<h2>6.3.2</h2>
+<h2 id="6.3.2">6.3.2</h2>
 <p>The stack is left empty at the end of each routine: when a
    return occurs, any values pushed during the routine are thrown away.
 </p>
 
-<h2>6.3.3</h2>
+<h2 id="6.3.3">6.3.3</h2>
 <p>The absolute minimum standard for stack size is defined as:</p>
 <p>let the 'usage' of a routine call be 4 plus the number of local
    variables it has.  During a game the total of the usages for each
@@ -133,15 +135,20 @@
 </p>
 
 
-<h2>6.3.4</h2>
-<p>In the seven opcodes that take indirect variable references (<strong>inc</strong>,
-   <strong>dec</strong>, <strong>inc_chk</strong>, <strong>dec_chk</strong>,
-   <strong>load</strong>, <strong>store</strong>, <strong>pull</strong>), 
+<h2 id="6.3.4">6.3.4</h2>
+<p>In the seven opcodes that take indirect variable references 
+   <a href="sect15.html#inc">(<strong>inc</strong></a>,
+   <a href="sect15.html#dec"><strong>dec</strong></a>, 
+   <a href="sect15.html#inc_chk"><strong>inc_chk</strong></a>, 
+   <a href="sect15.html#dec_chk"><strong>dec_chk</strong></a>,
+   <a href="sect15.html#load"><strong>load</strong></a>, 
+   <a href="sect15.html#store"><strong>store</strong></a>, 
+   <a href="sect15.html#pull"><strong>pull</strong>)</a>, 
    an indirect reference to the stack pointer does not push or pull the top 
    item of the stack - it is read or written in place.
 </p>
 
-<h2 id="four">6.4</h2>
+<h2 id="6.4">6.4</h2>
 <p>Routine calls occur in the following circumstances: when one
    of the <strong>call...</strong> opcodes is executed; in Versions 4 and later, when
    timed keyboard input is being monitored; in Versions 5 and later,
@@ -150,26 +157,26 @@
    interrupt" occurs.
 </p>
 
-<h2>6.4.1</h2>
+<h2 id="6.4.1">6.4.1</h2>
 <p>A routine call may have any number of arguments, from 0 to
    3 (in Versions 1 to 3) or 0 to 7 (Versions 4 and later).  All
    routines return a value (though sometimes this value is thrown away
    afterward: for example by opcodes in the form <strong>call_vn*</strong>).
 </p>
 
-<h2>6.4.2</h2>
+<h2 id="6.4.2">6.4.2</h2>
 <p>Routine calls preserve local variables and the stack
    (except when the return value is stored in a local variable or onto
    the top of the stack).
 </p>
 
-<h2>6.4.3</h2>
+<h2 id="6.4.3">6.4.3</h2>
 <p>A routine call to packed address 0 is legal: it does nothing
    and returns false (0).  Otherwise it is illegal to call a packed
    address where no routine is present.
 </p>
 
-<h2>6.4.4</h2>
+<h2 id="6.4.4">6.4.4</h2>
 <p>When a routine is called, its local variables are created
    with initial values taken from the routine header (Versions 1 to
    4) or with initial value 0 (Versions 5 and later).  Next, the
@@ -177,29 +184,30 @@
    local 1 and so on).
 </p>
 
-<h2>6.4.4.1</h2>
+<h2 id="6.4.4.1">6.4.4.1</h2>
 <p>It is legal for there to be more arguments than local
    variables (any spare arguments are thrown away) or for there to
    be fewer.
 </p>
 
-<h2>6.4.5</h2>
+<h2 id="6.4.5">6.4.5</h2>
 <p>The return value of a routine can be any Z-machine number.
    Returning 'false' means returning 0; returning 'true' means
    returning 1.
 </p>
 
-<h2 id="five">6.5</h2>
+<h2 id="6.5">6.5</h2>
 <p>A "stack frame" is an index to the routine call state
    (that is, the call-stack of return addresses from routines currently
    running, and values of local variables within them).  This index
    is a Z-machine number.  The interpreter must be able to produce the
    current value and to set a value further down the call-stack than
    the current one, effectively throwing away its recent history
-   (see <strong>catch</strong> and <strong>throw</strong>).
+   (see <a href="sect15.html#catch"><strong>catch</strong></a> and 
+   <a href="sect15.html#throw"><strong>throw</strong></a>).
 </p>
 
-<h2 id="six">6.6</h2>
+<h2 id="6.6">6.6</h2>
 <p>In Version 6, the Z-machine understands a third kind of stack: a
    "user stack", which is a table of words in dynamic memory.  The first word
    in this table always holds the number of spare slots on the stack (so the
@@ -211,7 +219,7 @@
 
 <hr>
 
-<h2>Remarks</h2>
+<h2 id="remarks">Remarks</h2>
 <p>Some interpreters store the whole of dynamic memory to disc as part of their
    saved game files, which can make them as much as 45K or so long.  A player
    making a serious attack on a game may end up wasting a whole megabyte, more
@@ -229,12 +237,20 @@
    compiled to handle the sonarscope differently).
 </p>
 
-<p>These issues are taken up in great detail in Martin Frost's <strong>Quetzal</strong>
+<p>These issues are taken up in great detail in Martin Frost's 
+   <a href="quetzal/index.html"><strong>Quetzal</strong></a>
    standard for saved game files, created to allow different interpreters
    to exchange saved games.  This Standard doesn't require compliance with
    <strong>Quetzal</strong>, but interpreter writers are urged to consider it: it can only
    help authors if players can send them saved games where bugs seem to
    have appeared.
+</p>
+
+<p>Given the existence of <strong>Quetzal</strong>, it is quite
+   possible that after loading, the game may be running on a different
+   interpreter to that on which the game started. As a result, it is strongly
+   advisable for games to recheck any interpreter capabilities (eg Standard version,
+   unicode support, etc) after loading.
 </p>
 
 <p>The stack is stored in the interpreter's own memory, not anywhere in the
@@ -263,13 +279,6 @@
    failing.  Some Infocom-written interpreters will only provide "undo" to a
    game which has bit 4 of 'Flags 2' set: but Inform 5.5 doesn't set this bit,
    so modern interpreters should be more generous.
-</p>
-
-<p>Given the existence of Quetzal, a portable saved file format, it is quite
-   possible that after loading, the game may be running on a different
-   interpreter to that on which the game started. As a result, it is strongly
-   advisable for games to recheck any interpreter capabilities (eg Standard version,
-   unicode support, etc) after loading.
 </p>
 
 <hr>
