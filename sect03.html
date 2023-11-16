@@ -339,7 +339,8 @@ current   --------------------------
 </p>
 
 <h2 id="3.8.5.1">3.8.5.1</h2>
-<p><strong>***</strong> To define which characters are required, the Unicode
+<p><strong>***</strong>
+   To define which characters are required, the Unicode
    (or ISO 10646-1) Basic Multilingual Plane character set is used: characters are specified
    by unsigned 16-bit codes.  These values agree with ISO 8859 Latin-1
    in the range 0 to 255, and with ASCII and ZSCII in the range
@@ -356,7 +357,8 @@ current   --------------------------
 </p>
 
 <h2 id="3.8.5.2">3.8.5.2</h2>
-<p><strong>***</strong> The story file chooses its stock of extra characters
+<p><strong>***</strong>
+   The story file chooses its stock of extra characters
    with a "Unicode translation table" as follows.  Under Versions
    1 to 4, the "default table" is always used (see below).
    In Version 5 or later, if Word 3 of the header extension table is
@@ -391,7 +393,8 @@ current   --------------------------
 </p>
 
 <h2 id="3.8.5.4.1">3.8.5.4.1</h2>
-<p><strong>***</strong> The interpreter is required to be able to print
+<p><strong>***</strong>
+   The interpreter is required to be able to print
    representations of every defined Unicode character under <strong>$0100</strong>
    (i.e. of every defined ISO 8859-1 Latin1 character).  If no
    suitable letter forms are available, textual equivalents may
@@ -408,7 +411,8 @@ current   --------------------------
 </p>
 
 <h2 id="3.8.5.4.3">3.8.5.4.3</h2>
-<p><strong>***</strong> An interpreter is not required to have suitable
+<p><strong>***</strong>
+   An interpreter is not required to have suitable
    letter-forms for printing Unicode characters <strong>$0100</strong> to <strong>$FFFF</strong>.
    (It may, if it chooses, allow the user to configure certain
    fonts for certain Unicode ranges; but this is not required.)
