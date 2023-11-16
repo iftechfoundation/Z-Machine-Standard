@@ -36,7 +36,8 @@
    to a printer or a file).
 </p>
 <h2 id="7.1.1.1">7.1.1.1</h2>
-<p>In Versions 1 to 5, the player's input to the <strong>read</strong>
+<p>In Versions 1 to 5, the player's input to the 
+   <a href="sect15.html#read"><strong>read</strong></a>
    opcode should be echoed to output streams 1 and 2 (if stream 2
    is active), so that text typed in appears in any transcript.
    In Version 6 input should be sent only to stream 1 and it is
@@ -56,7 +57,8 @@
 <h2 id="7.1.2">7.1.2</h2>
 <p>Versions 3 and later supply these and two other output streams,
    numbered 3 (Z-machine memory) and 4 (a script file of the player's whole
-   commands and of individual keypresses as read by <strong>read_char</strong>).
+   commands and of individual keypresses as read by 
+   <a href="sect15.html#read_char"><strong>read_char</strong></a>).
 </p>
 
 <h2 id="7.1.2.1">7.1.2.1</h2>
@@ -94,17 +96,18 @@
 
 <h2 id="7.1.2.2.1">7.1.2.2.1</h2>
 <p>Newlines are written to output stream 3 as ZSCII 13.  (A game
-   should never <strong>print_char</strong> the value 10, or any other value which is
-   undefined as a ZSCII output code.)
+   should never <a href="sect15.html#print_char"><strong>print_char</strong></a>
+   the value 10, or any other value which is undefined as a ZSCII output code.)
 </p>
 
 <h2 id="7.1.1.2.3">7.1.2.3</h2>
 <p>Output stream 4 is unusual in that, when it is selected,
    the only text printed to it is that of the player's commands and
-   keypresses (as read by <strong>read_char</strong>).  (Each command is written, in
-   one go, when it has been finished. Time delays and mouse-clicks should ideally
-   be recorded. For suggestions on how this might be achieved, see the remarks section 
-   below. Mistypes and uses of 'delete' are not written.)
+   keypresses (as read by <a href="sect15.html#read_char"><strong>read_char</strong></a>).
+   (Each command is written, in one go, when it has been finished. Time delays and mouse-clicks 
+   should ideally be recorded. For suggestions on how this might be achieved, see the 
+   <a href="sect07.html#remarks">remarks</a> section below. Mistypes and uses of 'delete' are 
+   not written.)
 </p>
 
 <h2 id="7.2">7.2</h2>
@@ -118,13 +121,14 @@
 <h2 id="7.2.1">7.2.1</h2>
 <p>In Versions 1 to 3, buffering is always on.  In Versions 4
    and later it is on by default (at the start of a game) and a game can
-   switch it on or off using the <strong>buffer_mode</strong> opcode.
+   switch it on or off using the <a href="sect15.html#buffer_mode"><strong>buffer_mode</strong></a>
+   opcode.
 </p>
 
 <h2 id="7.2.2">7.2.2</h2>
 <p>In Version 6, each of the eight windows has its own "buffering
-   flag".  In Versions 3 to 5, the <strong>buffer_mode</strong> applies only to the lower
-   window, and buffering never happens in the upper window.
+   flag".  In Versions 3 to 5, the <a href="sect15.html#buffer_mode"><strong>buffer_mode</strong></a> 
+   applies only to the lower window, and buffering never happens in the upper window.
 </p>
 
 <h2 id="7.3">7.3</h2>
@@ -135,7 +139,8 @@
 
 <h2 id="7.4">7.4</h2>
 <p>In Versions 3 and later, all four output streams can be selected
-   or deselected using the <strong>output_stream</strong> opcode.  In addition, stream 2
+   or deselected using the <a href="sect15.html#output_stream">
+   <strong>output_stream</strong></a> opcode.  In addition, stream 2
    can be selected or deselected by setting or clearing bit 0 of 'Flags 2'.
    Whichever method is used, the interpreter must ensure that this flag
    holds the current status of stream 2.  ('A Mind Forever Voyaging'
@@ -172,7 +177,9 @@
 
 <h2 id="7.6">7.6</h2>
 <p><strong>***</strong> In Versions 5 and later, the Z-machine has the ability to load
-   and save files (using optional operands with the <strong>save</strong> and <strong>restore</strong>
+   and save files (using optional operands with the 
+   <a href="sect15.html#save"><strong>save</strong></a> and 
+   <a href="sect15.html#restore"><strong>restore</strong></a>
    opcodes: these operands were not used in Infocom's Version 5 games,
    but I wish to specify them as in Version 5 anyway).
 </p>
@@ -207,7 +214,7 @@
 <h2 id="7.6.4">7.6.4</h2>
 <p>File-handling errors such as "disc corrupt" and "disc full"
    should be reported directly to the player by the interpreter.  The error
-   "file not found" should only cause a failure return code from <strong>restore</strong>.
+   "file not found" should only cause a failure return code from 
    <a href="sect15.html#restore"><strong>restore</strong></a>.
 </p>
 
@@ -241,7 +248,8 @@
    the upper window.
 </p>
 
-<p>Note that the requirement 7.1.2.1.1, that usages of stream 3 can be
+<p>Note that the requirement in <a href="sect07.html#7.1.2.1.1"><strong>S</strong> 
+   7.1.2.1.1</a>, that usages of stream 3 can be
    'nested', is new in Standard 1.0.  This is potentially important for
    Inform games, as stream 3 is often used to examine text before printing,
    for instance to choose between the articles "a" and "an" in front

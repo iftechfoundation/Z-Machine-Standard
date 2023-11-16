@@ -49,8 +49,9 @@
 </p>
 
 <h2 id="6.1.1.3">6.1.1.3</h2>
-<p>It is illegal to save the game (either with <strong>save</strong> or
-   <strong>save_undo</strong>) during an "interrupt routine"
+<p>It is illegal to save the game (either with <a href="sect15.html#save">
+   <strong>save</strong></a> or <a href="sect15.html#save_undo">
+   <strong>save_undo</strong></a>) during an "interrupt routine"
    (one coming about through timed input, sound effect termination or
    newline interrupts).  Therefore saved games need not store information
    capable of restoring such a position.
@@ -72,7 +73,8 @@
 
 <h2 id="6.1.2.2">6.1.2.2</h2>
 <p>After a "restore" or "undo", an interpreter should reset
-   the header values marked <strong>Rst</strong> in the header table of <strong>S</strong> 11.  (It should
+   the header values marked <strong>Rst</strong> in the header table of 
+   <a href="sect11.html"><strong>S</strong> 11</a>.  (It should
    not be assumed that the game was saved by the same interpreter.)
 </p>
 
@@ -134,9 +136,14 @@
 
 
 <h2 id="6.3.4">6.3.4</h2>
-<p>In the seven opcodes that take indirect variable references (<strong>inc</strong>,
-   <strong>dec</strong>, <strong>inc_chk</strong>, <strong>dec_chk</strong>,
-   <strong>load</strong>, <strong>store</strong>, <strong>pull</strong>), 
+<p>In the seven opcodes that take indirect variable references 
+   <a href="sect15.html#inc">(<strong>inc</strong></a>,
+   <a href="sect15.html#dec"><strong>dec</strong></a>, 
+   <a href="sect15.html#inc_chk"><strong>inc_chk</strong></a>, 
+   <a href="sect15.html#dec_chk"><strong>dec_chk</strong></a>,
+   <a href="sect15.html#load"><strong>load</strong></a>, 
+   <a href="sect15.html#store"><strong>store</strong></a>, 
+   <a href="sect15.html#pull"><strong>pull</strong>)</a>, 
    an indirect reference to the stack pointer does not push or pull the top 
    item of the stack - it is read or written in place.
 </p>
@@ -196,7 +203,8 @@
    is a Z-machine number.  The interpreter must be able to produce the
    current value and to set a value further down the call-stack than
    the current one, effectively throwing away its recent history
-   (see <strong>catch</strong> and <strong>throw</strong>).
+   (see <a href="sect15.html#catch"><strong>catch</strong></a> and 
+   <a href="sect15.html#throw"><strong>throw</strong></a>).
 </p>
 
 <h2 id="6.6">6.6</h2>
@@ -229,7 +237,8 @@
    compiled to handle the sonarscope differently).
 </p>
 
-<p>These issues are taken up in great detail in Martin Frost's <strong>Quetzal</strong>
+<p>These issues are taken up in great detail in Martin Frost's 
+   <a href="quetzal/index.html"><strong>Quetzal</strong></a>
    standard for saved game files, created to allow different interpreters
    to exchange saved games.  This Standard doesn't require compliance with
    <strong>Quetzal</strong>, but interpreter writers are urged to consider it: it can only

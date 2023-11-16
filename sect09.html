@@ -60,7 +60,7 @@
 <h2 id="9.4">9.4</h2>
 <p>Bleeps are immediate and brief.  Other sound effects take place
    in the background, while normal operation of the Z-machine is going on.
-   Control is via the <strong>sound_effect</strong> opcode, allowing the game to prepare,
+   Control is via the <a href="sect15.html#sound_effect"><strong>sound_effect</strong></a> opcode, allowing the game to prepare,
    start, stop or finish with an effect.
 </p>
 
@@ -102,15 +102,15 @@
 
 <h2 id="remarks">Remarks</h2>
 <p>The safest way an Inform program can try to produce a bleep is by
-   executing <strong>@sound_effect 1</strong>.  Some ports of <strong>Zip</strong> believe that the
+   executing <a href="sect15.html#sound_effect"><strong>@sound_effect 1</strong></a>.  Some ports of <strong>Zip</strong> believe that the
    first operand of this is the number of bleeps to make (so that
-   <strong>@sound_effect 2</strong> bleeps twice), but this is incorrect.
+   <a href="sect15.html#sound_effect"><strong>@sound_effect 2</strong></a> bleeps twice), but this is incorrect.
 </p>
 
-<p>Several Infocom games bleep (using <strong>sound_effect</strong> with only one
+<p>Several Infocom games bleep (using <a href="sect15.html#sound_effect"><strong>sound_effect</strong></a> with only one
    operand, always equal to 1 or 2).  Two provided sampled sound effects
    but did not bleep: 'The Lurking Horror' and 'Sherlock'.
-   Their story files contain the following usages of <strong>sound_effect</strong>:
+   Their story files contain the following usages of <a href="sect15.html#sound_effect"><strong>sound_effect</strong></a>:
 </p>
 
 <pre>
@@ -133,7 +133,7 @@
 <p>A further difficulty with 'TLH' is that it assumes the interpreter is
    as slow as Infocom's Amiga interpreter was: it fires off several sound
    effects in one game round, assuming there will be time for it to play
-   most of each one.  To simulate this, <strong>sound_effect</strong> must be rewritten
+   most of each one.  To simulate this, <a href="sect15.html#sound_effect"><strong>sound_effect</strong></a> must be rewritten
    to pause sometimes:
 </p>
 
@@ -151,11 +151,11 @@
 <p>Infocom implemented sound effects differently on different machines.
    The format of Infocom's shipped sound effects files has been
    documented by Stefan Jokisch and his notes are available from
-   <strong>www.ifarchive.org</strong>. 
+   <a href="https://ifarchive.org/if-archive/infocom/info/sound_format.txt">the Interactive Fiction Archive</a>. 
 </p>
 
 <p>However, modern interpreters are strong encouraged to support Andrew Plotkin's
-   <strong>Blorb</strong> format, which is a more modern way to make sound effects 
+   <a href="http://www.eblong.com/zarf/blorb/blorb.html"><strong>Blorb</strong></a> format, which is a more modern way to make sound effects 
    available to newer games. Blorb files have been made available for the Infocom 
    sound effects, so that modern interpreters need no longer support the Infocom format.
 </p>
