@@ -56,7 +56,7 @@
 
 <h2 id="15.1">15.1</h2>
 <p>The dictionary below is alphabetical and includes entries on every
-   opcode listed in the table in <strong>S</strong> 14, as well as brief 
+   opcode listed in the table in <strong>§</strong> 14, as well as brief 
    notes on a few opcodes once thought to exist but now disproved.
 </p>
 
@@ -73,7 +73,7 @@
    a particular range, behaviour is undefined if it is not.  For instance
    an interpreter complies with the Standard even if it crashes when an
    illegal object number (including 0) is given for an object operand.
-   However, see <strong>S</strong> A for guidelines on detecting and dealing with errors.
+   However, see <strong>§</strong> A for guidelines on detecting and dealing with errors.
 </p>
 
 <hr>
@@ -338,7 +338,7 @@
 <p>Erases window with given number (to background colour);
    or if -1 it unsplits the screen and clears the lot; or if -2 it
    clears the screen without unsplitting it. The cursor may move if 
-   the window number given is -1 (see <strong>S</strong> 8 for precise details).
+   the window number given is -1 (see <strong>§</strong> 8 for precise details).
 </p>
 
 <hr>
@@ -438,7 +438,7 @@
 <h2 id="get_wind_prop">get_wind_prop</h2>
 <p><strong><a href="sect14.html#EXT">EXT</a>:19  13  6  get_wind_prop   window property-number -> (result)</strong></p>
 <p>Reads the given property of the given window (see
-   <strong>S</strong> 8).
+   <strong>§</strong> 8).
 </p>
 
 <hr>
@@ -529,7 +529,7 @@
 <p><strong><a href="sect14.html#1OP">1OP</a>:142  E     load            (variable) -> (result)</strong></p>
 <p>The value of the variable referred to by the operand
    is stored in the result.  (Inform doesn't use this; see the notes to
-   <strong>S</strong> 14.)
+   <strong>§</strong> 14.)
 </p>
 
 <hr>
@@ -740,7 +740,7 @@
 <h2 id="print_char">print_char</h2>
 <p><strong><a href="sect14.html#VAR">VAR</a>:229  5     print_char      output-character-code</strong></p>
 <p>Print a ZSCII character.  The operand must be a character code
-   defined in ZSCII for output (see <strong>S</strong> 3).  In particular, it must
+   defined in ZSCII for output (see <strong>§</strong> 3).  In particular, it must
    certainly not be negative or larger than 1023.
 </p>
 
@@ -807,7 +807,7 @@
 
 <h2 id="print_unicode">print_unicode</h2>
 <p><strong><a href="sect14.html#EXT">EXT</a>:11   B 5/* print_unicode   char-number</strong></p>
-<p>Print a Unicode character.  See <strong>S</strong> 3.8.5.4 and <strong>S</strong> 7.5 for details.
+<p>Print a Unicode character.  See <strong>§</strong> 3.8.5.4 and <strong>§</strong> 7.5 for details.
    The given character code must be defined in Unicode.
 </p>
 <p><strong>***</strong>
@@ -963,7 +963,7 @@
    2 + 4*n  bytes long to hold the results of the analysis.)
 </p>
 <p>The interpreter divides the text into words and looks them up in the
-   dictionary, as described in <strong>S</strong> 13.  The number of words is written in
+   dictionary, as described in <strong>§</strong> 13.  The number of words is written in
    byte 1 and one 4-byte block is
    written for each word, from byte 2 onwards (except that it should stop
    before going beyond the maximum number of words specified).  Each block
@@ -1145,7 +1145,7 @@
    the save area, whose address and length are in bytes, and provides a
    suggested filename: name is a pointer to an array of ASCII characters
    giving this name (as usual preceded by a byte giving the number of
-   characters).  See <strong>S</strong> 7.6.  (Whether Infocom intended these options
+   characters).  See <strong>§</strong> 7.6.  (Whether Infocom intended these options
    as part of Version 5 is doubtful, but it's too useful a feature to
    exclude from this Standard.)
 </p>
@@ -1263,7 +1263,7 @@
 <p>Sets the margin widths (in pixels) on the left and right
    for the given window (which are by default 0). If the cursor is
    overtaken and now lies outside the margins altogether, move it
-   back to the left margin of the current line (see <strong>S</strong> 8.8.3.2.2.1).
+   back to the left margin of the current line (see <strong>§</strong> 8.8.3.2.2.1).
 </p>
 
 <hr>
@@ -1307,7 +1307,7 @@
    play the sound, not the number of times to repeat it after the first play.)
    (In Version 3, repeats are unsupported and the high byte must be 0.)
 </p>
-<p>Note that sound effect numbers 1 and 2 are bleeps (see <strong>S</strong> 9) and in
+<p>Note that sound effect numbers 1 and 2 are bleeps (see <strong>§</strong> 9) and in
    these cases the other operands must be omitted.  Conversely, if any
    of the other operands are present, the sound effect number must be
    3 or higher.
@@ -1321,7 +1321,7 @@
    The routine is not called if the sound is stopped by another sound or by
    an effect 3 call.
 </p>
-<p>See the remarks to <strong>S</strong> 9 for which forms of this opcode were actually
+<p>See the remarks to <strong>§</strong> 9 for which forms of this opcode were actually
    used by Infocom.
 </p>
 <p>In theory, <strong>@sound_effect;</strong> (with no operands at all) is illegal.
@@ -1353,7 +1353,7 @@
    split.
 </p>
 <p>In Version 6, this is supposed to roughly emulate the earlier Version 5
-   behaviour (see <strong>S</strong> 8), though the line count is in units rather than
+   behaviour (see <strong>§</strong> 8), though the line count is in units rather than
    lines.  (Existing Version 6 games seem to use this opcode
    only for bounding cursor movement.  'Journey' creates a status region
    which is the whole screen and then overlays it with two other windows.)
