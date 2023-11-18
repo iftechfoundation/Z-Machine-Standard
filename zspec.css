@@ -23,7 +23,7 @@ p.dictindex { text-align: center; }
 ul.clean { list-style: none; }
 
 table { border-right: black 1px solid; border-bottom: black 1px solid; border-left: none; border-top: none; }
-td { border-left: black 1px solid; border-top: black 1px solid; border-bottom: none; border-right: none; }
+td,th { border-left: black 1px solid; border-top: black 1px solid; border-bottom: none; border-right: none; }
 td.note { font-style: italic; text-align: center; }
 table.opcodes { margin-left: auto; margin-right: auto; margin-bottom: 1em; }
 table caption { font-weight: bold; text-align: center; }
