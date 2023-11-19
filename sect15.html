@@ -912,9 +912,9 @@
    is found.
 </p>
 <p>In Versions 1 to 4, byte 0 of the <strong>text-buffer</strong> should initially contain
-   the maximum number of letters which can be typed, minus 1 (the interpreter
-   should not accept more than this).  The text typed is reduced to lower case
-   (so that it can tidily be printed back by the program if need be)
+   the maximum number of letters which can be typed (the interpreter should 
+   not accept more than this), plus 1 (for the zero terminator).  The text typed is reduced 
+   to lower case (so that it can tidily be printed back by the program if need be)
    and stored in bytes 1 onward, with a zero terminator (but without any other
    terminator, such as a carriage return code).  (This means that
    if byte 0 contains n then the buffer must contain n+1 bytes, which
