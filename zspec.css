@@ -16,13 +16,14 @@ li ins a { color: #009F00; }
 .index li ins a { color: #00CF00; }
 
 p.date { text-align: center; }
-p.update { text-align: center; font-size: .8em;}
+p.update { text-align: center; font-size: .8em; }
+p.notice { text-align: center; font-weight: bold; }
 p.dictindex { text-align: center; }
 
 ul.clean { list-style: none; }
 
 table { border-right: black 1px solid; border-bottom: black 1px solid; border-left: none; border-top: none; }
-td { border-left: black 1px solid; border-top: black 1px solid; border-bottom: none; border-right: none; }
+td,th { border-left: black 1px solid; border-top: black 1px solid; border-bottom: none; border-right: none; max-width: 45em;}
 td.note { font-style: italic; text-align: center; }
 table.opcodes { margin-left: auto; margin-right: auto; margin-bottom: 1em; }
 table caption { font-weight: bold; text-align: center; }

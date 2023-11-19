@@ -15,16 +15,16 @@
 
 <hr>
 
-<p>12.1 <a href="#one">Storage</a> / 
-   12.2 <a href="#two">Property defaults table</a> / 
-   12.3 <a href="#three">Object tree</a> /
-   12.4 <a href="#four">Property tables</a> / 
-   12.5 <a href="#five">Well-foundedness of the tree</a>
+<p>12.1 <a href="#12.1">Storage</a> / 
+   12.2 <a href="#12.2">Property defaults table</a> / 
+   12.3 <a href="#12.3">Object tree</a> /
+   12.4 <a href="#12.4">Property tables</a> / 
+   12.5 <a href="#12.5">Well-foundedness of the tree</a>
 </p>
 
 <hr>
 
-<h2 id="one">12.1</h2>
+<h2 id="12.1">12.1</h2>
 <p>The object table is held in dynamic memory and its byte address
    is stored in the word at <strong>$0a</strong> in the header.  (Recall that objects
    have flags attached called attributes, numbered from 0 upward, and
@@ -32,7 +32,7 @@
    object need not provide every property.)
 </p>
 
-<h2 id="two">12.2</h2>
+<h2 id="12.2">12.2</h2>
 <p>The table begins with a block known as the property defaults table.
    This contains 31 words in Versions 1 to 3 and 63 in Versions 4 and later.
    When the game attempts to read the value of property n for an object
@@ -40,14 +40,14 @@
    is the resulting value.
 </p>
 
-<h2 id="three">12.3</h2>
+<h2 id="12.3">12.3</h2>
 <p>Next is the object tree.  Objects are numbered consecutively from
    1 upward, with object number 0 being used to mean "nothing" (though
    there is formally no such object).  The table consists of a list of
    entries, one for each object.
 </p>
 
-<h2>12.3.1</h2>
+<h2 id="12.3.1"> 12.3.1</h2>
 <p>In Versions 1 to 3, there are at most 255 objects, each having
    a 9-byte entry as follows:
 </p>
@@ -65,7 +65,7 @@
    attribute 31 is stored in bit 0 of the fourth.
 </p>
 
-<h2>12.3.2</h2>
+<h2 id="12.3.2"> 12.3.2</h2>
 <p>In Version 4 and later, there are at most 65535 objects, each
    having a 14-byte entry as follows:
 </p>
@@ -76,7 +76,7 @@
 </pre>
 
 
-<h2 id="four">12.4</h2>
+<h2 id="12.4">12.4</h2>
 <p>Each object has its own property table.  Each of these can be
    anywhere in dynamic memory (indeed, a game can legally change an object's
    properties table address in play, provided the new address points to
@@ -97,7 +97,7 @@
    is not a matter of convention.)
 </p>
 
-<h2>12.4.1</h2>
+<h2 id="12.4.1"> 12.4.1</h2>
 <p>In Versions 1 to 3, each property is stored as a block</p>
 
 <pre>
@@ -111,7 +111,7 @@
    multiple of 32.)
 </p>
 
-<h2>12.4.2</h2>
+<h2 id="12.4.2"> 12.4.2</h2>
 <p>In Versions 4 and later, a property block instead has the form</p>
 
 <pre>
@@ -121,7 +121,7 @@
 
 <p>The property number occupies the bottom 6 bits of the first size byte.</p>
 
-<h2>12.4.2.1</h2>
+<h2 id="12.4.2.1"> 12.4.2.1</h2>
 <p>If the top bit (bit 7) of the first size byte is set, then there are
    two size-and-number bytes as follows.  In the first byte, bits 0 to
    5 contain the property number; bit 6 is undetermined (it is clear in
@@ -131,21 +131,21 @@
    in Inform ones); bit 7 is always set.
 </p>
 
-<h2>12.4.2.1.1</h2>
+<h2 id="12.4.2.1.1"> 12.4.2.1.1</h2>
 <p><strong>***[1.0]</strong>
    A value of 0 as property data length (in the second
    byte) should be interpreted as a length of 64.  (Inform can compile
    such properties.)
 </p>
 
-<h2>12.4.2.2</h2>
+<h2 id="12.4.2.2"> 12.4.2.2</h2>
 <p>If the top bit (bit 7) of the first size byte is clear, then there is
    only one size-and-number byte.  Bits 0 to 5 contain the property number;
    bit 6 is either clear to indicate a property data length of 1, or
    set to indicate a length of 2; bit 7 is clear.
 </p>
 
-<h2 id="five">12.5</h2>
+<h2 id="12.5">12.5</h2>
 <p>It is the game's responsibility to keep the object tree
    well-founded: the interpreter is not required to check.
    "Well-founded" means the following:
@@ -164,7 +164,7 @@
 
 <hr>
 
-<h2>Remarks</h2>
+<h2 id="remarks">Remarks</h2>
 <p>The largest valid object number is not directly stored anywhere
    in the Z-machine.  Utility programs like <strong>Infodump</strong> deduce this
    number by assuming that, initially, the object entries end where
