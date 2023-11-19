@@ -32,7 +32,7 @@
   <tr><th> Hex</th><th>Len</th><th>V          </th><th>Dyn</th><th>Int</th><th>Rst</th><th>Con</th><th>Contents</th></tr>
   <tr><td>  0 </td><td> 1 </td><td> 1         </td><td>   </td><td>   </td><td>   </td><td>   </td><td>Version number (1 to 8)</td></tr>
   <tr><td>  1 </td><td> 1 </td><td> 3         </td><td>   </td><td>   </td><td>   </td><td>   </td><td><em>Flags 1 (see <a href="sect11.html#11.1.4"><strong>§</strong> 11.1.4</a>)</em></td></tr>
-  <tr><td>  2 </td><td> 2 </td><td> 1         </td><td>   </td><td>   </td><td>   </td><td> * </td><td> Release number (word)</td></tr>
+  <tr><td>  2 </td><td> 2 </td><td> 1         </td><td>   </td><td>   </td><td>   </td><td> * </td><td>Release number (word)</td></tr>
   <tr><td>  4 </td><td> 2 </td><td> 1         </td><td>   </td><td>   </td><td>   </td><td>   </td><td>Base of high memory (byte address)</td></tr>
   <tr><td>  6 </td><td> 2 </td><td> 1         </td><td>   </td><td>   </td><td>   </td><td>   </td><td>Initial value of program counter (byte address)</td></tr>
   <tr><td>    </td><td> 2 </td><td> 6         </td><td>   </td><td>   </td><td>   </td><td>   </td><td>Packed address of initial "main" routine</td></tr>
@@ -41,9 +41,8 @@
   <tr><td>  C </td><td> 2 </td><td> 1         </td><td>   </td><td>   </td><td>   </td><td>   </td><td>Location of global variables table (byte address)</td></tr>
   <tr><td>  E </td><td> 2 </td><td> 1         </td><td>   </td><td>   </td><td>   </td><td>   </td><td>Base of static memory (byte address)</td></tr>
   <tr><td> 10 </td><td> 2 </td><td> 1         </td><td>   </td><td>   </td><td>   </td><td>   </td><td>Flags 2 (see <a href="sect11.html#11.1.2"><strong>§</strong> 11.1.2</a>)</td></tr>
-  <tr><td> 12 </td><td> 6 </td><td> 2         </td><td>   </td><td>   </td><td>   </td><td> * </td><td> Serial code (six characters of ASCII)</td></tr>
-  <tr><td>    </td><td>   </td><td> 3         </td><td>   </td><td>   </td><td>   </td><td> * </td><td> Serial number (ASCII for the compilation date in the form YYMMDD)</td></tr>
-  <tr><td>    </td><td>   </td><td>           </td><td>   </td><td>   </td><td>   </td><td>   </td><td> (For bits 3,4,5,7 and 8, Int clears again if it cannot provide the requested effect.)</td></tr>
+  <tr><td> 12 </td><td> 6 </td><td> 2         </td><td>   </td><td>   </td><td>   </td><td> * </td><td>Serial code (six characters of ASCII)</td></tr>
+  <tr><td>    </td><td>   </td><td> 3         </td><td>   </td><td>   </td><td>   </td><td> * </td><td>Serial number (ASCII for the compilation date in the form YYMMDD)</td></tr>
   <tr><td> 18 </td><td> 2 </td><td> 2         </td><td>   </td><td>   </td><td>   </td><td>   </td><td>Location of abbreviations table (byte address)</td></tr>
   <tr><td> 1A </td><td> 2 </td><td> 3+        </td><td>   </td><td>   </td><td>   </td><td>   </td><td>Length of file (see note)</td></tr>
   <tr><td> 1C </td><td> 2 </td><td> 3+        </td><td>   </td><td>   </td><td>   </td><td>   </td><td>Checksum of file</td></tr>
@@ -99,6 +98,7 @@
   <tr><td>  7</td><td><em>5</em> </td><td>   </td><td> * </td><td> * </td><td>   </td><td>If set, game wants to use sound effects</td></tr>
   <tr><td>  8</td><td><em>6</em> </td><td>   </td><td> * </td><td> * </td><td>   </td><td>If set, game wants to use menus</td></tr>
   <tr><td> 10</td><td> ?         </td><td> ? </td><td> * </td><td>   </td><td> * </td><td>Possibly set by interpreter to indicate an error with the printer during transcription</td></tr>
+  <tr><td>   </td><td>           </td><td>   </td><td>   </td><td>   </td><td>   </td><td> (For bits 3,4,5,7 and 8, Int clears again if it cannot provide the requested effect.)</td></tr>
  </table>
 <p>Those fields marked as "Con" are of uncertain function, and interpreters are not required to pay attention to them.</p>
 <p>"Bit 0" refers to bit 0 of the second byte, "Bit 8" refers to bit 0 of the first byte.</p>
