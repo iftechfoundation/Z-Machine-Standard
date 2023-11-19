@@ -23,8 +23,8 @@
    <a href="#VAR">VAR</a> /
    <a href="#EXT">EXT</a>
 </p>
-<p>14.1 <a href="#one">Contents</a> / 
-   14.2 <a href="#two">Out of range opcodes</a> /
+<p>14.1 <a href="#14.1">Contents</a> / 
+   14.2 <a href="#14.2">Out of range opcodes</a> /
    <a href="#reading"><em>Reading the table</em></a> /
    <a href="#inform"><em>Inform assembly language</em></a>
 </p>
@@ -646,19 +646,19 @@
    Infocom story files, and documents the Inform assembly language syntax.
 </p>
 
-<h2 id="two">14.2</h2>
+<h2 id="14.2">14.2</h2>
 <p>Formally, it is illegal for a game to contain an opcode
    not specified for its version.  An interpreter should normally halt with
    a suitable message.
 </p>
 
-<h2>14.2.1</h2>
+<h2 id="14.2.1">14.2.1</h2>
 <p>However, extended opcodes in the range EXT:30 to EXT:255
    should be simply ignored (perhaps with a warning message somewhere
    off-screen).
 </p>
 
-<h2>14.2.2</h2>
+<h2 id="14.2.2">14.2.2</h2>
 <p><strong>***[1.0][1.1]</strong>
    EXT:11 and EXT:12 were opcodes added in Standard 1.0
    and can be generated in code compiled by Inform 6.12 or later. EXT:13 and EXT:29 are new in Standard 1.1.
@@ -666,7 +666,7 @@
    of this document to specify.
 </p>
 
-<h2>14.2.3</h2>
+<h2 id="14.2.3">14.2.3</h2>
 <p>Designers who wish to create their own "new" opcodes, for one
    specific game only, are asked to use opcode numbers in the range EXT:128 to
    EXT:255.  It is easy to modify Inform to name and assemble such opcodes. 
@@ -674,7 +674,7 @@
    interpreter to run it.)
 </p>
 
-<h2>14.2.4</h2>
+<h2 id="14.2.4">14.2.4</h2>
 <p>Interpreter-writers should ideally make this easy by providing a
    routine which is called if EXT:128 to EXT:255 are found, so that
    the minimum possible modification to the interpreter is needed.
@@ -884,7 +884,7 @@
 
 <hr>
 
-<h2>Remarks</h2>
+<h2 id="remarks">Remarks</h2>
 <p>The opcodes EXT:5 to EXT:8 were very likely in Infocom's own Version 5
    specification (documentary records of which are lost): they seem to have
    been partially implemented in existing Infocom interpreters, but do not

@@ -13,7 +13,7 @@
 
 <h1>11. The format of the header</h1>
 
-<h2>11.1</h2>
+<h2 id="11.1">11.1</h2>
 <p>The header table summarises locations in the Z-machine's
    header.
    "Hex" means the address, in hexadecimal;
@@ -119,7 +119,7 @@
    interpreter ensures that its value survives a restart or restore.
 </p>
 
-<h2>11.1.3</h2>
+<h2 id="11.1.3"> 11.1.3</h2>
 <p>Infocom used the interpreter numbers:</p>
 
 <pre>
@@ -140,7 +140,7 @@
    (There are, for instance, specifically Amiga versions.)
 </p>
 
-<h2>11.1.3.1</h2>
+<h2 id="11.1.3.1"> 11.1.3.1</h2>
 <p>Interpreter versions are conventionally ASCII codes for
    upper-case letters in Versions 4 and 5 (note that Infocom's Version 6
    interpreters just store numbers here).
@@ -151,7 +151,7 @@
    provides many better ways to query the interpreter for information.
 </p>
 
-<h2>11.1.4</h2>
+<h2 id="11.1.4">11.1.4</h2>
 <p>Flags 1:</p>
 <table>
 <caption><strong>Versions 1 to 3</strong></caption>
@@ -178,13 +178,13 @@
 </table>
 <p>Those fields marked as "Con" are meaningful only by convention (since existing Infocom and Inform games write them), and the interpreter need not know about their state.</p>
 
-<h2>11.1.4.1</h2>
+<h2 id="11.1.4.1">11.1.4.1</h2>
 <p><strong>***[1.0]</strong>
    The use of bit 7 in 'Flags 1' to signal whether timed
    input is available was new in the 1.0 document: see the preface.
 </p>
 
-<h2>11.1.5</h2>
+<h2 id="11.1.5"> 11.1.5</h2>
 <p><strong>***[1.0]</strong>
    If an interpreter obeys Revision <strong>n.m</strong> of this document
    <em>perfectly</em>, as far as anyone knows,
@@ -194,32 +194,32 @@
    interpreter, it should leave these bytes as 0.
 </p>
 
-<h2>11.1.6</h2>
+<h2 id="11.1.6"> 11.1.6</h2>
 <p>The file length stored at <strong>$1a</strong> is actually divided by a constant,
    depending on the Version, to make it fit into a header word.  This constant
    is 2 for Versions 1 to 3, 4 for Versions 4 to 5 or 8 for Versions 6 and
    later.
 </p>
 
-<h2>11.1.7</h2>
+<h2 id="11.1.7"> 11.1.7</h2>
 <p>The header extension table provides potentially unlimited
    room for further header information.  It is a table of word entries,
    in which the initial word contains the number of words of data to follow.
 </p>
 
-<h2>11.1.7.1</h2>
+<h2 id="11.1.7.1"> 11.1.7.1</h2>
 <p>If the interpreter needs to read a word which is beyond the
    length of the extension table, or the extension table doesn't exist at
    all, then the result is 0.
 </p>
 
-<h2>11.1.7.2</h2>
+<h2 id="11.1.7.2"> 11.1.7.2</h2>
 <p>If the interpreter needs to write a word which is beyond the
    length of the extension table, or the extension table doesn't exist at
    all, then the result is that nothing happens.
 </p>
 
-<h2>11.1.7.3</h2>
+<h2 id="11.1.7.3"> 11.1.7.3</h2>
 <p><strong>***[1.0][1.1]</strong>
    Words in the header extension table have been allocated
    as follows:
@@ -252,20 +252,20 @@
 
 </table>
 
-<h2>11.1.7.4</h2>
+<h2 id="11.1.7.4">11.1.7.4</h2>
 <p><strong>***[1.1]</strong>
    The bits in Flags 3 are set by the game to request use of a feature. If the interpreter cannot
    provide a feature, it must clear the relevant bit.
 </p>
 
-<h2>11.1.7.4.1</h2>
+<h2 id="11.1.7.4.1">11.1.7.4.1</h2>
 <p><strong>***[1.1]</strong>
    All unused bits in Flags 3 must be cleared by the interpreter.</p>
 
 
 <hr>
 
-<h2>Remarks</h2>
+<h2 id="remarks">Remarks</h2>
 <p>Some early Infocom games were sold by the Tandy Corporation, who
    seem to have been sensitive souls.  'Zork I' pretends not to have sequels
    if it finds the Tandy bit set.  And to quote Paul David Doherty:
