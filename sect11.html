@@ -41,7 +41,6 @@
   <tr><td>  C </td><td> 2 </td><td> 1         </td><td>   </td><td>   </td><td>   </td><td>   </td><td>Location of global variables table (byte address)</td></tr>
   <tr><td>  E </td><td> 2 </td><td> 1         </td><td>   </td><td>   </td><td>   </td><td>   </td><td>Base of static memory (byte address)</td></tr>
   <tr><td> 10 </td><td> 2 </td><td> 1         </td><td>   </td><td>   </td><td>   </td><td>   </td><td>Flags 2 (see <a href="sect11.html#11.1.2"><strong>§</strong> 11.1.2</a>)</td></tr>
-
   <tr><td> 12 </td><td> 6 </td><td> 2         </td><td>   </td><td>   </td><td>   </td><td> * </td><td> Serial code (six characters of ASCII)</td></tr>
   <tr><td>    </td><td>   </td><td> 3         </td><td>   </td><td>   </td><td>   </td><td> * </td><td> Serial number (ASCII for the compilation date in the form YYMMDD)</td></tr>
   <tr><td>    </td><td>   </td><td>           </td><td>   </td><td>   </td><td>   </td><td>   </td><td> (For bits 3,4,5,7 and 8, Int clears again if it cannot provide the requested effect.)</td></tr>
@@ -69,12 +68,6 @@
   <tr><td> 36 </td><td> 2 </td><td> 5         </td><td>   </td><td>   </td><td>   </td><td>   </td><td>Header extension table address (bytes)</td></tr>
   <tr><td> 38 </td><td> 8 </td><td> 6         </td><td>   </td><td> * </td><td>   </td><td> * </td><td>Infocom used this as 8 bytes of ASCII: the player's user-name on their own mainframe, useful to identify which person played a saved-game (however, the bytes are all 0 in shipped story files)</td></tr>
   <tr><td> 3C </td><td> 4 </td><td>          </td><td>    </td><td>   </td><td>   </td><td> * </td><td>Inform 6 stores 4 bytes of ASCII here, giving the version of Inform used to compile the file: for instance, "6.11".</td></tr>
-
-
-
-
-
-
 </table>
 
 <p>Some early Version 3 files do not contain length and checksum
@@ -150,7 +143,7 @@
    header information for any game-changing behaviour. It is rarely meaningful, and a Standard interpreter
    provides many better ways to query the interpreter for information.
 </p>
-
+  
 <h2 id="11.1.4">11.1.4</h2>
 <p>Flags 1:</p>
 <table>
