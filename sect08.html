@@ -1,4 +1,4 @@
-11/06/2014<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -15,20 +15,20 @@
 
 <hr>
 
-<p>8.1 <a href="#one">Fonts</a> / 
-   8.2 <a href="#two">Status line</a> / 
-   8.3 <a href="#three">Text colours</a> /
-   8.4 <a href="#four">Screen dimensions</a> / 
-   8.5 <a href="#five">Screen model (V1, V2)</a> / 
-   8.6 <a href="#six">Screen model (V3)</a> / 
-   8.7 <a href="#seven">Screen model (V4, V5)</a> / 
-   8.8 <a href="#eight">Screen model (V6)</a>
+<p>8.1 <a href="#8.1">Fonts</a> / 
+   8.2 <a href="#8.2">Status line</a> / 
+   8.3 <a href="#8.3">Text colours</a> /
+   8.4 <a href="#8.4">Screen dimensions</a> / 
+   8.5 <a href="#8.5">Screen model (V1, V2)</a> / 
+   8.6 <a href="#8.6">Screen model (V3)</a> / 
+   8.7 <a href="#8.7">Screen model (V4, V5)</a> / 
+   8.8 <a href="#8.8">Screen model (V6)</a>
 </p>
 
 <hr>
 
 
-<h2 id="one">8.1</h2>
+<h2 id="8.1">8.1</h2>
 <p>Text may be printed in any font of the interpreter's choice,
    variable- or fixed-pitch: except that when bit 1 of 'Flags 2' in
    the header is set, font 4 has been selected, or when the text style has been set to Fixed Pitch,
@@ -36,7 +36,7 @@
    and interpreter support in Version 6 is optional.
 </p>
 
-<h2>8.1.1</h2>
+<h2 id="8.1.1">8.1.1</h2>
 <p>In Version 5, the height and width of the current
    font (in units (see below)) should be written to bytes <strong>$27</strong> and
    <strong>$26</strong> of the header, respectively.  In Version 6, these bytes
@@ -48,7 +48,7 @@
    window is selected, the current font is changed, or a different style is chosen.
 </p>
 
-<h2>8.1.2</h2>
+<h2 id="8.1.2">8.1.2</h2>
 <p>An interpreter should ideally provide 4 fonts, with ID numbers
    as follows:
 </p>
@@ -69,8 +69,8 @@
    accented letters on-screen).
 </p>
 
-<h2>8.1.3</h2>
-<p><strong>***[1.0]</strong>
+<h2 id="8.1.3">8.1.3</h2>
+<p><strong>***</strong>
    A game must not use fonts other than 1 unless allowed
    to by the interpreter: see the <strong>set_font</strong> opcode for how to give
    or refuse permission.  (This paragraph is marked <strong>***</strong> because
@@ -78,14 +78,14 @@
    'Beyond Zork' in a complicated and unsatisfactory way: see <strong>§</strong> 16.)
 </p>
 
-<h2>8.1.3.1</h2>
-<p><strong>***[1.0]</strong>
+<h2 id="8.1.3.1">8.1.3.1</h2>
+<p><strong>***</strong>
    It is legal for a game to change font at any time,
    including halfway through the printing of a word.  (This might be
    needed to introduce exotic foreign accents in the future.)
 </p>
 
-<h2>8.1.4</h2>
+<h2 id="8.1.4">8.1.4</h2>
 <p>The specification of the "picture font" is unknown
    (conjecturally, it was intended to provide pictures before Version
    6 was properly developed). 
@@ -93,47 +93,47 @@
    permission to any game requesting it.
 </p>
 
-<h2>8.1.5</h2>
+<h2 id="8.1.5">8.1.5</h2>
 <p>The specification of the character graphics font is given
    in <strong>§</strong> 16.
 </p>
 
-<h2>8.1.5.1</h2>
+<h2 id="8.1.5.1">8.1.5.1</h2>
 <p>In Version 5 (only), an interpreter which cannot provide
    the character graphics font should clear bit 3 of 'Flags 2' in the
    header.
 </p>
 
-<h2>8.1.6</h2>
+<h2 id="8.1.6">8.1.6</h2>
 <p>Any new fonts will have numbers higher than 4. Fonts 5-1023 are reserved 
    for future Standards to specify. Local use may be made of higher font numbers.
 </p>
 
-<h2 id="two">8.2</h2>
+<h2 id="8.2">8.2</h2>
 <p>In Versions 1 to 3, a status line should be printed by the
    interpreter, as follows.  In Version 3, it must set bit 4 of
    'Flags 1' in the header if it is unable to produce a status line.
 </p>
 
-<h2>8.2.1</h2>
+<h2 id="8.2.1">8.2.1</h2>
 <p>In Versions 1 and 2, all games are "score games".  In
    Version 3, if bit 1 of 'Flags 1' is clear then the game is a "score game";
    if it is set, then the game is a "time game".
 </p>
 
-<h2>8.2.2</h2>
+<h2 id="8.2.2">8.2.2</h2>
 <p>The short name of the object whose number is in the first global
    variable should be printed on the left hand side of the line.
 </p>
 
-<h2>8.2.2.1</h2>
+<h2 id="8.2.2.1">8.2.2.1</h2>
 <p>Whenever the status line is being printed the first global
    must contain a valid object number.  (It would be useful if interpreters
    could protect themselves in case the game accidentally violates this
    requirement.)
 </p>
 
-<h2>8.2.2.2</h2>
+<h2 id="8.2.2.2">8.2.2.2</h2>
 <p>If the object's short name exceeds the available room on
    the status line, the author suggests that an interpreter should break
    it at the last space and append an ellipsis "...".  There is no
@@ -141,19 +141,19 @@
    expect names of length up to at least 49 characters.
 </p>
 
-<h2>8.2.3</h2>
+<h2 id="8.2.3">8.2.3</h2>
 <p>If there is room, the right hand side of the status line should
    display:
 </p>
 
-<h2>8.2.3.1</h2>
+<h2 id="8.2.3.1">8.2.3.1</h2>
 <p>For "score games": the score and number of turns, held in
    the values of the second and third global variables respectively.  The
    score may be assumed to be in the range -99 to 999 inclusive, and
    the turn number in the range 0 to 9999.
 </p>
 
-<h2>8.2.3.2</h2>
+<h2 id="8.2.3.2">8.2.3.2</h2>
 <p>For "time games": the time, in the form <strong>hours:minutes</strong> (held
    in the second and third globals).  The time may be given on a 24-hour clock
    or the number of hours may be reduced modulo 12 (but if so, "AM" or "PM"
@@ -163,13 +163,13 @@
    0 to 59.
 </p>
 
-<h2>8.2.4</h2>
+<h2 id="8.2.4">8.2.4</h2>
 <p>The status line is updated in exactly two circumstances: when
    a <strong>show_status</strong> opcode is executed, and just before the keyboard is
    read by <strong>read</strong>.  (It is not displayed when the game begins.)
 </p>
 
-<h2 id="three">8.3</h2>
+<h2 id="8.3">8.3</h2>
 <p>Under Versions 5 and later, text printing has a current
    foreground and background colour.  In Version 6, each window has its
    own pair.  (Note that a Version 6 interpreter going under the
@@ -184,7 +184,7 @@
    Amiga interpreter number when running Infocom's Version 6 games.)
 </p>
 
-<h2>8.3.1</h2>
+<h2 id="8.3.1">8.3.1</h2>
 <p>The following codes are used to refer to colours:</p>
 
 <pre>
@@ -207,9 +207,9 @@
  15 = transparent (true -4) [V6 only]
  </pre>
 
-<p>Colours 15 and -1 are available only in Version 6.</p>
+<p>Colours 10, 11, 12, 15 and -1 are available only in Version 6.</p>
 
-<h2>8.3.1.1</h2>
+<h2 id="8.3.1.1">8.3.1.1</h2>
 <p><strong>***[1.1]</strong>
    The equivalences between the colour numbers 
    and true colours are recommended. The interpreter may allow the user to 
@@ -223,7 +223,7 @@
    file.
 </p>
 
-<h2>8.3.2</h2>
+<h2 id="8.3.2">8.3.2</h2>
 <p>If the interpreter cannot produce colours, it should clear
    bit 0 of 'Flags 1' in the header.  In Version 6 it should write
    colours 2 and 9 (black and white), either way round, into the default
@@ -231,36 +231,70 @@
    header.
 </p>
 
-<h2>8.3.3</h2>
+<h2 id="8.3.3">8.3.3</h2>
 <p>If the interpreter can produce colours, it should set bit
    0 of 'Flags 1' in the header, and write its default background
    and foreground colours into bytes <strong>$2c</strong> and <strong>$2d</strong> of the header.
 </p>
 
-<h2>8.3.4</h2>
+<h2 id="8.3.4">8.3.4</h2>
 <p>If a game wishes to use colours, it should have bit 6 in
    'Flags 2' set in its story file.  (However, an interpreter should not
    rule out the use of colours just because this has not been done.)
 </p>
 
-<h2>8.3.5</h2>
+<h2 id="8.3.5">8.3.5</h2>
 <p>In version 6, if a true colour, or an "under the cursor" colour has been 
    requested by the game, then the foreground or background colour shown in 
    window property 11 is implementation defined, with two exceptions:
 </p>
 
-<h2>8.3.5.1</h2>
+<h2 id="8.3.5.1">8.3.5.1</h2>
 <p>If the colour selected was one of the standard set (2-15), then
    that colour is indicated in property 11.
 </p>
 
-<h2>8.3.5.2</h2>
+<h2 id="8.3.5.2">8.3.5.2</h2>
 <p>If the colour selected was not one of the standard set (this can happen
    when using graphics, which may use many more colours), the colour
    shown in property 11 will be >= 16.
 </p>
 
-<h2>8.3.6</h2>
+<h2 id="8.3.7">8.3.7</h2>
+<p><strong>***[1.1]</strong>
+   Standard 1.1 adds the ability for games
+   to select many more colours with <strong>set_true_colour</strong>, which uses
+   15-bit RBG colour values, with the following special values:
+</p>
+<pre>
+ (-1) = default setting
+ (-2) = current setting
+ (-3) = colour under cursor (V6 only)
+ (-4) = transparent (V6 only)
+</pre>
+
+<h2 id="8.3.7.1">8.3.7.1</h2>
+<p><strong>***[1.1]</strong>
+   The interpreter selects the closest approximations available to
+   the requested colours. In V6, the interpreter may store the approximations
+   in window properties 16 and 17, so the program can tell how close it got
+   (although it is acceptable for the interpreter to just store the requested
+   value).
+</p>
+
+<p>In the minimal implementation, interpreters just need to match to the closest
+   of the standard colours and internally call <strong>set_colour</strong> (although that would
+   have to ensure window properties 16 and 17 were updated). In a full
+   implementation this would be turned around and <strong>set_colour</strong> would internally
+   call <strong>set_true_colour</strong>.
+</p>
+
+<p>True colour specifications are in the sRGB colour space, <strong>$0000</strong> being black
+   and <strong>$7FFF</strong> being white. Colours should be gamma adjusted if necessary. See the
+   <strong>PNG</strong> specification for a good introduction to colour spaces and gamma
+   correction.
+</p>
+<h2 id="8.3.6">8.3.6</h2>
 <p><strong>***[1.1]</strong>
    In Version 6 only, colour 15 is defined 
    as transparent.  This is only valid as a background colour; an attempt 
@@ -290,42 +324,7 @@
    heavier.
 </p>
 
-<h2>8.3.7</h2>
-<p><strong>***[1.1]</strong>
-   Standard 1.1 adds the ability for games
-   to select many more colours with <strong>set_true_colour</strong>, which uses
-   15-bit RBG colour values, with the following special values:
-</p>
-<pre>
- (-1) = default setting
- (-2) = current setting
- (-3) = colour under cursor (V6 only)
- (-4) = transparent (V6 only)
-</pre>
-
-<h2>8.3.7.1</h2>
-<p><strong>***[1.1]</strong>
-   The interpreter selects the closest approximations available to
-   the requested colours. In V6, the interpreter may store the approximations
-   in window properties 16 and 17, so the program can tell how close it got
-   (although it is acceptable for the interpreter to just store the requested
-   value).
-</p>
-
-<p>In the minimal implementation, interpreters just need to match to the closest
-   of the standard colours and internally call <strong>set_colour</strong> (although that would
-   have to ensure window properties 16 and 17 were updated). In a full
-   implementation this would be turned around and <strong>set_colour</strong> would internally
-   call <strong>set_true_colour</strong>.
-</p>
-
-<p>True colour specifications are in the sRGB colour space, <strong>$0000</strong> being black
-   and <strong>$7FFF</strong> being white. Colours should be gamma adjusted if necessary. See the
-   <strong>PNG</strong> specification for a good introduction to colour spaces and gamma
-   correction.
-</p>
-
-<h2 id="four">8.4</h2>
+<h2 id="8.4">8.4</h2>
 <p>The screen should ideally be at least 60 characters wide by 14 lines
    deep.  (Old Apple II interpreters had a 40 character width and some more 
    recent laptop ones have a 9 line height, but implementors should seek to 
@@ -335,7 +334,7 @@
    in the header.
 </p>
 
-<h2>8.4.1</h2>
+<h2 id="8.4.1">8.4.1</h2>
 <p>The interpreter should use the screen height for calculating when to pause 
    and print "[MORE]". 
 </p>
@@ -348,37 +347,37 @@
    sensible maximum size for screen operations such as <strong>split_window</strong>.
 </p>
 
-<h2>8.4.2</h2>
+<h2 id="8.4.2">8.4.2</h2>
 <p>Screen dimensions are measured in notional "units".  In
    Versions 1 to 4, one unit is simply the height or width of one character.
    In Version 5 and later, the interpreter is free to implement units as
    anything from character sizes down to individual pixels.
 </p>
 
-<h2>8.4.3</h2>
+<h2 id="8.4.3">8.4.3</h2>
 <p>In Version 5 and later, the screen's width and height in units
    should be written to the words at <strong>$22</strong> and <strong>$24</strong>.
 </p>
 
-<h2 id="five">8.5</h2>
+<h2 id="8.5">8.5</h2>
 <p>The screen model for Versions 1 and 2 is as follows:
 </p>
 
-<h2>8.5.1</h2>
+<h2 id="8.5.1">8.5.1</h2>
 <p>The screen can only be printed to (like a teletype) and there
    is no control of the cursor.
 </p>
 
-<h2>8.5.2</h2>
+<h2 id="8.5.2">8.5.2</h2>
 <p>At the start of a game, the screen should be cleared and the text
    cursor placed at the bottom left (so that text scrolls upwards as the game
    gets under way).
 </p>
 
-<h2 id="six">8.6</h2>
+<h2 id="8.6">8.6</h2>
 <p>The screen model for Version 3 is as follows:</p>
 
-<h2>8.6.1</h2>
+<h2 id="8.6.1">8.6.1</h2>
 <p>The screen is divided into a lower and an upper window and at any
    given time one of these is selected.  (Initially it is the lower
    window.)  The game uses the <strong>set_window</strong> opcode to select one of the
@@ -389,7 +388,7 @@
    not change the screen's appearance.
 </p>
 
-<h2>8.6.1.1</h2>
+<h2 id="8.6.1.1">8.6.1.1</h2>
 <p>The upper window has variable height (of n lines)
    and the same width as the screen.  This should be displayed on the n lines
    of the screen below the top one (which continues to hold the status line).
@@ -398,29 +397,29 @@
    an upper window of any chosen size by using the <strong>split_window</strong> opcode.
 </p>
 
-<h2>8.6.1.1.1</h2>
+<h2 id="8.6.1.1.1">8.6.1.1.1</h2>
 <p>Printing onto the upper window overlays whatever text is
    already there.
 </p>
 
-<h2>8.6.1.1.2</h2>
+<h2 id="8.6.1.1.2">8.6.1.1.2</h2>
 <p>When a screen split takes place in Version 3, the upper
    window is cleared.
 </p>
 
-<h2>8.6.1.2</h2>
+<h2 id="8.6.1.2">8.6.1.2</h2>
 <p>An interpreter need not provide the upper window at all.  If
    it is going to do so, it should set bit 5 of 'Flags 1' in the header to
    signal this to the game.  It is only legal for a game to use
    <strong>set_window</strong> or <strong>split_window</strong> if this bit has been set.
 </p>
 
-<h2>8.6.1.3</h2>
+<h2 id="8.6.1.3">8.6.1.3</h2>
 <p>Following a "restore" of the game, the interpreter should
    automatically collapse the upper window to size 0.
 </p>
 
-<h2>8.6.2</h2>
+<h2 id="8.6.2">8.6.2</h2>
 <p>When text reaches the bottom right of the lower window, it
    should be scrolled upwards.  The upper window should never be scrolled:
    it is legal for a character to be printed on the bottom right position
@@ -428,18 +427,18 @@
    is undefined: the author suggests that it stay put).
 </p>
 
-<h2>8.6.3</h2>
+<h2 id="8.6.3">8.6.3</h2>
 <p>At the start of a game, the screen should be cleared and the text
    cursor placed at the bottom left (so that text scrolls upwards as the game
    gets under way).
 </p>
 
-<h2 id="seven">8.7</h2>
+<h2 id="8.7">8.7</h2>
 <p>The screen model for Versions 4 and later, except Version 6,
    is as follows:
 </p>
 
-<h2>8.7.1</h2>
+<h2 id="8.7.1">8.7.1</h2>
 <p>Text can be printed in five different styles (modelled on the
    VT100 design of terminal).  These are: Roman (the default), Bold, Italic,
    Reverse Video (usually printed with foreground and background colours
@@ -450,18 +449,18 @@
    Roman should turn off all the text styles currently active.
 </p>
 
-<h2>8.7.1.1</h2>
+<h2 id="8.7.1.1">8.7.1.1</h2>
 <p>An interpreter need not provide Bold or Italic (even for font 1)
    and is free to interpret them broadly.  (For example, rendering bold-face by
    changing the colour, or rendering italic with underlining.)
 </p>
 
-<h2>8.7.1.2</h2>
+<h2 id="8.7.1.2">8.7.1.2</h2>
 <p>It is legal to change text style at any point, including in
    the middle of a word being printed.
 </p>
 
-<h2>8.7.2</h2>
+<h2 id="8.7.2">8.7.2</h2>
 <p>There are two "windows", called "upper" and "lower": at
    any given time one of these two is selected.  (Initially it is the lower
    window.)  The game uses the <strong>set_window</strong> opcode to select 
@@ -471,7 +470,7 @@
    reset to the top left.
 </p>
 
-<h2>8.7.2.1</h2>
+<h2 id="8.7.2.1">8.7.2.1</h2>
 <p>The upper window has variable height (of n lines) and the
    same width as the screen.  (It is usual for interpreters to print the
    upper window on the top n lines of the screen, overlaying any text
@@ -481,7 +480,7 @@
    chosen size by using the <strong>split_window</strong> opcode.
 </p>
 
-<h2>8.7.2.1.1</h2>
+<h2 id="8.7.2.1.1">8.7.2.1.1</h2>
 <p>It is unclear exactly what <strong>split_window</strong> should do if
    the upper window is currently selected.  The author suggests that
    it should work as usual, leaving the cursor where it is if the
@@ -490,7 +489,7 @@
    practice.)
 </p>
 
-<h2>8.7.2.2</h2>
+<h2 id="8.7.2.2">8.7.2.2</h2>
 <p>In Version 4, the lower window's cursor is always on
    the bottom screen line.  In Version 5 it can be at any line which is
    not underneath the upper window.  If a split takes place which would
@@ -498,12 +497,12 @@
    the interpreter should move the lower window's cursor down to the
    line just below the upper window's new size.
 </p>
-<h2>8.7.2.3</h2>
+<h2 id="8.7.2.3">8.7.2.3</h2>
 <p>The position of the cursor in the upper window can be set and retrieved 
    with <strong>set_cursor</strong> and <strong>get_cursor</strong>.
 </p>
 
-<h2>8.7.2.3.1</h2>
+<h2 id="8.7.2.3.1">8.7.2.3.1</h2>
 <p>When the upper window is selected, its cursor position can be moved with 
    <strong>set_cursor</strong>. This position is given in units in the 
    form (row, column), with (1,1) at the top left. The opcode has no effect 
@@ -511,26 +510,26 @@
    the current size of the upper window.
 </p>
 
-<h2>8.7.2.3.2</h2>
+<h2 id="8.7.2.3.2">8.7.2.3.2</h2>
 <p>When either the upper or lower windows are selected, <strong>get_cursor</strong>
    returns the position of the cursor (in units) in the upper window.
 </p>
 
-<h2>8.7.2.4</h2>
+<h2 id="8.7.2.4">8.7.2.4</h2>
 <p>An interpreter should use a fixed-pitch font when printing on
    the upper window.
 </p>
 
-<h2>8.7.2.5</h2>
+<h2 id="8.7.2.5">8.7.2.5</h2>
 <p>In Versions 3 to 5, text buffering is never active in the
    upper window (even if a game begins printing there without having
    turned it off).
 </p>
 
-<h2>8.7.3</h2>
+<h2 id="8.7.3">8.7.3</h2>
 <p>Clearing regions of the screen:</p>
 
-<h2>8.7.3.1</h2>
+<h2 id="8.7.3.1">8.7.3.1</h2>
 <p>When text reaches the bottom right of the lower window, it
    should be scrolled upwards.  (When the text style is Reverse Video
    the new blank line should <strong>not</strong> have reversed colours.)  The upper
@@ -540,19 +539,19 @@
    suggests that it stay put).
 </p>
 
-<h2>8.7.3.2</h2>
+<h2 id="8.7.3.2">8.7.3.2</h2>
 <p>Using the opcode <strong>erase_window</strong>, the specified window
    can be cleared to background colour.  (Even if the text style is Reverse
    Video the new blank space should not have reversed colours.)
 </p>
 
-<h2>8.7.3.2.1</h2>
+<h2 id="8.7.3.2.1">8.7.3.2.1</h2>
 <p>In Versions 5 and later, the cursor for the window being erased
    should be moved to the top left.  In Version 4, the lower window's cursor
    moves to its bottom left, while the upper window's cursor moves to top left.
 </p>
 
-<h2>8.7.3.3</h2>
+<h2 id="8.7.3.3">8.7.3.3</h2>
 <p>Erasing window -1 clears the whole screen to the
    background colour of the lower screen, collapses the upper window
    to height 0, moves the cursor of the lower screen to bottom
@@ -561,29 +560,29 @@
    happen at the start of a game.
 </p>
 
-<h2>8.7.3.4</h2>
+<h2 id="8.7.3.4">8.7.3.4</h2>
 <p>Using <strong>erase_line</strong> in the upper window should erase
    the current line from the cursor position to the right-hand edge,
    clearing it to background colour.  (Even if the text style is
    Reverse Video the new blank space should not have reversed colours.)
 </p>
 
-<h2 id="eight">8.8</h2>
+<h2 id="8.8">8.8</h2>
 <p> The screen model for Version 6 is as follows:</p>
 
-<h2>8.8.1</h2>
+<h2 id="8.8.1">8.8.1</h2>
 <p>The display is an array of pixels.  Coordinates are usually
    given (in units) in the form (y,x), with (1,1) in the top left.
 </p>
 
-<h2>8.8.2</h2>
+<h2 id="8.8.2">8.8.2</h2>
 <p>If the interpreter thinks the screen should be redrawn
    (e.g. because a menu window has been clicked over it), it may set bit
    2 of 'Flags 2'.  The game is expected to notice, take action and clear
    the bit.  (However, a more efficient interpreter would handle redraws itself.)
 </p>
 
-<h2>8.8.3</h2>
+<h2 id="8.8.3">8.8.3</h2>
 <p>There are eight "windows", numbered 0 to 7.  The code -3
    is used as a window number to mean "the currently selected window".
    This selection can be changed with the <strong>set_window</strong> opcode.
@@ -598,7 +597,7 @@
    of variables called "properties".
 </p>
 
-<h2>8.8.3.1</h2>
+<h2 id="8.8.3.1">8.8.3.1</h2>
 <p>There are four attributes, numbered as follows:</p>
 
 <pre>
@@ -610,7 +609,7 @@
 
 <p>Each can be turned on or off, using the <strong>window_style</strong> opcode.</p>
 
-<h2>8.8.3.1.1</h2>
+<h2 id="8.8.3.1.1">8.8.3.1.1</h2>
 <p>"Wrapping" is the continuation of printed text from
    one line to the next.  Text running up to the right margin will
    continue from the left margin of the following line.  If
@@ -620,19 +619,19 @@
    any further text will be ignored.
 </p>
 
-<h2>8.8.3.1.2</h2>
+<h2 id="8.8.3.1.2">8.8.3.1.2</h2>
 <p>"Buffered printing" means that text to be printed
    in the window is temporarily stored in a buffer and only
    flushed onto the screen at intervals convenient for the
    interpreter.
 </p>
 
-<h2>8.8.3.1.2.1</h2>
+<h2 id="8.8.3.1.2.1">8.8.3.1.2.1</h2>
 <p>"Buffered printing" has two practical effects:
    firstly it causes a delay before printed text actually appears.
 </p>
 
-<h2>8.8.3.1.2.2</h2>
+<h2 id="8.8.3.1.2.2">8.8.3.1.2.2</h2>
 <p>Secondly it affects the way "wrapping" is done.
    If "buffered printing" is on, then text is wrapped after the
    last word which could fit on a line.  If not, then text is
@@ -665,7 +664,7 @@
    appearance of individual printed characters.)
 </p>
 
-<h2>8.8.3.2</h2>
+<h2 id="8.8.3.2">8.8.3.2</h2>
 <p>There are 18 properties, numbered as follows:</p>
 
 <pre>
@@ -687,7 +686,7 @@
    The true foreground and true background properties must not be written by put_wind_prop.
 </p>
 
-<h2>8.8.3.2.1</h2>
+<h2 id="8.8.3.2.1">8.8.3.2.1</h2>
 <p>If a window has character wrapping, then text is
    clipped to stay inside the left and right margins.  After a
    new-line, the cursor moves to the left margin on the next line.
@@ -697,7 +696,7 @@
    default 0.)
 </p>
 
-<h2>8.8.3.2.2</h2>
+<h2 id="8.8.3.2.2">8.8.3.2.2</h2>
 <p>If the interrupt countdown is set to a non-zero value (which by default it 
    is not), then it is decremented on each new-line, and when it hits zero the 
    routine whose packed address is stored in the "newline interrupt routine" 
@@ -706,7 +705,7 @@
    The interrupt routine should not attempt to print anything.
 </p>
 
-<h2>8.8.3.2.2.1</h2>
+<h2 id="8.8.3.2.2.1">8.8.3.2.2.1</h2>
 <p>Because of an Infocom bug, if the interpreter number is
    6 (for MSDOS) and the story file is 'Zork Zero' release 393.890714,
    but in no other case, the interpreter must do the following instead:
@@ -716,7 +715,7 @@
    story files and interpreters.
 </p>
 
-<h2>8.8.3.2.2.2</h2>
+<h2 id="8.8.3.2.2.2">8.8.3.2.2.2</h2>
 <p>Note that the <strong>set_margins</strong> opcode, which is often
    used by newline interrupt routines (to adjust the shape of a margin
    as it flows past a picture), automatically moves the cursor if the
@@ -725,25 +724,25 @@
    takes place.
 </p>
 
-<h2>8.8.3.2.3</h2>
+<h2 id="8.8.3.2.3">8.8.3.2.3</h2>
 <p>The text style is set just as in Version 4, using
    <strong>set_text_style</strong> (which sets that for the current window).  The
    property holds the operand of that instruction (e.g. 4 for italic).
 </p>
 
-<h2>8.8.3.2.3.1</h2>
+<h2 id="8.8.3.2.4">8.8.3.2.4</h2>
 <p><strong>***[1.1]</strong>
    The property must show 
    the actual style combination currently in use; with this a story file can 
    probe for the availability of particular combinations.
 </p>
 
-<h2>8.8.3.2.4</h2>
+<h2 id="8.8.3.2.4">8.8.3.2.4</h2>
 <p>The foreground colour is stored in the lower byte of the
    colour data property, the background colour in the upper byte.
 </p>
 
-<h2>8.8.3.2.5</h2>
+<h2 id="8.8.3.2.5">8.8.3.2.5</h2>
 <p>The font height (in pixels) is stored in the upper byte of the
    font size property, the font width (in pixels) in the lower byte.
 </p>
@@ -751,7 +750,7 @@
    because of <strong>set_font</strong> or <strong>set_text_style</strong>.
 </p>
 
-<h2>8.8.3.2.6</h2>
+<h2 id="8.8.3.2.6">8.8.3.2.6</h2>
 <p>The line count is incremented on each new-line, unless it is 
    set to -999. The interpreter should use the line count to see when 
    it should print "[MORE]". A line count of -999 means "never print 
@@ -760,14 +759,14 @@
    than -999.
 </p>
 
-<h2>8.8.3.2.7</h2>
+<h2 id="8.8.3.2.7">8.8.3.2.7</h2>
 <p>If an attempt is made by the game to read the cursor position
    at a time when text is held unprinted in a buffer, then this text should
    be flushed first, to ensure that the cursor position is accurate before
    being read.
 </p>
 
-<h2>8.8.3.2.8</h2>
+<h2 id="8.8.3.3">8.8.3.3</h2>
 <p><strong>***[1.1]</strong>
    The true foreground and background colours 
    show the actual colour being used for the foreground and background, 
@@ -779,7 +778,7 @@
 
 
 
-<h2>8.8.3.3</h2>
+<h2 id="8.8.3.3">8.8.3.3</h2>
 <p>All eight windows begin at (1,1).
    Window 0 occupies the
    whole screen and is initially selected.  Window 1 is as wide as the
@@ -789,14 +788,14 @@
    attribute 4 (buffering) on, and the other attributes off.
 </p>
 
-<h2>8.8.3.4</h2>
+<h2 id="8.8.3.4">8.8.3.4</h2>
 <p>A window can be moved with <strong>move_window</strong> and resized with
    <strong>window_size</strong>.  If the window size is reduced so that its cursor lies
    outside it, the cursor should be reset to the left margin on the top
    line.
 </p>
 
-<h2>8.8.3.5</h2>
+<h2 id="8.8.3.5">8.8.3.5</h2>
 <p>Each window remembers its own cursor position (relative
    to its own coordinates, so that the position (1,1) is at its top
    left).  These can
@@ -805,17 +804,17 @@
    the current window.
 </p>
 
-<h2>8.8.3.6</h2>
+<h2 id="8.8.3.6">8.8.3.6</h2>
 <p>Each window can be scrolled vertically (up or down) any
    number of pixels, using the <strong>scroll_window</strong> opcode.
 </p>
 
-<h2>8.8.4</h2>
+<h2 id="8.8.4">8.8.4</h2>
 <p>To some extent windows 0 and 1 mimic the behaviour of the
    lower and upper windows in the Version 4 screen model:
 </p>
 
-<h2>8.8.4.1</h2>
+<h2 id="8.8.4.1">8.8.4.1</h2>
 <p>The <strong>split_window</strong> opcode tiles windows 0 and 1 together
    to fill the screen vertically, so that window 1 has the given height and 
    has its y coordinate set to 1, while window 0 is placed just below it
@@ -824,54 +823,54 @@
 </p>
 <p>The x coordinate and width of the windows are not changed.</p>
 
-<h2>8.8.4.2</h2>
+<h2 id="8.8.4.2">8.8.4.2</h2>
 <p>An "unsplit" (that is, a <strong>split_window 0</strong>) takes place
    when the entire screen is cleared with <strong>erase_window -1</strong>, if a
    "split" has previously occurred (meaning that windows 0 and 1
    have been set up as above).
 </p>
 
-<h2>8.8.5</h2>
+<h2 id="8.8.5">8.8.5</h2>
 <p>Screen clearing operations:</p>
 
-<h2>8.8.5.1</h2>
+<h2 id="8.8.5.1">8.8.5.1</h2>
 <p>Erasing a picture is like drawing it (see below), except
    that the space where it would appear is painted over with background
    colour instead.
 </p>
 
-<h2>8.8.5.2</h2>
+<h2 id="8.8.5.2">8.8.5.2</h2>
 <p>The current line can be erased using <strong>erase_line</strong>, either
    all the way to the right margin or by any positive number of pixels in
    that direction.  The space is painted over with background colour
    (even if the current text style is Reverse Video).
 </p>
 
-<h2>8.8.5.3</h2>
+<h2 id="8.8.5.3">8.8.5.3</h2>
 <p>Each window can be erased using <strong>erase_window</strong>, erasing to
    background colour (even if the current text style is Reverse Video).
 </p>
 
-<h2>8.8.5.3.1</h2>
+<h2 id="8.8.5.3.1">8.8.5.3.1</h2>
 <p>Erasing window number -1 erases the entire screen to
    the background colour of window 0, unsplits windows 0 and 1
    (see <strong>§</strong> 8.7.3.3 above) and selects window 0.
 </p>
 
-<h2>8.8.5.3.2</h2>
+<h2 id="8.8.5.3.2">8.8.5.3.2</h2>
 <p>Erasing window -2 erases the entire screen to the current
    background colour.  (It doesn't perform <strong>erase_window</strong> for all the
    individual windows, and it doesn't change any window attributes or
    cursor positions.)
 </p>
 
-<h2>8.8.6</h2>
+<h2 id="8.8.6">8.8.6</h2>
 <p>Pictures may accompany the game.  They are not stored in the
    story file (or the Z-machine) itself, and the interpreter is simply
    expected to know where to find them.
 </p>
 
-<h2>8.8.6.1</h2>
+<h2 id="8.8.6.1">8.8.6.1</h2>
 <p>Pictures are numbered from 1 upwards (not necessarily
    contiguously).  They can be "drawn" or "erased" (using <strong>draw_picture</strong>
    and <strong>erase_picture</strong>).  Before attempting to do so, a game may ask the
@@ -880,7 +879,7 @@
    or to specify its height and width.
 </p>
 
-<h2>8.8.6.2</h2>
+<h2 id="8.8.6.2">8.8.6.2</h2>
 <p>The game may, if it wishes, use the <strong>picture_table</strong> opcode
    to give the interpreter advance warning that a group of pictures will
    soon be needed (for instance, a collection of icons making up a control
