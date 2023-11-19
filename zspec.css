@@ -16,7 +16,8 @@ li ins a { color: #009F00; }
 .index li ins a { color: #00CF00; }
 
 p.date { text-align: center; }
-p.update { text-align: center; font-size: .8em;}
+p.update { text-align: center; font-size: .8em; }
+p.notice { text-align: center; font-weight: bold; }
 p.dictindex { text-align: center; }
 
 ul.clean { list-style: none; }
