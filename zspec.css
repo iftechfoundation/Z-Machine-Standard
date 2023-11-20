@@ -27,6 +27,8 @@ td,th { border-left: black 1px solid; border-top: black 1px solid; border-bottom
 td.note { font-style: italic; text-align: center; }
 table.opcodes { margin-left: auto; margin-right: auto; margin-bottom: 1em; }
 table caption { font-weight: bold; text-align: center; }
+table.left { float: left; margin-right: 1em;}
+
 
 ol ol { list-style-type: lower-alpha; }
 
